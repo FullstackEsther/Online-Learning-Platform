@@ -16,6 +16,13 @@ namespace Infrastucture.Context.EntityConfiguration
             .WithOne(x => x.Instructor).HasForeignKey<Instructor>(x => x.UserId);
             builder.HasMany(x => x.Courses)
             .WithOne(x => x.Instructor);
+              builder.Property(x => x.Biography).IsRequired(false);
+            builder.Property(x => x.ProfilePicture).IsRequired(false); 
+            builder.Property(x => x.FirstName)
+            .HasMaxLength(30)
+            .IsRequired(true);
+            builder.Property(x => x.LastName)
+            .HasMaxLength(30);
         } 
     }
 }

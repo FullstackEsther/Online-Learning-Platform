@@ -18,6 +18,13 @@ namespace Infrastucture.Context.EntityConfiguration
             .WithOne(x => x.Student);
             builder.HasMany(x => x.Results)
             .WithOne(x => x.Student);
+            builder.Property(x => x.Biography).IsRequired(false);
+            builder.Property(x => x.ProfilePicture).IsRequired(false); 
+            builder.Property(x => x.FirstName)
+            .HasMaxLength(30)
+            .IsRequired(true);
+            builder.Property(x => x.LastName)
+            .HasMaxLength(30);
         }
 
     }

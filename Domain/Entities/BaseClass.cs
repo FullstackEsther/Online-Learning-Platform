@@ -7,10 +7,10 @@ namespace Domain.Entities
 {
     public abstract class BaseClass
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string CreatedBy {get;set;}= default!;
         public DateTime CreatedOn {get;set;}
-        public string DeletedBy {get;set;}
+        public string? DeletedBy {get;set;}
         public DateTime DeletedOn {get;set;}
     }
 }
