@@ -11,6 +11,6 @@ namespace Domain.Entities
         public string CreatedBy {get;set;}= default!;
         public DateTime CreatedOn {get;set;}
         public string? DeletedBy {get;set;}
-        public DateTime DeletedOn {get;set;}
+        public DateTime? DeletedOn {get;set;}
     }
 }

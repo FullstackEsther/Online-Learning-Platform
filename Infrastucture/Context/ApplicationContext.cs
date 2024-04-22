@@ -17,7 +17,6 @@ namespace Infrastucture.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new SubCategoryEntityConfiguration());
             modelBuilder.ApplyConfiguration(new StudentCourseEntityConfiguration());
             modelBuilder.ApplyConfiguration(new StudentEntityConfiguration());
             modelBuilder.ApplyConfiguration(new RoleEntityConfiguration());
@@ -32,9 +31,8 @@ namespace Infrastucture.Context
         }
          public DbSet<User> Users {get; set;}
         public DbSet<Role> Roles {get; set;}
-        public DbSet<SubCategory> SubCategories {get; set;}
         public DbSet<Category> Categories {get; set;}
-        public DbSet<StudentCourse> StudentCourses {get; set;}
+        public DbSet<Enrollment> StudentCourses {get; set;}
         public DbSet<Student> Students {get; set;}
         public DbSet<Result> Results {get; set;}
         public DbSet<Quiz> Quizzes {get; set;}

@@ -7,10 +7,18 @@ namespace Domain.Entities
 {
     public class Result : BaseClass
     {
-         public double  Score { get; set; }
-        public string  QuizId { get; set; }
-        public Quiz  Quiz { get; set; }
-        public string StudentId { get; set; }
-        public Student Student { get; set; }
+        public double? Score { get; private set; }
+        public Result(double? score)
+        {
+            if (score.HasValue && score < 80)
+            {
+                throw new ArgumentException("Retake test, you can only score 80 and above");
+            }
+            Score = score;
+        }
+        public string QuizId { get; set; } = default!;
+        public Quiz Quiz { get; set; } = default!;
+        public string StudentId { get; set; } = default!;
+        public Student Student { get; set; } = default!;
     }
 }

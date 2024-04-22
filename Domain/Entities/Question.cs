@@ -7,9 +7,10 @@ namespace Domain.Entities
 {
     public class Question : BaseClass
     {
-        public string QuizId { get; set; }
-        public Quiz Quiz { get; set; }
-        public string Text { get; set; }
-        public string CorrectAnswer { get; set; }
+        public string QuizId { get; set; }= default!;
+        public Quiz Quiz { get; set; }= default!;
+        public required string AskedQuestion { get; set; }
+        public  string?  PickedAnswer { get; set; }
+        public required string CorrectAnswer { get; set; }
     }
 }

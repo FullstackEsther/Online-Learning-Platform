@@ -7,8 +7,20 @@ namespace Domain.Entities
 {
     public class Role : BaseClass
     {
-        public string  RoleName { get; set; }
-        public string  Description { get; set; }
-        public IEnumerable<User> Users { get; set;}= new HashSet<User>();
+        public required string  RoleName { get; set; }
+        private string? _description;
+        public string?  Description { 
+            get{
+                return _description;
+            } 
+            set
+            {
+                if (value?.Length > 50)
+                {
+                    throw new ArgumentException("Description must be 50 characters or fewer.");
+                }
+                _description = value;
+            } }
+        public IEnumerable<string> UserName { get; set;}= new HashSet<string>();
     }
 }

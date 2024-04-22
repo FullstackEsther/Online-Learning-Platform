@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastucture.Context.EntityConfiguration
 {
-    public class StudentCourseEntityConfiguration : IEntityTypeConfiguration<StudentCourse>
+    public class StudentCourseEntityConfiguration : IEntityTypeConfiguration<Enrollment>
     {
-        public void Configure(EntityTypeBuilder<StudentCourse> builder)
+        public void Configure(EntityTypeBuilder<Enrollment> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasOne(x => x.Student).WithMany(x => x.StudentCourses).HasForeignKey(x => x.StudentId);
-            builder.HasOne(x => x.Course).WithMany(x => x.StudentCourses).HasForeignKey(x => x.CourseId);
+            builder.HasOne(x => x.Student).WithMany(x => x.Enrollments).HasForeignKey(x => x.StudentId);
+            builder.HasOne(x => x.Course).WithMany(x => x.Enrollments).HasForeignKey(x => x.CourseId);
         }
     }
 }
