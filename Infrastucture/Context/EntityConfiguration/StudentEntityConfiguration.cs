@@ -12,14 +12,12 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Student> builder)
         {
-            builder.HasOne(x => x.User)
-            .WithOne(x => x.Student).HasForeignKey<Student>(x => x.UserId);
-            builder.HasMany(x => x.StudentCourses)
-            .WithOne(x => x.Student);
+            builder.HasMany(x => x.Enrollments)
+            .WithOne();
             builder.HasMany(x => x.Results)
-            .WithOne(x => x.Student);
-            builder.Property(x => x.Biography).IsRequired(false);
-            builder.Property(x => x.ProfilePicture).IsRequired(false); 
+            .WithOne();
+            builder.Property(x => x.ProfilePicture).IsRequired(false);
+            builder.Property(x => x.Biography).IsRequired(false); 
             builder.Property(x => x.FirstName)
             .HasMaxLength(30)
             .IsRequired(true);

@@ -31,7 +31,7 @@ namespace Domain.Entities
             }
         } }  
         private string? _biography; 
-        string? Biography { 
+        public string? Biography { 
             get{
                 return _biography;
                 }
@@ -43,14 +43,14 @@ namespace Domain.Entities
                 }
                 _biography = value; 
             } }
-        string? ProfilePicture { get; set; }
-        string FirstName { get; set; }= default!;
-        string LastName { get; set; }= default!;
+        public string? ProfilePicture { get; set; }
+        public string FirstName { get; set; }= default!;
+        public string LastName { get; set; }= default!;
 
         private bool IsValidEmail(string email)
         {
             var pattern = @"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$";
-            Regex regex = new Regex(pattern);
+            Regex regex = new(pattern);
             return regex.IsMatch(email);
         }
     }

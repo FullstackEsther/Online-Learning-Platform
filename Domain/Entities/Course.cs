@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Enum;
 using Domain.Enum;
 
 namespace Domain.Entities
@@ -25,7 +26,7 @@ namespace Domain.Entities
             get => _price;
              set
              {
-                if (value.HasValue && value <=0)
+                if (value.HasValue && value >= 0)
                 {
                     _price = (double)value;
                 }
@@ -34,36 +35,43 @@ namespace Domain.Entities
                     throw new ArgumentException("You cannot add a price of zero or lower than zero");
                 }
              }}
-        private string _totaltime;
-        public string TotalTime {
-            get{
-                return _totaltime;
-             }
-             set
-             {
-                _totaltime = CalculateTime();
-             }}
+        public double TotalTime {get;set;}
+        public int numberOfModules {get;set;}
         public required string InstructorName { get; set; }
-        public bool IsVerified {get; set;} = false;
+        public required string DisplayPicture { get; set; }
+        public  string WhatToLearn { get; set; } = default!;
+        public bool IsVerified {get; private set;} 
+        public Level Level { get; set; }
         public CourseStatus CourseStatus { get; set; }
-        public string CategoryId { get; set; } = default!;
-        public virtual Instructor Instructor { get; set; } = default!;
-        public virtual Category Category { get; set; } = default!;
-        public IEnumerable<Module> Modules { get; set; } = new HashSet<Module>();
-        public IEnumerable<Enrollment> Enrollments { get; set; } = new HashSet<Enrollment>();
+        public Guid CategoryId { get; set; } = default!;
+        public Guid InstructorId { get; set; } = default!;
+        public double TotalScore { get; set; } = default!;
 
-        private string CalculateTime()
+        public void VerifyCourse()
         {
-            double hours=0,minutes=0,seconds=0;
-            foreach (var module in Modules)
-            {
-                var  time = module.TotalTime.Split(':');
-                hours =+ Double.Parse(time[0]);
-                minutes =+ Double.Parse(time[1]);
-                seconds =+ Double.Parse(time[2]);
-            }
-            var convertedTime = $"{hours}:{minutes}:{seconds}";
-            return convertedTime;
+            IsVerified = true;
         }
+        public void IsNotVerified()
+        {
+            IsVerified = false;
+        }
+        // public ICollection<Module> Modules { get; set; } = new HashSet<Module>();
+        // public virtual Instructor Instructor { get; set; } = default!;
+        // public virtual Category Category { get; set; } = default!;
+        // public IEnumerable<Enrollment> Enrollments { get; set; } = new HashSet<Enrollment>();
+
+        // private string CalculateTime()
+        // {
+        //     double hours=0,minutes=0,seconds=0;
+        //     foreach (var module in Modules)
+        //     {
+        //         var  time = module.TotalTime.Split(':');
+        //         hours =+ Double.Parse(time[0]);
+        //         minutes =+ Double.Parse(time[1]);
+        //         seconds =+ Double.Parse(time[2]);
+        //     }
+        //     var convertedTime = $"{hours}:{minutes}:{seconds}";
+        //     return convertedTime;
+        // }
     }
 }

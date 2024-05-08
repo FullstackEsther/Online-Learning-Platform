@@ -2,23 +2,89 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.DomainServices;
+using Domain.DomainServices.Interfaces;
+using Newtonsoft.Json;
 
 namespace Domain.Entities
 {
     public class Result : BaseClass
     {
-        public double? Score { get; private set; }
-        public Result(double? score)
+        private string serializedResponse;
+        // public string SerializedResponse { get; private set; }
+        public double Score { get; private set; }
+        public Guid StudentId { get; set; } = default!;
+        public Guid QuizId { get; private set; } = default!;
+        public bool IsPassedTest{get; private set;} 
+        internal Dictionary<Question, string> Responses;
+        // public Dictionary<Question, string> DeserializedResponse { get;}
+    // public Quiz Quiz { get; set; } = default!;
+        // public Student Student { get; set; } = default!;
+        public Result(Guid quizId, Guid studentId, Dictionary<Question, string> responses)
         {
-            if (score.HasValue && score < 80)
-            {
-                throw new ArgumentException("Retake test, you can only score 80 and above");
-            }
-            Score = score;
+            StudentId = studentId;
+            QuizId = quizId;
+            Responses = responses;
+            SerializeResponse();
         }
-        public string QuizId { get; set; } = default!;
-        public Quiz Quiz { get; set; } = default!;
-        public string StudentId { get; set; } = default!;
-        public Student Student { get; set; } = default!;
+        public void CheckScore()
+        {
+            var score = CalculateScore();
+            if (score < 80)
+            {
+                Score = score;
+                FailedTest();
+                throw new ArgumentException("Retake test, you can only score 80 and above");
+                
+            }
+            else
+            {
+                PassedTest();
+                Score = score;
+            }
+        }
+        private void SerializeResponse()
+        {
+            if (Responses.Count != 0)
+            {
+                IResultManager resultManager = new ResultManager();
+               serializedResponse =  resultManager.SerializeDictionary(Responses);
+            }
+            else
+            {
+                throw new ArgumentException("No object to Serialize");
+            }
+
+        }
+        private double MarkQuiz()
+        {
+            double correctAnswer = 0;
+            foreach (var obj in Responses)
+            {
+                   if (obj.Key.CorrectAnswer == obj.Value)
+                {
+                    correctAnswer++;
+                }
+            }
+            return correctAnswer;
+        }
+        private double CalculateScore()
+        {
+            if (Responses.Count == 0)
+            {
+                return 0;
+            }
+            var score = MarkQuiz();
+            var totalscore = score / Responses.Count * 100;
+            return totalscore;
+        }
+        private void PassedTest()
+        {
+            IsPassedTest = true;
+        }
+        private void FailedTest()
+        {
+            IsPassedTest = false;
+        }
     }
 }

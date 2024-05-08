@@ -21,6 +21,6 @@ namespace Domain.Entities
              } 
              }
         public string? ParentCategory {get; set;}
-        public IEnumerable<string> Courses { get; set; }= new HashSet<string>();
+        // public ICollection<string> Courses { get; set; }= new HashSet<string>();
     }
 }

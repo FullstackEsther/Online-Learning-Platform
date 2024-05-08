@@ -9,6 +9,8 @@ namespace Domain.Entities
     {
         public required string Title { get; set; }
         private string _totaltime;
+        public Guid CourseId { get;  private set; }= default!;
+        public ICollection<Lesson> Lessons { get; set; } 
         public string TotalTime { get
         {
             return _totaltime;
@@ -18,10 +20,18 @@ namespace Domain.Entities
         {
             _totaltime = TimeConverter(CalculateTotaltime);
         } }
-        public string CourseId { get; set; }= default!;
-        public Course Course { get; set; }= default!;
-        public Quiz Quiz { get; set; }= default!;
-        public IEnumerable<Lesson> Lessons { get; set; } = new HashSet<Lesson>();
+        // public Course Course { get; set; }= default!;
+        // public Quiz Quiz { get; set; }= default!; 
+       public Module(string title, Guid courseId)
+       {
+            Title = title;
+            CourseId = courseId;
+            Lessons = new HashSet<Lesson>();
+       }
+       private Module()
+       {
+
+       }
 
         private double CalculateTotaltime()
         {
@@ -46,6 +56,33 @@ namespace Domain.Entities
             var minutes = remainingSeconds/60;
             var seconds = minutes% 60;
             return(hours, minutes, seconds);
+        }
+        public void AddLessons(Lesson lesson)
+        {
+            if (lesson != null)
+            {
+                Lessons.Add(lesson);
+            }
+            else
+            {
+                throw new ArgumentException("Cannot Add an empty Lesson Object");
+            }
+        }
+        public void RemoveLesson(Guid lessonId)
+        {
+           var lesson = Lessons.FirstOrDefault(x => x.Id == lessonId);
+           Lessons.Remove(lesson!);
+        }
+    
+        public void UpdateLesson(Lesson updatedLesson)
+        {
+            var existingLessons = Lessons.FirstOrDefault(x => x.Id == updatedLesson.Id);
+            if (existingLessons != null)
+            {
+                existingLessons.File = updatedLesson.File;
+                existingLessons.Topic = updatedLesson.Topic;
+                existingLessons.TotalMinutes = updatedLesson.TotalMinutes;
+            }
         }
         
     }

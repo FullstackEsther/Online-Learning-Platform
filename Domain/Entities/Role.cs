@@ -21,6 +21,6 @@ namespace Domain.Entities
                 }
                 _description = value;
             } }
-        public IEnumerable<string> UserName { get; set;}= new HashSet<string>();
+        // public virtual ICollection<UserRole> UserRoles { get; set; } = default!;
     }
 }

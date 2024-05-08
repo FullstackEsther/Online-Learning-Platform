@@ -12,21 +12,9 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            // builder.ToTable("Users").SplitToTable("Profile", 
-            // x => 
-            // {
-            //     x.Property(user => user.ProfilePicture);
-            //     x.Property(User => User.FirstName);
-            //     x.Property(user => user.LastName);
-            //     x.Property(User => User.Biography);
-
-            // }
-            // );
-            builder.HasOne(x => x.Role)
-            .WithMany(x => x.Users).HasForeignKey(x => x.RoleId);
-            builder.Property(x => x.Email).IsRequired(true);
-            builder.Property(x => x.Password).IsRequired(true);
-            
+            builder.HasKey(x => x.Id);
+            builder.HasMany(x=> x.UserRoles).WithOne();
+            builder.Property(x => x.Username).IsRequired(true);
         }
 
     }

@@ -12,12 +12,12 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
-             builder.HasMany(x => x.Modules)
-             .WithOne(x =>x.Course);
-             builder.HasMany(x => x.StudentCourses)
-             .WithOne(x => x.Course);
-             builder.HasOne(x => x.SubCategory).WithMany(x => x.Courses).HasForeignKey(x => x.SubCategoryId);
-             builder.HasOne(x => x.Instructor).WithMany(x => x.Courses).HasForeignKey(x => x.InstructorId);
+             builder.HasMany<Module>()
+             .WithOne();
+             builder.HasMany<Enrollment>()
+             .WithOne();
+             builder.HasOne<Instructor>().WithMany(x => x.Courses).HasForeignKey(x => x.InstructorId);
+             builder.HasOne<Category>().WithMany().HasForeignKey(x => x.CategoryId);
         }
     }
 }

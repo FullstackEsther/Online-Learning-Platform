@@ -12,9 +12,9 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Question> builder)
         {
-            builder.HasOne(x => x.Quiz)
+            builder.HasOne<Quiz>()
             .WithMany(x => x.Questions).HasForeignKey(x => x.QuizId);
-            builder.Property(x => x.Text).IsRequired(true);
+            builder.Property(x => x.AskedQuestion).IsRequired(true);
             builder.Property(x => x.CorrectAnswer).IsRequired(true);
         }
     }

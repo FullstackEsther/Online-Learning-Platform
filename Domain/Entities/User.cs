@@ -10,12 +10,9 @@ namespace Domain.Entities
     {
         public required string Username { get; set; }
         private string password;
+        public virtual ICollection<UserRole> UserRoles { get; set; } = default!;
         public required string Password
         {
-            get
-            {
-                return password;
-            }
             set
             {
                 if (IsValidPassword(value))
@@ -29,7 +26,6 @@ namespace Domain.Entities
                 
             }
         }
-        public List<string> RoleName { get; set; } = default!;
         private bool IsValidPassword(string password)
         {
             var pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\d\s])(?=.*[a-zA-Z\d\W\S]).{8,}$";

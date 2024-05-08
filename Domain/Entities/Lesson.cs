@@ -9,6 +9,7 @@ namespace Domain.Entities
     {
         public required string Topic { get; set; }
         public string File { get; set; }= default!;
+        public Guid ModuleId { get; private set; } = default!;
         private double _totalMinutes;
         public double  TotalMinutes { 
             get
@@ -22,7 +23,17 @@ namespace Domain.Entities
                 }
                 _totalMinutes = value;
             } }
-        public string ModuleId { get; set; } = default!;
-        public Module Module { get; set; }= default!;
+        // public Module Module { get; set; }= default!;
+        public Lesson(string topic,string file,Guid moduleId,double totalMinutes)
+        {
+            Topic = topic;
+            File = file;
+            ModuleId = moduleId;
+            TotalMinutes = totalMinutes;
+        }
+        private Lesson()
+        {
+            
+        }
     }
 }

@@ -12,10 +12,11 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasMany(x => x.SubCategories)
-            .WithOne(x => x.Category);
+            builder.HasMany<Course>()
+            .WithOne();
             builder.Property(x => x.Name).IsRequired(true);
             builder.Property(x => x.Description).IsRequired(true);
+            builder.Property(x => x.ParentCategory).IsRequired(false);
         }
     }
 }

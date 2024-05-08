@@ -12,10 +12,10 @@ namespace Infrastucture.Context.EntityConfiguration
     {
          public void Configure(EntityTypeBuilder<Lesson> builder)
         {
-            builder.HasOne(x => x.Module)
+            builder.HasOne<Module>()
             .WithMany(x => x.Lessons).HasForeignKey(x => x.ModuleId);
             builder.Property(x => x.Topic).IsRequired(true);
-            builder.Property(x => x.TotalTime).IsRequired(true);
+            builder.Property(x => x.TotalMinutes).IsRequired(true);
             builder.Property(x => x.File).IsRequired(true);
         }
     }

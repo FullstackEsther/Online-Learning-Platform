@@ -12,9 +12,9 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Result> builder)
         {
-            builder.HasOne(x => x.Quiz)
-            .WithOne(x => x.Result).HasForeignKey<Result>(x => x.QuizId);
-            builder.HasOne(x => x.Student)
+            builder.HasOne<Quiz>()
+            .WithMany(x => x.Result).HasForeignKey(x => x.QuizId);
+            builder.HasOne<Student>()
             .WithMany(x => x.Results).HasForeignKey(x => x.StudentId);
         }
     }

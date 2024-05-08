@@ -7,6 +7,11 @@ namespace Domain.Entities
 {
     public class Instructor : Profile
     {
-       public IEnumerable<Course> Courses { get; set; } = new HashSet<Course>();
+       public ICollection<Course> Courses { get; set; } 
+
+       public Instructor()
+       {
+            Courses = new HashSet<Course>();
+       }
     }
 }
