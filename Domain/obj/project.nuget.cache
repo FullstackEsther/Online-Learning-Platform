@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "GMgxzspTL6BoYvr63H20HpKAoauMfjT/2gO21HsLNaf0u0biMKZqkw8mv65c8Lumzx8IOQYVxkH9cFxwforf9w==",
+  "dgSpecHash": "UbVC2C1qGGbY2F5Md3BMwkHe46H9Bu9UR1e69p73R5uCLxsorSwvP7Udl6vO1XWxBDKeNPTlKe6wK6kvo6rhpA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
@@ -36,6 +36,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\paystack.net\\1.1.1\\paystack.net.1.1.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.componentmodel.annotations\\4.5.0\\system.componentmodel.annotations.4.5.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",

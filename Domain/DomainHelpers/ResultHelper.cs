@@ -2,26 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Domain.DomainServices.Interfaces;
 using Domain.Entities;
 using Newtonsoft.Json;
 
 namespace Domain.DomainServices
 {
-    public class ResultManager : IResultManager
+    public class ResultHelper
     {
-        public Dictionary<Question, string> DeserializeDictionary(Result result)
+        public static Dictionary<Question, string> DeserializeDictionary(Result result)
         {
-            if (result.serializedResponse != null)
+            if (result.SerializedResponse != null)
             {
-                var deserialized = JsonConvert.DeserializeObject<Dictionary<Question, string>>(result.serializedResponse, new DictionaryConverter());
+                var deserialized = JsonConvert.DeserializeObject<Dictionary<Question, string>>(result.SerializedResponse, new DictionaryConverter());
                 return deserialized;
             }
             throw new ArgumentException("No content to Deserialize");
 
         }
 
-        public string SerializeDictionary(Dictionary<Question, string> answers)
+        public static string SerializeDictionary(Dictionary<Question, string> answers)
         {
             var json = JsonConvert.SerializeObject(answers, new DictionaryConverter());
             return json;

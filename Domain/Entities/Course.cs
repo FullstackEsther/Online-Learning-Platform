@@ -17,7 +17,7 @@ namespace Domain.Entities
             {
                var code =  Title[..3].ToUpper();
                var num = new Random().Next(100, 199);
-               var courseCode = $"{code}{num}";
+               var courseCode = $"{code}{num}";   
                _id = courseCode;
             }
         } 
@@ -35,8 +35,15 @@ namespace Domain.Entities
                     throw new ArgumentException("You cannot add a price of zero or lower than zero");
                 }
              }}
-        public double TotalTime {get;set;}
-        public int numberOfModules {get;set;}
+        private string _totaltime;   
+        public string TotalTime {
+            get => _totaltime;
+            set
+            {
+                _totaltime = CalculateTime();
+            }
+            }
+        public int NumberOfModules {get;set;}
         public required string InstructorName { get; set; }
         public required string DisplayPicture { get; set; }
         public  string WhatToLearn { get; set; } = default!;
@@ -46,7 +53,37 @@ namespace Domain.Entities
         public Guid CategoryId { get; set; } = default!;
         public Guid InstructorId { get; set; } = default!;
         public double TotalScore { get; set; } = default!;
-
+        public ICollection<Module> Modules { get; set; } = new HashSet<Module>();
+        public void CreateModule(Module module)
+        {
+            if (module == null)
+            {
+                throw new ArgumentException("Module cannot be null");
+            }
+            if (module.CourseId != this.Id)
+            {
+                throw new ArgumentException("Wrong courseId passed ");
+            }
+            Modules.Add(module);
+        }
+        public void UpdateModule(Module module)
+        {
+            if (module == null) { throw new ArgumentNullException("An empty module cannot be updated"); }
+            var existingModule = Modules.FirstOrDefault(m => m.Id == module.Id);
+            if (existingModule == null)
+            {
+                throw new ArgumentException("This module does not exist");
+            }
+            existingModule = module;
+        }
+        public void RemoveModule(Module module)
+        {
+            if (module == null)
+            {
+                throw new ArgumentException("Module cannot be null");
+            }
+            Modules.Remove(module);
+        }
         public void VerifyCourse()
         {
             IsVerified = true;
@@ -55,23 +92,24 @@ namespace Domain.Entities
         {
             IsVerified = false;
         }
-        // public ICollection<Module> Modules { get; set; } = new HashSet<Module>();
+
+        private string CalculateTime()
+        {
+            double hours=0,minutes=0,seconds=0;
+            foreach (var module in Modules)
+            {
+                var  time = module.TotalTime.Split(':');
+                hours =+ Double.Parse(time[0]);
+                minutes =+ Double.Parse(time[1]);
+                seconds =+ Double.Parse(time[2]);
+            }
+            var convertedTime = $"{hours}:{minutes}:{seconds}";
+            return convertedTime;
+        }
+        
+
         // public virtual Instructor Instructor { get; set; } = default!;
         // public virtual Category Category { get; set; } = default!;
-        // public IEnumerable<Enrollment> Enrollments { get; set; } = new HashSet<Enrollment>();
-
-        // private string CalculateTime()
-        // {
-        //     double hours=0,minutes=0,seconds=0;
-        //     foreach (var module in Modules)
-        //     {
-        //         var  time = module.TotalTime.Split(':');
-        //         hours =+ Double.Parse(time[0]);
-        //         minutes =+ Double.Parse(time[1]);
-        //         seconds =+ Double.Parse(time[2]);
-        //     }
-        //     var convertedTime = $"{hours}:{minutes}:{seconds}";
-        //     return convertedTime;
-        // }
+        // public virtual IEnumerable<Enrollment> Enrollments { get; set; } = new HashSet<Enrollment>();
     }
 }

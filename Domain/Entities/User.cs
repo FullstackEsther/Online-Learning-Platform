@@ -9,21 +9,25 @@ namespace Domain.Entities
     public class User : BaseClass
     {
         public required string Username { get; set; }
-        private string password;
-        public virtual ICollection<UserRole> UserRoles { get; set; } = default!;
+        private string _password;
+        public ICollection<UserRole> UserRoles { get; set; } = default!;
         public required string Password
         {
+             get
+            {
+                return _password;
+            }
             set
             {
                 if (IsValidPassword(value))
                 {
-                   password = value; 
+                    _password = value;
                 }
                 else
                 {
                     throw new ArgumentException("Password too weak");
                 }
-                
+
             }
         }
         private bool IsValidPassword(string password)

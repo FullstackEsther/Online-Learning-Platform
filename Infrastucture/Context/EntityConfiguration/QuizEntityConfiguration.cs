@@ -14,8 +14,6 @@ namespace Infrastucture.Context.EntityConfiguration
         {
             builder.HasOne<Module>()
             .WithOne().HasForeignKey<Quiz>(x => x.ModuleId);
-            builder.HasMany(x => x.Result)
-            .WithOne();
             builder.HasMany(x => x.Questions)
             .WithOne();
             builder.Property(x => x.Duration).IsRequired(true);

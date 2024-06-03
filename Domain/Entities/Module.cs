@@ -9,8 +9,9 @@ namespace Domain.Entities
     {
         public required string Title { get; set; }
         private string _totaltime;
-        public Guid CourseId { get;  private set; }= default!;
+        public string CourseId { get;  private set; }= default!;
         public ICollection<Lesson> Lessons { get; set; } 
+        public  ICollection<Result> Result { get; set; }= default!;
         public string TotalTime { get
         {
             return _totaltime;
@@ -21,8 +22,8 @@ namespace Domain.Entities
             _totaltime = TimeConverter(CalculateTotaltime);
         } }
         // public Course Course { get; set; }= default!;
-        // public Quiz Quiz { get; set; }= default!; 
-       public Module(string title, Guid courseId)
+        public Quiz Quiz { get; set; }= default!; 
+       public Module(string title, string courseId)
        {
             Title = title;
             CourseId = courseId;
@@ -31,6 +32,22 @@ namespace Domain.Entities
        private Module()
        {
 
+       }
+       public void SetQuiz(Quiz quiz)
+       {
+            if (quiz == null)
+            {
+                throw new ArgumentNullException("Quiz cannot be null");
+            }
+            if (quiz.ModuleId != this.Id)
+            {
+                throw new ArgumentException("Wrong ModuleId passed");
+            }
+            Quiz = quiz;
+       }
+       public void RemoveQuiz()
+       {
+           Quiz = null; 
        }
 
         private double CalculateTotaltime()

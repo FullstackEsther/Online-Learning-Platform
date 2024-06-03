@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.DomainServices;
-using Domain.DomainServices.Interfaces;
 using Newtonsoft.Json;
 
 namespace Domain.Entities
 {
     public class Result : BaseClass
     {
-        private string serializedResponse;
-        // public string SerializedResponse { get; private set; }
+        // public string SerializedResponse ;
+        public string SerializedResponse { get; private set; }
         public double Score { get; private set; }
         public Guid StudentId { get; set; } = default!;
-        public Guid QuizId { get; private set; } = default!;
+        public Guid ModuleId { get; private set; }= default!;
         public bool IsPassedTest{get; private set;} 
         internal Dictionary<Question, string> Responses;
-        // public Dictionary<Question, string> DeserializedResponse { get;}
-    // public Quiz Quiz { get; set; } = default!;
         // public Student Student { get; set; } = default!;
-        public Result(Guid quizId, Guid studentId, Dictionary<Question, string> responses)
+        private Result()
+        {
+            
+        }
+        public Result(Guid moduleId, Guid studentId, Dictionary<Question, string> responses)
         {
             StudentId = studentId;
-            QuizId = quizId;
+            ModuleId = moduleId;
             Responses = responses;
             SerializeResponse();
         }
@@ -47,8 +48,7 @@ namespace Domain.Entities
         {
             if (Responses.Count != 0)
             {
-                IResultManager resultManager = new ResultManager();
-               serializedResponse =  resultManager.SerializeDictionary(Responses);
+               SerializedResponse =  ResultHelper.SerializeDictionary(Responses);
             }
             else
             {

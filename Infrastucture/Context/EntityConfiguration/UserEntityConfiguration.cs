@@ -13,7 +13,7 @@ namespace Infrastucture.Context.EntityConfiguration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasMany(x=> x.UserRoles).WithOne();
+            // builder.HasMany(x=> x.UserRoles).WithOne();
             builder.Property(x => x.Username).IsRequired(true);
         }
 

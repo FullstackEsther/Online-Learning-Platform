@@ -13,7 +13,7 @@ namespace Infrastucture.Context.EntityConfiguration
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasMany<Course>()
-            .WithOne();
+            .WithOne().HasForeignKey("CategoryId");
             builder.Property(x => x.Name).IsRequired(true);
             builder.Property(x => x.Description).IsRequired(true);
             builder.Property(x => x.ParentCategory).IsRequired(false);

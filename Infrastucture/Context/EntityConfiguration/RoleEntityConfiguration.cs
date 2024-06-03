@@ -12,8 +12,8 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-           builder.HasMany<UserRole>()
-           .WithOne();
+        //    builder.HasMany<UserRole>()
+        //    .WithOne();
            builder.Property(x => x.RoleName).IsRequired(true);
            builder.Property(x => x.Description).IsRequired(true);
 

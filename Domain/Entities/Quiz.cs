@@ -21,7 +21,6 @@ namespace Domain.Entities
              } } 
         public ICollection<Question> Questions { get; set; }
         public Guid ModuleId { get; private set; }= default!;
-        public  ICollection<Result> Result { get; set; }= default!;
         public Quiz(double duration, Guid moduleId)
         {
             Duration = duration;
@@ -43,10 +42,10 @@ namespace Domain.Entities
                 throw new ArgumentException("Cannot add an empty Question");
             }   
         }
-        public void DeleteQuestion(Guid questionId)
+        public void DeleteQuestion(Question question)
         {
-            var question = Questions.FirstOrDefault(x => x.Id == questionId);
-            Questions.Remove(question!);
+            var obtainedQuestion = Questions.FirstOrDefault(x => x.Id == question.Id);
+            Questions.Remove(obtainedQuestion);
         }
 
         public void UpdateQuestion(Question updatedQuestion)
@@ -54,12 +53,11 @@ namespace Domain.Entities
             var existingQuestion = Questions.FirstOrDefault(x => x.Id == updatedQuestion.Id);
             if (existingQuestion != null)
             {
-                existingQuestion.AskedQuestion = updatedQuestion.AskedQuestion;
-                existingQuestion.CorrectAnswer = updatedQuestion.CorrectAnswer;
+                existingQuestion = updatedQuestion;
             }
             else
             {
-                throw new ArgumentException("Cannot update an empty Question");
+                throw new ArgumentException("Cannot update a non-existent Question");
             }
         }
     }
