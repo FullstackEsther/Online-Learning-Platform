@@ -15,10 +15,9 @@ namespace Infrastucture.Context.EntityConfiguration
         public void Configure(EntityTypeBuilder<Module> builder)
         {
             builder.HasMany(x => x.Lessons).WithOne();
-            builder.HasOne<Course>().WithMany().HasForeignKey(x => x.CourseId);
-            builder.HasOne<Quiz>().WithOne().HasForeignKey<Quiz>(x => x.ModuleId);
+            builder.HasOne<Course>().WithMany(x => x.Modules).HasForeignKey(x => x.CourseId);
+            builder.HasOne(x => x.Quiz).WithOne().HasForeignKey<Quiz>(x => x.ModuleId);
             builder.Property(x => x.Title).IsRequired(true);
-            builder.HasMany(x => x.Result).WithOne().HasForeignKey(x => x.ModuleId);
         }
     }
 }

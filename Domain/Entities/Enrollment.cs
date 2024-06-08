@@ -9,7 +9,7 @@ namespace Domain.Entities
     {
         public string Feedback{ get; set; } = default!;
         public Guid StudentId { get; set; } = default!;
-        public string CourseId { get; set; }= default!;
+        public Guid CourseId { get; set; }= default!;
         public Guid? PaymentId { get; set; } = default!;
         public Payment Payment {get;set; } = default!;
         // public Student Student { get; set; }= default!;

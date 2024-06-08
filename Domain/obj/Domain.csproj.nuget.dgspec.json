@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {}
+    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
+    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
+        "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\obj\\",
+        "outputPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -49,6 +49,10 @@
             "Paystack.Net": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.6.0, )"
             }
           },
           "imports": [

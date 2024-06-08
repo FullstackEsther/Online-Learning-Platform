@@ -1,17 +1,80 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\FinalProjectApi.csproj": {}
+    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\FinalProjectApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
+    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
-        "projectName": "Domain",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj",
+        "projectName": "Application",
+        "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\obj\\",
+        "outputPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
+                "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -49,6 +112,10 @@
             "Paystack.Net": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.6.0, )"
             }
           },
           "imports": [
@@ -71,14 +138,14 @@
         }
       }
     },
-    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\FinalProjectApi.csproj": {
+    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\FinalProjectApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\FinalProjectApi.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\FinalProjectApi.csproj",
         "projectName": "FinalProjectApi",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\FinalProjectApi.csproj",
+        "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\FinalProjectApi.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\obj\\",
+        "outputPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\FinalProjectApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -93,8 +160,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj"
+              "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj": {
+                "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj"
+              },
+              "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
+                "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj"
               }
             }
           }
@@ -109,6 +179,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.11, )"
@@ -120,6 +194,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.6.0, )"
             }
           },
           "imports": [
@@ -145,14 +223,14 @@
         }
       }
     },
-    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
+    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj",
         "projectName": "Infrastucture",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj",
+        "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\obj\\",
+        "outputPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -167,8 +245,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj"
+              "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
+                "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj"
               }
             }
           }

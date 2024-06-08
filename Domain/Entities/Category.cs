@@ -7,9 +7,9 @@ namespace Domain.Entities
 {
     public class Category : BaseClass
     {
-        public required string Name { get; set; }
+        public string Name { get; set; }
         private string _description;
-        public required string Description {
+        public  string Description {
              get => _description;
              set
              {
@@ -22,5 +22,14 @@ namespace Domain.Entities
              }
         public string? ParentCategory {get; set;}
         // public ICollection<string> Courses { get; set; }= new HashSet<string>();
+        public Category(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
+        private Category()
+        {
+            
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Domain.Entities
     public class Profile : BaseClass
     {
         private  string _email;
-        public required string Email { 
+        public  string Email { 
             get
             {
                 return _email;

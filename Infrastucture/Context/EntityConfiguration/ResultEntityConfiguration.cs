@@ -12,8 +12,8 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Result> builder)
         {
-            builder.HasOne<Module>()
-            .WithMany(x => x.Result).HasForeignKey(x => x.ModuleId);
+            builder.HasOne<Quiz>()
+            .WithMany(x => x.Result).HasForeignKey(x => x.QuizId);
             builder.HasOne<Student>()
             .WithMany(x => x.Results).HasForeignKey(x => x.StudentId);
         }

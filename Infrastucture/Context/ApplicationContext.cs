@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.DomainServices.Interface;
 using Domain.Entities;
 using Domain.Entities.Chat;
 using Infrastucture.Context.EntityConfiguration;
@@ -11,18 +12,43 @@ namespace Infrastucture.Context
 {
     public class ApplicationContext : DbContext
     {
+        private readonly ICurrentUser _currentUser;
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-
+            
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySQL("AppString",
-                    sqlOptions => sqlOptions.MigrationsAssembly("Infrastucture"));
-            }
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     if (!optionsBuilder.IsConfigured)
+        //     {
+        //         optionsBuilder.UseMySQL("AppString",
+        //             sqlOptions => sqlOptions.MigrationsAssembly("Infrastucture"));
+        //     }
+        // }
+        // public override int SaveChanges()
+        // {
+        //     EntityStateModification();
+        //     return base.SaveChanges();
+        // }
+        // public void EntityStateModification()
+        // {
+        //     var  anonymousUser = "Anonymous";
+        //     foreach (var entry in ChangeTracker.Entries<BaseClass>())
+        //     {
+        //         switch (entry.State)
+        //         {
+        //             case EntityState.Added:
+        //                 entry.Entity.CreatedOn = DateTime.UtcNow;
+        //                 entry.Entity.CreatedBy = _currentUser.GetLoggedInUserEmail() ?? anonymousUser;
+        //                 break;
+        //             case EntityState.Deleted:
+        //                 entry.Entity.DeletedBy =_currentUser.GetLoggedInUserEmail() ?? anonymousUser;
+        //                 entry.Entity.DeletedOn = DateTime.UtcNow;
+        //                 break;
+        //         }
+        //     }
+        // }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());

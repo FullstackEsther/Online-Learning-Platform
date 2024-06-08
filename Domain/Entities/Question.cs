@@ -8,7 +8,16 @@ namespace Domain.Entities
     public class Question : BaseClass
     {
         public Guid QuizId { get; set; }= default!;
-        public required string AskedQuestion { get; set; }
-        public required string CorrectAnswer { get; set; }
+        public  string AskedQuestion { get; set; }
+        public  string CorrectAnswer { get; set; }
+        internal Question(string askedQuestion , string correctAnswer)
+        {
+            AskedQuestion = askedQuestion;
+            CorrectAnswer = correctAnswer;
+        }
+        private Question()
+        {
+
+        }
     }
 }

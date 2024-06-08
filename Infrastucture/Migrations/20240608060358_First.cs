@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Infrastucture.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class First : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,10 +24,10 @@ namespace Infrastucture.Migrations
                     Name = table.Column<string>(type: "longtext", nullable: false),
                     Description = table.Column<string>(type: "longtext", nullable: false),
                     ParentCategory = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,10 +44,10 @@ namespace Infrastucture.Migrations
                     IsGroupChat = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     SenderUserName = table.Column<string>(type: "longtext", nullable: false),
                     ReceiverUserName = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,10 +60,10 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Email = table.Column<string>(type: "longtext", nullable: false),
                     Biography = table.Column<string>(type: "longtext", nullable: true),
                     ProfilePicture = table.Column<string>(type: "longtext", nullable: true),
@@ -80,11 +82,11 @@ namespace Infrastucture.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     RoleName = table.Column<string>(type: "longtext", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    Description = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -97,10 +99,10 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Email = table.Column<string>(type: "longtext", nullable: false),
                     Biography = table.Column<string>(type: "longtext", nullable: true),
                     ProfilePicture = table.Column<string>(type: "longtext", nullable: true),
@@ -119,10 +121,11 @@ namespace Infrastucture.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Username = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    Password = table.Column<string>(type: "longtext", nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -156,11 +159,11 @@ namespace Infrastucture.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Title = table.Column<string>(type: "longtext", nullable: false),
+                    CourseCode = table.Column<string>(type: "longtext", nullable: false),
                     Price = table.Column<double>(type: "double", nullable: true),
                     TotalTime = table.Column<double>(type: "double", nullable: false),
-                    numberOfModules = table.Column<int>(type: "int", nullable: false),
                     InstructorName = table.Column<string>(type: "longtext", nullable: false),
                     DisplayPicture = table.Column<string>(type: "longtext", nullable: false),
                     WhatToLearn = table.Column<string>(type: "longtext", nullable: false),
@@ -170,11 +173,10 @@ namespace Infrastucture.Migrations
                     CategoryId = table.Column<Guid>(type: "char(36)", nullable: false),
                     InstructorId = table.Column<Guid>(type: "char(36)", nullable: false),
                     TotalScore = table.Column<double>(type: "double", nullable: false),
-                    CategoryId1 = table.Column<Guid>(type: "char(36)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -185,11 +187,6 @@ namespace Infrastucture.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Courses_Categories_CategoryId1",
-                        column: x => x.CategoryId1,
-                        principalTable: "Categories",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Courses_Instructors_InstructorId",
                         column: x => x.InstructorId,
@@ -206,10 +203,10 @@ namespace Infrastucture.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false),
                     RoleId = table.Column<Guid>(type: "char(36)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -236,13 +233,12 @@ namespace Infrastucture.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Feedback = table.Column<string>(type: "longtext", nullable: false),
                     StudentId = table.Column<Guid>(type: "char(36)", nullable: false),
-                    CourseId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    PaymenId = table.Column<Guid>(type: "char(36)", nullable: true),
-                    CourseId1 = table.Column<string>(type: "varchar(255)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CourseId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    PaymentId = table.Column<Guid>(type: "char(36)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,11 +249,6 @@ namespace Infrastucture.Migrations
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Enrollments_Courses_CourseId1",
-                        column: x => x.CourseId1,
-                        principalTable: "Courses",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Enrollments_Students_StudentId",
                         column: x => x.StudentId,
@@ -273,13 +264,12 @@ namespace Infrastucture.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Title = table.Column<string>(type: "longtext", nullable: false),
-                    CourseId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    TotalTime = table.Column<string>(type: "longtext", nullable: false),
-                    CourseId1 = table.Column<string>(type: "varchar(255)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CourseId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    TotalTime = table.Column<double>(type: "double", nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -290,11 +280,6 @@ namespace Infrastucture.Migrations
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Modules_Courses_CourseId1",
-                        column: x => x.CourseId1,
-                        principalTable: "Courses",
-                        principalColumn: "Id");
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -307,10 +292,10 @@ namespace Infrastucture.Migrations
                     Email = table.Column<string>(type: "longtext", nullable: false),
                     TrxRef = table.Column<string>(type: "longtext", nullable: false),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -333,10 +318,10 @@ namespace Infrastucture.Migrations
                     File = table.Column<string>(type: "longtext", nullable: false),
                     ModuleId = table.Column<Guid>(type: "char(36)", nullable: false),
                     TotalMinutes = table.Column<double>(type: "double", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -357,11 +342,10 @@ namespace Infrastucture.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Duration = table.Column<double>(type: "double", nullable: false),
                     ModuleId = table.Column<Guid>(type: "char(36)", nullable: false),
-                    ModuleId1 = table.Column<Guid>(type: "char(36)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -372,11 +356,6 @@ namespace Infrastucture.Migrations
                         principalTable: "Modules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Quizzes_Modules_ModuleId1",
-                        column: x => x.ModuleId1,
-                        principalTable: "Modules",
-                        principalColumn: "Id");
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -388,10 +367,10 @@ namespace Infrastucture.Migrations
                     QuizId = table.Column<Guid>(type: "char(36)", nullable: false),
                     AskedQuestion = table.Column<string>(type: "longtext", nullable: false),
                     CorrectAnswer = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -410,14 +389,15 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    SerializedResponse = table.Column<string>(type: "longtext", nullable: false),
                     Score = table.Column<double>(type: "double", nullable: false),
                     StudentId = table.Column<Guid>(type: "char(36)", nullable: false),
                     QuizId = table.Column<Guid>(type: "char(36)", nullable: false),
                     IsPassedTest = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedBy = table.Column<string>(type: "longtext", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -437,15 +417,20 @@ namespace Infrastucture.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "CreatedBy", "CreatedOn", "Description", "ModifiedBy", "ModifiedOn", "RoleName" },
+                values: new object[,]
+                {
+                    { new Guid("6c444f63-4b61-4570-b194-478ec8e5248c"), "Admin", new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9895), "Creates and owns a course ", null, null, "Instructor" },
+                    { new Guid("9037d127-13f2-4419-803f-08b6f7c486ac"), "Admin", new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9854), "Takes a course for better Understanding", null, null, "Student" },
+                    { new Guid("9158a705-d59b-4e36-af27-a3f887e82392"), "Admin", new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9901), "Takes a course for better Understanding", null, null, "Admin" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Courses_CategoryId",
                 table: "Courses",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_CategoryId1",
-                table: "Courses",
-                column: "CategoryId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Courses_InstructorId",
@@ -456,11 +441,6 @@ namespace Infrastucture.Migrations
                 name: "IX_Enrollments_CourseId",
                 table: "Enrollments",
                 column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_CourseId1",
-                table: "Enrollments",
-                column: "CourseId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_StudentId",
@@ -483,11 +463,6 @@ namespace Infrastucture.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Modules_CourseId1",
-                table: "Modules",
-                column: "CourseId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuizId",
                 table: "Questions",
                 column: "QuizId");
@@ -496,12 +471,6 @@ namespace Infrastucture.Migrations
                 name: "IX_Quizzes_ModuleId",
                 table: "Quizzes",
                 column: "ModuleId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Quizzes_ModuleId1",
-                table: "Quizzes",
-                column: "ModuleId1",
                 unique: true);
 
             migrationBuilder.CreateIndex(

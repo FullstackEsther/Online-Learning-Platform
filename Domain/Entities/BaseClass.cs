@@ -8,28 +8,20 @@ namespace Domain.Entities
     public abstract class BaseClass
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public string CreatedBy {get;private set;}= default!;
-        public DateTime CreatedOn {get;private set;} 
-        public string? DeletedBy {get; private set;}
-        public DateTime? DeletedOn {get; private set;}
+        public string? CreatedBy {get; set;}= default!;
+        public DateTime? CreatedOn {get;set;} 
+        public string? ModifiedBy {get;  set;}
+        public DateTime? ModifiedOn {get; set;}
 
-        public void CreateDetails(string userEmail)
+        public void CreateDetails(string userEmail, DateTime dateCreated)
         {
-            if (userEmail == null)
-            {
-                throw new ArgumentException("Email cannot be null");
-            }
             CreatedBy = userEmail;
-            CreatedOn = DateTime.UtcNow;
+            CreatedOn = dateCreated;
         }
-        public void DeleteDetails(string userEmail)
+        public void DeleteDetails(string userEmail, DateTime dataModified)
         {
-            if (userEmail == null)
-            {
-                throw new ArgumentException("Email cannot be null");
-            }
-            DeletedBy = userEmail;
-            DeletedOn = DateTime.UtcNow;
+            ModifiedBy = userEmail;
+            ModifiedOn = dataModified;
         }
 
     }

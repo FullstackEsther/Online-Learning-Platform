@@ -12,8 +12,8 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
-             builder.HasMany<Module>()
-             .WithOne().HasForeignKey("CourseId");
+             builder.HasMany(x => x.Modules)
+             .WithOne();
              builder.HasMany<Enrollment>()
              .WithOne().HasForeignKey("CourseId");
              builder.HasOne<Instructor>().WithMany("Courses").HasForeignKey(x => x.InstructorId);

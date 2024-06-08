@@ -26,21 +26,20 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -61,20 +60,19 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<bool>("IsGroupChat")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("ReceiverUserName")
                         .HasColumnType("longtext");
@@ -120,26 +118,24 @@ namespace Infrastucture.Migrations
 
             modelBuilder.Entity("Domain.Entities.Course", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("char(36)");
+
+                    b.Property<string>("CourseCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("CourseStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("DisplayPicture")
@@ -159,8 +155,11 @@ namespace Infrastucture.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfModules")
-                        .HasColumnType("int");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<double?>("Price")
                         .HasColumnType("double");
@@ -172,9 +171,8 @@ namespace Infrastucture.Migrations
                     b.Property<double>("TotalScore")
                         .HasColumnType("double");
 
-                    b.Property<string>("TotalTime")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<double>("TotalTime")
+                        .HasColumnType("double");
 
                     b.Property<string>("WhatToLearn")
                         .IsRequired()
@@ -195,26 +193,24 @@ namespace Infrastucture.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("CourseId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Feedback")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid?>("PaymentId")
                         .HasColumnType("char(36)");
@@ -241,16 +237,9 @@ namespace Infrastucture.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
@@ -267,6 +256,12 @@ namespace Infrastucture.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("ProfilePicture")
                         .HasColumnType("longtext");
 
@@ -282,21 +277,20 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("File")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("ModuleId")
                         .HasColumnType("char(36)");
@@ -321,39 +315,31 @@ namespace Infrastucture.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("CourseId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("CourseId1")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("DeletedBy")
+                    b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("TotalTime")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<double>("TotalTime")
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("CourseId1");
 
                     b.ToTable("Modules");
                 });
@@ -367,21 +353,20 @@ namespace Infrastucture.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
@@ -410,16 +395,15 @@ namespace Infrastucture.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("DeletedBy")
+                    b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("QuizId")
@@ -439,33 +423,26 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("Duration")
                         .HasColumnType("double");
 
-                    b.Property<Guid>("ModuleId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
 
-                    b.Property<Guid?>("ModuleId1")
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("ModuleId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ModuleId")
-                        .IsUnique();
-
-                    b.HasIndex("ModuleId1")
                         .IsUnique();
 
                     b.ToTable("Quizzes");
@@ -478,22 +455,21 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<bool>("IsPassedTest")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<Guid>("ModuleId")
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("QuizId")
                         .HasColumnType("char(36)");
 
                     b.Property<double>("Score")
@@ -508,7 +484,7 @@ namespace Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModuleId");
+                    b.HasIndex("QuizId");
 
                     b.HasIndex("StudentId");
 
@@ -522,21 +498,19 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
@@ -545,6 +519,32 @@ namespace Infrastucture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9037d127-13f2-4419-803f-08b6f7c486ac"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9854),
+                            Description = "Takes a course for better Understanding",
+                            RoleName = "Student"
+                        },
+                        new
+                        {
+                            Id = new Guid("6c444f63-4b61-4570-b194-478ec8e5248c"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9895),
+                            Description = "Creates and owns a course ",
+                            RoleName = "Instructor"
+                        },
+                        new
+                        {
+                            Id = new Guid("9158a705-d59b-4e36-af27-a3f887e82392"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9901),
+                            Description = "Takes a course for better Understanding",
+                            RoleName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Student", b =>
@@ -557,16 +557,9 @@ namespace Infrastucture.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
@@ -583,6 +576,12 @@ namespace Infrastucture.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("ProfilePicture")
                         .HasColumnType("longtext");
 
@@ -598,16 +597,15 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("DeletedBy")
+                    b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Password")
@@ -630,16 +628,15 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("DeletedBy")
+                    b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("DeletedOn")
+                    b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("RoleId")
@@ -708,14 +705,10 @@ namespace Infrastucture.Migrations
             modelBuilder.Entity("Domain.Entities.Module", b =>
                 {
                     b.HasOne("Domain.Entities.Course", null)
-                        .WithMany()
+                        .WithMany("Modules")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Entities.Course", null)
-                        .WithMany("Modules")
-                        .HasForeignKey("CourseId1");
                 });
 
             modelBuilder.Entity("Domain.Entities.Payment", b =>
@@ -741,21 +734,17 @@ namespace Infrastucture.Migrations
             modelBuilder.Entity("Domain.Entities.Quiz", b =>
                 {
                     b.HasOne("Domain.Entities.Module", null)
-                        .WithOne()
+                        .WithOne("Quiz")
                         .HasForeignKey("Domain.Entities.Quiz", "ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Entities.Module", null)
-                        .WithOne("Quiz")
-                        .HasForeignKey("Domain.Entities.Quiz", "ModuleId1");
                 });
 
             modelBuilder.Entity("Domain.Entities.Result", b =>
                 {
-                    b.HasOne("Domain.Entities.Module", null)
+                    b.HasOne("Domain.Entities.Quiz", null)
                         .WithMany("Result")
-                        .HasForeignKey("ModuleId")
+                        .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -768,17 +757,21 @@ namespace Infrastucture.Migrations
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
                 {
-                    b.HasOne("Domain.Entities.Role", null)
+                    b.HasOne("Domain.Entities.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", null)
+                    b.HasOne("Domain.Entities.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Chat.ChatRoom", b =>
@@ -808,13 +801,13 @@ namespace Infrastucture.Migrations
 
                     b.Navigation("Quiz")
                         .IsRequired();
-
-                    b.Navigation("Result");
                 });
 
             modelBuilder.Entity("Domain.Entities.Quiz", b =>
                 {
                     b.Navigation("Questions");
+
+                    b.Navigation("Result");
                 });
 
             modelBuilder.Entity("Domain.Entities.Role", b =>

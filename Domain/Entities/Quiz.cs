@@ -20,6 +20,7 @@ namespace Domain.Entities
                     _duration = value;
              } } 
         public ICollection<Question> Questions { get; set; }
+        public  ICollection<Result> Result { get; set; }= default!;
         public Guid ModuleId { get; private set; }= default!;
         public Quiz(double duration, Guid moduleId)
         {
@@ -48,17 +49,17 @@ namespace Domain.Entities
             Questions.Remove(obtainedQuestion);
         }
 
-        public void UpdateQuestion(Question updatedQuestion)
-        {
-            var existingQuestion = Questions.FirstOrDefault(x => x.Id == updatedQuestion.Id);
-            if (existingQuestion != null)
-            {
-                existingQuestion = updatedQuestion;
-            }
-            else
-            {
-                throw new ArgumentException("Cannot update a non-existent Question");
-            }
-        }
+        // public void UpdateQuestion(Question updatedQuestion)
+        // {
+        //     var existingQuestion = Questions.FirstOrDefault(x => x.Id == updatedQuestion.Id);
+        //     if (existingQuestion != null)
+        //     {
+        //         existingQuestion = updatedQuestion;
+        //     }
+        //     else
+        //     {
+        //         throw new ArgumentException("Cannot update a non-existent Question");
+        //     }
+        // }
     }
 }

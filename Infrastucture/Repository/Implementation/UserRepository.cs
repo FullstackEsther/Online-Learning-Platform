@@ -22,6 +22,11 @@ namespace Infrastucture.Repository.Implementation
             _applicationContext.Users.Remove(user);
         }
 
+        public bool Exist(Expression<Func<User, bool>> predicate)
+        {
+            return _applicationContext.Users.Any(predicate);
+        }
+
         public async Task<User> Get(Expression<Func<User, bool>> predicate)
         {
              return await _applicationContext.Users.FirstOrDefaultAsync(predicate);

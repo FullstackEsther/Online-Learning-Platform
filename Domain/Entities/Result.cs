@@ -13,7 +13,7 @@ namespace Domain.Entities
         public string SerializedResponse { get; private set; }
         public double Score { get; private set; }
         public Guid StudentId { get; set; } = default!;
-        public Guid ModuleId { get; private set; }= default!;
+        public Guid QuizId { get; private set; }= default!;
         public bool IsPassedTest{get; private set;} 
         internal Dictionary<Question, string> Responses;
         // public Student Student { get; set; } = default!;
@@ -21,10 +21,10 @@ namespace Domain.Entities
         {
             
         }
-        public Result(Guid moduleId, Guid studentId, Dictionary<Question, string> responses)
+        internal Result(Guid quizId, Guid studentId, Dictionary<Question, string> responses)
         {
             StudentId = studentId;
-            ModuleId = moduleId;
+            QuizId = quizId;
             Responses = responses;
             SerializeResponse();
         }

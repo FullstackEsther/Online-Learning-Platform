@@ -7,7 +7,7 @@ namespace Domain.Entities
 {
     public class Role : BaseClass
     {
-        public required string  RoleName { get; set; }
+        public  string  RoleName { get; set; }
         private string? _description;
         public string?  Description { 
             get{
@@ -22,5 +22,13 @@ namespace Domain.Entities
                 _description = value;
             } }
         public ICollection<UserRole> UserRoles { get; set; } = default!;
+        public Role(string roleName)
+        {
+            RoleName = roleName;
+        }
+        private Role()
+        {
+            
+        }
     }
 }

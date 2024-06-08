@@ -9,6 +9,7 @@ namespace Domain.RepositoryInterfaces
 {
     public interface IUserRepository : IBaseRepository<User>
     {
+        bool Exist(Expression<Func<User, bool>> predicate);
         Task<User> Get(Expression<Func<User, bool>> predicate); 
         void Delete(User user); 
     }

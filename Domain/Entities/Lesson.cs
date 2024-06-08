@@ -7,7 +7,7 @@ namespace Domain.Entities
 {
     public class Lesson : BaseClass
     {
-        public required string Topic { get; set; }
+        public  string Topic { get; set; }
         public string File { get; set; }= default!;
         public Guid ModuleId { get; private set; } = default!;
         private double _totalMinutes;
@@ -24,7 +24,7 @@ namespace Domain.Entities
                 _totalMinutes = value;
             } }
         // public Module Module { get; set; }= default!;
-        public Lesson(string topic,string file,Guid moduleId,double totalMinutes)
+        internal Lesson(string topic,string file,Guid moduleId,double totalMinutes)
         {
             Topic = topic;
             File = file;

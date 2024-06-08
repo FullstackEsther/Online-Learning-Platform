@@ -9,6 +9,7 @@ namespace Domain.RepositoryInterfaces
 {
     public interface IRoleRepository : IBaseRepository<Role>
     {
+        bool Exist(Expression<Func<Role, bool>> predicate);
         Task<Role> Get(Expression<Func<Role, bool>> predicate);
         Task<IEnumerable<Role>> GetAll();
         void Delete(Role  role);

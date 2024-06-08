@@ -57,7 +57,7 @@ namespace Domain.DomainServices
                     reader.Read();
                     var value = (string)reader.Value;
 
-                    var question = new Question { AskedQuestion = askedQuestion, CorrectAnswer = correctAnswer, QuizId = quizId };
+                    var question = new Question(askedQuestion, correctAnswer) {  QuizId = quizId };
                     dictionary.Add(question, value);
                 }
 

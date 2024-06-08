@@ -7,26 +7,25 @@ namespace Domain.Entities
 {
     public class Module : BaseClass
     {
-        public required string Title { get; set; }
-        private string _totaltime;
-        public string CourseId { get;  private set; }= default!;
+        public  string Title { get; set; }
+        private double _totaltime;
+        public Guid CourseId { get;  private set; }= default!;
         public ICollection<Lesson> Lessons { get; set; } 
-        public  ICollection<Result> Result { get; set; }= default!;
-        public string TotalTime { get
+        public double TotalTime { get
         {
             return _totaltime;
         }
 
         set
         {
-            _totaltime = TimeConverter(CalculateTotaltime);
+            _totaltime = CalculateTotaltime();
         } }
         // public Course Course { get; set; }= default!;
         public Quiz Quiz { get; set; }= default!; 
-       public Module(string title, string courseId)
+       internal Module(string title, double totaltime)
        {
             Title = title;
-            CourseId = courseId;
+            TotalTime = totaltime;
             Lessons = new HashSet<Lesson>();
        }
        private Module()
@@ -59,21 +58,7 @@ namespace Domain.Entities
             }
             return totaltime;
         }
-        private string TimeConverter(Func<double> method )
-        {
-            double timeCalculated = method();
-            string ConvertedTime = $"{CalculateHoursMinutesAndSeconds( timeCalculated ).Item1}:{CalculateHoursMinutesAndSeconds( timeCalculated ).Item2}:{CalculateHoursMinutesAndSeconds( timeCalculated ).Item3}" ;
-            return ConvertedTime;
-        }
-         private (double, double,double) CalculateHoursMinutesAndSeconds(double time)
-        {
-            var totalSeconds = time * 60;
-            var hours = totalSeconds/3600;
-            var remainingSeconds = totalSeconds%3600;
-            var minutes = remainingSeconds/60;
-            var seconds = minutes% 60;
-            return(hours, minutes, seconds);
-        }
+         
         public void AddLessons(Lesson lesson)
         {
             if (lesson != null)

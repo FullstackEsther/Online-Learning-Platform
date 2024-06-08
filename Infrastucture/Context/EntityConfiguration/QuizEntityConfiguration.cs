@@ -13,10 +13,11 @@ namespace Infrastucture.Context.EntityConfiguration
         public void Configure(EntityTypeBuilder<Quiz> builder)
         {
             builder.HasOne<Module>()
-            .WithOne().HasForeignKey<Quiz>(x => x.ModuleId);
+            .WithOne(x => x.Quiz).HasForeignKey<Quiz>(x => x.ModuleId);
             builder.HasMany(x => x.Questions)
             .WithOne();
             builder.Property(x => x.Duration).IsRequired(true);
+            builder.HasMany(x => x.Result).WithOne().HasForeignKey(x => x.QuizId);
         }
     }
 }

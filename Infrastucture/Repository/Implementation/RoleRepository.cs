@@ -22,6 +22,11 @@ namespace Infrastucture.Repository.Implementation
             _applicationContext.Roles.Remove(role);
         }
 
+        public bool Exist(Expression<Func<Role, bool>> predicate)
+        {
+           return _applicationContext.Roles.Any(predicate);
+        }
+
         public async Task<Role> Get(Expression<Func<Role, bool>> predicate)
         {
            return await _applicationContext.Roles.FirstOrDefaultAsync(predicate);

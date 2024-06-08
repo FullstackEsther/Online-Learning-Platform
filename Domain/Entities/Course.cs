@@ -9,16 +9,20 @@ namespace Domain.Entities
 {
     public class Course : BaseClass
     {
-        public required string Title { get; set; }
-        private string _id;
-        public new required string Id { 
-            get => _id;
+        public  string Title { get; set; }
+        private string _courseCode;
+        public new  string CourseCode { 
+            get => _courseCode;
             set
             {
-               var code =  Title[..3].ToUpper();
-               var num = new Random().Next(100, 199);
-               var courseCode = $"{code}{num}";   
-               _id = courseCode;
+                if (value != null && value.Length <8)
+                {
+                    _courseCode = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Course Code must be less than 8 characters");
+                }
             }
         } 
         private double _price;
@@ -35,17 +39,16 @@ namespace Domain.Entities
                     throw new ArgumentException("You cannot add a price of zero or lower than zero");
                 }
              }}
-        private string _totaltime;   
-        public string TotalTime {
+        private double _totaltime;   
+        public double TotalTime {
             get => _totaltime;
             set
             {
                 _totaltime = CalculateTime();
             }
-            }
-        public int NumberOfModules {get;set;}
-        public required string InstructorName { get; set; }
-        public required string DisplayPicture { get; set; }
+        }
+        public  string InstructorName { get; set; }
+        public  string DisplayPicture { get; set; }
         public  string WhatToLearn { get; set; } = default!;
         public bool IsVerified {get; private set;} 
         public Level Level { get; set; }
@@ -53,29 +56,26 @@ namespace Domain.Entities
         public Guid CategoryId { get; set; } = default!;
         public Guid InstructorId { get; set; } = default!;
         public double TotalScore { get; set; } = default!;
-        public ICollection<Module> Modules { get; set; } = new HashSet<Module>();
+        public  ICollection<Module> Modules { get; set; } = new HashSet<Module>();
         public void CreateModule(Module module)
         {
             if (module == null)
             {
                 throw new ArgumentException("Module cannot be null");
             }
-            if (module.CourseId != this.Id)
-            {
-                throw new ArgumentException("Wrong courseId passed ");
-            }
+            
             Modules.Add(module);
         }
-        public void UpdateModule(Module module)
-        {
-            if (module == null) { throw new ArgumentNullException("An empty module cannot be updated"); }
-            var existingModule = Modules.FirstOrDefault(m => m.Id == module.Id);
-            if (existingModule == null)
-            {
-                throw new ArgumentException("This module does not exist");
-            }
-            existingModule = module;
-        }
+        // public void UpdateModule(Module module)
+        // {
+        //     if (module == null) { throw new ArgumentNullException("An empty module cannot be updated"); }
+        //     var existingModule = Modules.FirstOrDefault(m => m.Id == module.Id);
+        //     if (existingModule == null)
+        //     {
+        //         throw new ArgumentException("This module does not exist");
+        //     }
+        //     existingModule = module;
+        // }
         public void RemoveModule(Module module)
         {
             if (module == null)
@@ -93,20 +93,29 @@ namespace Domain.Entities
             IsVerified = false;
         }
 
-        private string CalculateTime()
+        private double CalculateTime()
         {
-            double hours=0,minutes=0,seconds=0;
+            double calculatedTime =0;
             foreach (var module in Modules)
             {
-                var  time = module.TotalTime.Split(':');
-                hours =+ Double.Parse(time[0]);
-                minutes =+ Double.Parse(time[1]);
-                seconds =+ Double.Parse(time[2]);
+                calculatedTime = module.TotalTime;
             }
-            var convertedTime = $"{hours}:{minutes}:{seconds}";
-            return convertedTime;
+            return calculatedTime;
         }
         
+        public Course(string title, string courseCode,string displayPicture, string whatToLearn,Level level, CourseStatus courseStatus)
+        {
+            Title = title;
+            CourseCode = courseCode;
+            DisplayPicture = displayPicture;
+            WhatToLearn = whatToLearn;
+            Level = level;
+            CourseStatus = courseStatus;
+        }
+        private Course()
+        {
+
+        }
 
         // public virtual Instructor Instructor { get; set; } = default!;
         // public virtual Category Category { get; set; } = default!;

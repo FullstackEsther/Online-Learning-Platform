@@ -45,7 +45,6 @@ namespace Domain.DomainServices.Implementation
                         TrxRef = request.Reference,
                         Status = false
                     };
-                    payment.CreateDetails(userEmail);
                     return await _paymentRepository.Create(payment);
                 }
                 else
