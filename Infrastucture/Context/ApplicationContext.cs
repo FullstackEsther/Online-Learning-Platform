@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Domain.DomainServices.Interface;
 using Domain.Entities;
 using Domain.Entities.Chat;
 using Infrastucture.Context.EntityConfiguration;
@@ -12,20 +11,20 @@ namespace Infrastucture.Context
 {
     public class ApplicationContext : DbContext
     {
-        private readonly ICurrentUser _currentUser;
+
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             
         }
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     if (!optionsBuilder.IsConfigured)
-        //     {
-        //         optionsBuilder.UseMySQL("AppString",
-        //             sqlOptions => sqlOptions.MigrationsAssembly("Infrastucture"));
-        //     }
-        // }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseMySQL("AppString",
+                    sqlOptions => sqlOptions.MigrationsAssembly("Infrastucture"));
+            }
+        }
         // public override int SaveChanges()
         // {
         //     EntityStateModification();

@@ -8,7 +8,7 @@ namespace Domain.Entities
     public abstract class BaseClass
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public string? CreatedBy {get; set;}= default!;
+        public string? CreatedBy {get; set;}
         public DateTime? CreatedOn {get;set;} 
         public string? ModifiedBy {get;  set;}
         public DateTime? ModifiedOn {get; set;}

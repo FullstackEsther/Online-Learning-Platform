@@ -27,9 +27,18 @@ namespace Infrastucture.Repository.Implementation
             return _applicationContext.Users.Any(predicate);
         }
 
-        public async Task<User> Get(Expression<Func<User, bool>> predicate)
+        public async Task<User?> Get(Expression<Func<User, bool>> predicate)
         {
-             return await _applicationContext.Users.FirstOrDefaultAsync(predicate);
+            return await _applicationContext.Users
+            .Include(x => x.UserRoles).ThenInclude(x => x.Role)
+            .FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            return await _applicationContext.Users
+            .Include(x => x.UserRoles).ThenInclude(x => x.Role)
+            .ToListAsync();
         }
     }
 }

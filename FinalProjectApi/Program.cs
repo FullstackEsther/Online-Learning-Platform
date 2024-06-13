@@ -13,6 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Application.Services;
 using Domain.DomainServices.Interface;
+using System.Reflection;
+using Application.CQRS.User.Command;
+using Application.Exception;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,8 +39,8 @@ builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<ResultHelper>();
 builder.Services.AddScoped<PaymentManager>();
 builder.Services.AddScoped<ChatHub>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddSingleton<IAuthService, AuthService>();
 builder.Services.AddTransient<ICurrentUser, CurrentUser>();
 builder.Services.AddAuthentication(x =>
@@ -60,6 +63,7 @@ builder.Services.AddAuthentication(x =>
                   };
 
               });
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegisterUserCommand).Assembly));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -72,9 +76,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTO
 {
-    public class RoleDto
+    public record RoleDto
     {
         public string RoleName { get; set; }
         public Guid RoleId { get; set; }

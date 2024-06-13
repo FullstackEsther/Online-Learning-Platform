@@ -523,25 +523,25 @@ namespace Infrastucture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9037d127-13f2-4419-803f-08b6f7c486ac"),
+                            Id = new Guid("ebfaf7a3-94a7-47df-a282-b832e3a800f4"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9854),
+                            CreatedOn = new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4195),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Student"
                         },
                         new
                         {
-                            Id = new Guid("6c444f63-4b61-4570-b194-478ec8e5248c"),
+                            Id = new Guid("e716db23-770f-4cc5-a5e6-a0ed3a9df63a"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9895),
+                            CreatedOn = new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4396),
                             Description = "Creates and owns a course ",
                             RoleName = "Instructor"
                         },
                         new
                         {
-                            Id = new Guid("9158a705-d59b-4e36-af27-a3f887e82392"),
+                            Id = new Guid("eb2a9156-40b6-4f47-9eb2-9f6cdde06e6f"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 6, 8, 7, 3, 57, 919, DateTimeKind.Local).AddTicks(9901),
+                            CreatedOn = new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4414),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Admin"
                         });
@@ -611,6 +611,9 @@ namespace Infrastucture.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("ResetPasswordCode")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()

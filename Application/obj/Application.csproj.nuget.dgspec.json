@@ -1,33 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj": {}
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj": {
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj",
+        "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
-                "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj"
+              "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
+                "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj"
               }
             }
           }
@@ -36,12 +39,25 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.3.0, )"
+            },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[7.6.0, )"
@@ -58,31 +74,48 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -95,6 +128,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -129,39 +167,56 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj",
         "projectName": "Infrastucture",
-        "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj",
+        "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\Infrastucture.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Infrastucture\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
-                "projectPath": "c:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj"
+              "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\MyFinalProject\\Domain\\Domain.csproj"
               }
             }
           }
@@ -170,6 +225,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -200,12 +260,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.19, 7.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

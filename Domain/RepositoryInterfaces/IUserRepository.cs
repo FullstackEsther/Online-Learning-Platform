@@ -11,6 +11,7 @@ namespace Domain.RepositoryInterfaces
     {
         bool Exist(Expression<Func<User, bool>> predicate);
         Task<User> Get(Expression<Func<User, bool>> predicate); 
+        Task<IEnumerable<User>> GetAll(); 
         void Delete(User user); 
     }
 }

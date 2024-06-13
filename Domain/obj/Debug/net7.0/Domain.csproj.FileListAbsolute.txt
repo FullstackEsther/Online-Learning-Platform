@@ -6,6 +6,7 @@ C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Domain\obj\Debug\net7.0\Domain.Ge
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Domain\obj\Debug\net7.0\Domain.AssemblyInfoInputs.cache
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Domain\obj\Debug\net7.0\Domain.AssemblyInfo.cs
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Domain\obj\Debug\net7.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Domain\obj\Debug\net7.0\Domain.sourcelink.json
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Domain\obj\Debug\net7.0\Domain.dll
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Domain\obj\Debug\net7.0\refint\Domain.dll
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Domain\obj\Debug\net7.0\Domain.pdb

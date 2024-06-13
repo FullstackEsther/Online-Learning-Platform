@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.CQRS.User.Command;
+using Application.CQRS.User.Query;
+using Application.CQRS.User.Query.Get;
 using Application.DTO;
 using Application.Services.Interfaces;
+using Domain.DomainServices.Interface;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProjectApi.Controllers
@@ -14,49 +19,60 @@ namespace FinalProjectApi.Controllers
     public class UserController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly IUserService _userService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICurrentUser _currentUser;
+        private readonly ISender _mediator;
 
-        public UserController(IAuthService authService, IUserService userService, IHttpContextAccessor httpContextAccessor)
+        public UserController(IAuthService authService,  ICurrentUser currentUser, ISender mediator)
         {
             _authService = authService;
-            _userService = userService;
-            _httpContextAccessor = httpContextAccessor;
+            _currentUser = currentUser;
+            _mediator = mediator;
         }
+        
+        // [HttpPost]
+        // public async Task<IActionResult> AssignRoleToUser([FromRoute] string roleName)
+        // {
+        //     var user = _currentUser.GetLoggedInUserEmail;
+        //     var assigned = await _userService.AssignRoleToUser(user.ToString(), roleName);
+        //     if (assigned) return Ok();
+        //     return BadRequest();
+        // }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody]RegisterRequestModel model)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterUserCommand command)
         {
-            if (!ModelState.IsValid)
+            var response = await _mediator.Send(command);
+            if (response.Status)
             {
-                return BadRequest(ModelState);
+                return Ok(response);
             }
-           var response =  await _userService.Register(model);
-           if (response.Status)
-           {
-                return CreatedAtAction(nameof(Register), new { id = response.Data.Id }, response);
-           }
-           return BadRequest(new{response.Message});
+            return BadRequest(response);
         }
-        [HttpPost("token")]
-        public async Task<IActionResult> Login([FromBody]LoginRequestModel model)
+        [HttpGet]
+        public async Task<IActionResult> GetUser([FromQuery] GetUserQuery query)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            var response = await _userService.Login(model.UserName, model.Password);
-            if (!response.Status)
+            if (!query.Id.HasValue && string.IsNullOrEmpty(query.UserName))
+            {
+                return BadRequest("Either UserId or UserName must be provided.");
+            }
+            var user = await _mediator.Send(query);
+            if (user == null)
             {
                 return NotFound();
             }
-            var token = _authService.GenerateToken(response.Data);
-            return Ok(token);
+
+            return Ok(user);
         }
-        [HttpPost]
-        public async Task<IActionResult> AssignRoleToUser([FromRoute]string roleName)
+
+        [HttpGet("getUsers")]
+        public async Task<IActionResult> GetUsers()
         {
-            var user = _httpContextAccessor.HttpContext?.User?.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Email)?.Value;
-            var assigned = await  _userService.AssignRoleToUser(user, roleName);
-            if (assigned) return Ok();
-            return BadRequest();
+            var users = await _mediator.Send(new UsersListQuery());
+            if (!users.Status)
+            {
+                return NotFound(users.Message);
+            }
+            return Ok(users);
         }
     }
 }

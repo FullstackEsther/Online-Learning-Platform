@@ -10,7 +10,8 @@ C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Appl
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Application.AssemblyInfoInputs.cache
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Application.AssemblyInfo.cs
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Application.csproj.CoreCompileInputs.cache
-C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Application.csproj.CopyComplete
+C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Application.sourcelink.json
+C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Applicat.44B5EDA2.Up2Date
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Application.dll
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\refint\Application.dll
 C:\Users\Admin\OneDrive\Desktop\MyFinalProject\Application\obj\Debug\net7.0\Application.pdb

@@ -32,7 +32,7 @@ namespace FinalProjectApi.Controllers
         //     }
         //     return BadRequest(response.Message);
         // }
-        [HttpGet("{rolename}")]
+        [HttpGet("{roleName}")]
         public async Task<IActionResult> GetRole([FromRoute]string roleName)
         {
             var role = await _roleService.GetRole(roleName);
