@@ -18,7 +18,7 @@ namespace Domain.Entities
             CreatedBy = userEmail;
             CreatedOn = dateCreated;
         }
-        public void DeleteDetails(string userEmail, DateTime dataModified)
+        public void ModifyDetails(string userEmail, DateTime dataModified)
         {
             ModifiedBy = userEmail;
             ModifiedOn = dataModified;

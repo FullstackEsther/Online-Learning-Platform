@@ -48,7 +48,7 @@ namespace FinalProjectApi.Controllers
             }
             return BadRequest(response);
         }
-        [HttpGet]
+        [HttpGet("user")]
         public async Task<IActionResult> GetUser([FromQuery] GetUserQuery query)
         {
             if (!query.Id.HasValue && string.IsNullOrEmpty(query.UserName))
@@ -64,7 +64,7 @@ namespace FinalProjectApi.Controllers
             return Ok(user);
         }
 
-        [HttpGet("getUsers")]
+        [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _mediator.Send(new UsersListQuery());

@@ -26,58 +26,58 @@ namespace Domain.Entities
             StudentId = studentId;
             QuizId = quizId;
             Responses = responses;
-            SerializeResponse();
+            // SerializeResponse();
         }
-        public void CheckScore()
-        {
-            var score = CalculateScore();
-            if (score < 80)
-            {
-                Score = score;
-                FailedTest();
-                throw new ArgumentException("Retake test, you can only score 80 and above");
+        // public void CheckScore()
+        // {
+        //     // var score = CalculateScore();
+        //     if (score < 80)
+        //     {
+        //         Score = score;
+        //         FailedTest();
+        //         throw new ArgumentException("Retake test, you can only score 80 and above");
                 
-            }
-            else
-            {
-                PassedTest();
-                Score = score;
-            }
-        }
-        private void SerializeResponse()
-        {
-            if (Responses.Count != 0)
-            {
-               SerializedResponse =  ResultHelper.SerializeDictionary(Responses);
-            }
-            else
-            {
-                throw new ArgumentException("No object to Serialize");
-            }
+        //     }
+        //     else
+        //     {
+        //         PassedTest();
+        //         Score = score;
+        //     }
+        // }
+        // private void SerializeResponse()
+        // {
+        //     if (Responses.Count != 0)
+        //     {
+        //        SerializedResponse =  ResultHelper.SerializeDictionary(Responses);
+        //     }
+        //     else
+        //     {
+        //         throw new ArgumentException("No object to Serialize");
+        //     }
 
-        }
-        private double MarkQuiz()
-        {
-            double correctAnswer = 0;
-            foreach (var obj in Responses)
-            {
-                   if (obj.Key.CorrectAnswer == obj.Value)
-                {
-                    correctAnswer++;
-                }
-            }
-            return correctAnswer;
-        }
-        private double CalculateScore()
-        {
-            if (Responses.Count == 0)
-            {
-                return 0;
-            }
-            var score = MarkQuiz();
-            var totalscore = score / Responses.Count * 100;
-            return totalscore;
-        }
+        // }
+        // private double MarkQuiz()
+        // {
+        //     double correctAnswer = 0;
+        //     foreach (var obj in Responses)
+        //     {
+        //            if (obj.Key.CorrectAnswer == obj.Value)
+        //         {
+        //             correctAnswer++;
+        //         }
+        //     }
+        //     return correctAnswer;
+        // }
+        // private double CalculateScore()
+        // {
+        //     if (Responses.Count == 0)
+        //     {
+        //         return 0;
+        //     }
+        //     var score = MarkQuiz();
+        //     var totalscore = score / Responses.Count * 100;
+        //     return totalscore;
+        // }
         private void PassedTest()
         {
             IsPassedTest = true;

@@ -66,6 +66,8 @@ namespace Infrastucture.Context
             modelBuilder.ApplyConfiguration(new ChatRoomEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PaymentEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserRolesEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionOptionEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new QuizAnswerEntityConfiguration());
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -75,7 +77,9 @@ namespace Infrastucture.Context
         public DbSet<Student> Students { get; set; }
         public DbSet<Result> Results { get; set; }
         public DbSet<Quiz> Quizzes { get; set; }
+        // public DbSet<QuizAnswer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
+        // public DbSet<QuestionOption> Options { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Lesson> Lessons { get; set; }

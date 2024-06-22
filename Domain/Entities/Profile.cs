@@ -23,7 +23,7 @@ namespace Domain.Entities
             }
             else if (value == null)
             {
-                throw new ArgumentException("This field is required");
+                throw new ArgumentException("Email field is required");
             }
             else
             {

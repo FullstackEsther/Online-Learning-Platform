@@ -20,12 +20,12 @@ namespace Domain.Entities
         {
             _totaltime = CalculateTotaltime();
         } }
-        // public Course Course { get; set; }= default!;
         public Quiz Quiz { get; set; }= default!; 
-       internal Module(string title, double totaltime)
+        public Course Course{get;set;}
+       internal Module(string title, Guid courseId)
        {
             Title = title;
-            TotalTime = totaltime;
+            CourseId = courseId;
             Lessons = new HashSet<Lesson>();
        }
        private Module()
@@ -36,7 +36,7 @@ namespace Domain.Entities
        {
             if (quiz == null)
             {
-                throw new ArgumentNullException("Quiz cannot be null");
+                throw new ArgumentException("Quiz cannot be null");
             }
             if (quiz.ModuleId != this.Id)
             {
@@ -76,16 +76,16 @@ namespace Domain.Entities
            Lessons.Remove(lesson!);
         }
     
-        public void UpdateLesson(Lesson updatedLesson)
-        {
-            var existingLessons = Lessons.FirstOrDefault(x => x.Id == updatedLesson.Id);
-            if (existingLessons != null)
-            {
-                existingLessons.File = updatedLesson.File;
-                existingLessons.Topic = updatedLesson.Topic;
-                existingLessons.TotalMinutes = updatedLesson.TotalMinutes;
-            }
-        }
+        // public void UpdateLesson(Lesson updatedLesson)
+        // {
+        //     var existingLessons = Lessons.FirstOrDefault(x => x.Id == updatedLesson.Id);
+        //     if (existingLessons != null)
+        //     {
+        //         existingLessons.File = updatedLesson.File;
+        //         existingLessons.Topic = updatedLesson.Topic;
+        //         existingLessons.TotalMinutes = updatedLesson.TotalMinutes;
+        //     }
+        // }
         
     }
 }

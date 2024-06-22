@@ -22,6 +22,11 @@ namespace Infrastucture.Repository.Implementation
             _applicationContext.Courses.Remove(course);
         }
 
+        public bool Exist(Expression<Func<Course, bool>> predicate)
+        {
+            return _applicationContext.Courses.Any(predicate);
+        }
+
         public async Task<IEnumerable<Course>> GetAllCourse()
         {
             var courses = await  _applicationContext.Courses

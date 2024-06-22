@@ -386,14 +386,6 @@ namespace Infrastucture.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("AskedQuestion")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("CorrectAnswer")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("longtext");
 
@@ -406,6 +398,13 @@ namespace Infrastucture.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("QuestionText")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("QuestionType")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("QuizId")
                         .HasColumnType("char(36)");
 
@@ -414,6 +413,23 @@ namespace Infrastucture.Migrations
                     b.HasIndex("QuizId");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.QuestionOption", b =>
+                {
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("QuestionOption");
                 });
 
             modelBuilder.Entity("Domain.Entities.Quiz", b =>
@@ -446,6 +462,16 @@ namespace Infrastucture.Migrations
                         .IsUnique();
 
                     b.ToTable("Quizzes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.QuizAnswer", b =>
+                {
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("char(36)");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("QuizAnswer");
                 });
 
             modelBuilder.Entity("Domain.Entities.Result", b =>
@@ -523,25 +549,25 @@ namespace Infrastucture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ebfaf7a3-94a7-47df-a282-b832e3a800f4"),
+                            Id = new Guid("9275f625-84a9-4a15-b3e6-89b6c303f1d9"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4195),
+                            CreatedOn = new DateTime(2024, 6, 22, 9, 53, 39, 166, DateTimeKind.Local).AddTicks(8655),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Student"
                         },
                         new
                         {
-                            Id = new Guid("e716db23-770f-4cc5-a5e6-a0ed3a9df63a"),
+                            Id = new Guid("39e1491f-6f64-41a7-984b-bc95ccf05862"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4396),
+                            CreatedOn = new DateTime(2024, 6, 22, 9, 53, 39, 166, DateTimeKind.Local).AddTicks(8725),
                             Description = "Creates and owns a course ",
                             RoleName = "Instructor"
                         },
                         new
                         {
-                            Id = new Guid("eb2a9156-40b6-4f47-9eb2-9f6cdde06e6f"),
+                            Id = new Guid("f5b21e1b-119d-4008-8987-895f052b8346"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4414),
+                            CreatedOn = new DateTime(2024, 6, 22, 9, 53, 39, 166, DateTimeKind.Local).AddTicks(8741),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Admin"
                         });
@@ -707,11 +733,13 @@ namespace Infrastucture.Migrations
 
             modelBuilder.Entity("Domain.Entities.Module", b =>
                 {
-                    b.HasOne("Domain.Entities.Course", null)
+                    b.HasOne("Domain.Entities.Course", "Course")
                         .WithMany("Modules")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Domain.Entities.Payment", b =>
@@ -734,11 +762,27 @@ namespace Infrastucture.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Entities.QuestionOption", b =>
+                {
+                    b.HasOne("Domain.Entities.Question", null)
+                        .WithMany()
+                        .HasForeignKey("QuestionId");
+                });
+
             modelBuilder.Entity("Domain.Entities.Quiz", b =>
                 {
                     b.HasOne("Domain.Entities.Module", null)
                         .WithOne("Quiz")
                         .HasForeignKey("Domain.Entities.Quiz", "ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.QuizAnswer", b =>
+                {
+                    b.HasOne("Domain.Entities.Question", null)
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
