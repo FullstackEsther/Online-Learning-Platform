@@ -42,6 +42,8 @@ builder.Services.AddScoped<ChatHub>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddSingleton<IAuthService, AuthService>();
+builder.Services.AddScoped<ICourseManager, CourseManager>();
+builder.Services.AddScoped<IInstructorManager, InstructorManager>();
 builder.Services.AddTransient<ICurrentUser, CurrentUser>();
 builder.Services.AddAuthentication(x =>
            {

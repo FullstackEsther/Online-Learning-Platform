@@ -37,7 +37,7 @@ namespace Application.Exception
             // }
         }
 
-        private Task HandleArgumentExceptionAsync(HttpContext context, ArgumentException exception)
+        private static Task HandleArgumentExceptionAsync(HttpContext context, ArgumentException exception)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;

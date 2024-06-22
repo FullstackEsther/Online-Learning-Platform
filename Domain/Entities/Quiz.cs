@@ -34,18 +34,19 @@ namespace Domain.Entities
         }
         public void AddQuestion(Question question)
         {
-            if (question != null)
+            var check = Questions.SingleOrDefault(x => x.QuestionText == question.QuestionText);
+            if (check == null)
             {
                 Questions.Add(question);
             }
             else
             {
-                throw new ArgumentException("Cannot add an empty Question");
+                throw new ArgumentException("Duplicate Question");
             }   
         }
         public void DeleteQuestion(Question question)
         {
-            var obtainedQuestion = Questions.FirstOrDefault(x => x.Id == question.Id);
+            var obtainedQuestion = Questions.FirstOrDefault(x => x.QuestionText == question.QuestionText) ?? throw new ArgumentException("Question doesnot exist");
             Questions.Remove(obtainedQuestion);
         }
 

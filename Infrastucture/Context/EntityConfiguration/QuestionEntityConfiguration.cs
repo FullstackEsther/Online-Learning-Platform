@@ -14,8 +14,9 @@ namespace Infrastucture.Context.EntityConfiguration
         {
             builder.HasOne<Quiz>()
             .WithMany(x => x.Questions).HasForeignKey(x => x.QuizId);
-            builder.Property(x => x.AskedQuestion).IsRequired(true);
-            builder.Property(x => x.CorrectAnswer).IsRequired(true);
+            builder.Property(x => x.QuestionText).IsRequired(true);
+            builder.HasMany(x => x.Options).WithOne();
+            builder.HasMany(x => x.Answers).WithOne().HasForeignKey(x => x.QuestionId);
         }
     }
 }

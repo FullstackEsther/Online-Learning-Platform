@@ -27,9 +27,11 @@ namespace Infrastucture.Repository.Implementation
             return await _applicationContext.Instructors.Include(x => x.Courses).ToListAsync();
         }
 
-        public async Task<Instructor> GetInstructor(Expression<Func<Instructor, bool>> predicate)
+        public async Task<Instructor?> GetInstructor(Expression<Func<Instructor, bool>> predicate)
         {
-            return await _applicationContext.Instructors.Include(x => x.Courses).FirstOrDefaultAsync(predicate);
+            return await _applicationContext.Instructors
+            .Include(x => x.Courses)
+            .FirstOrDefaultAsync(predicate);
         }
     }
 }

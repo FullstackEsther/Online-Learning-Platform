@@ -11,15 +11,4 @@ namespace Application.DTO
         public string UserName { get; set; }
         public List<string> roleNames {get;set;}
     }
-    public class RegisterRequestModel
-    {
-        public string UserName { get; set;}
-        public string Password { get; set; }
-    }
-
-    public class LoginRequestModel
-    {
-        public string UserName {get;set;}
-        public string Password { get; set; }
-    }
 }

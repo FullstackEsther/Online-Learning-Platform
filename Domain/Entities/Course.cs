@@ -56,32 +56,23 @@ namespace Domain.Entities
         public Guid CategoryId { get; set; } = default!;
         public Guid InstructorId { get; set; } = default!;
         public double TotalScore { get; set; } = default!;
-        public  ICollection<Module> Modules { get; set; } = new HashSet<Module>();
-        public void CreateModule(Module module)
+        public  virtual ICollection<Module> Modules { get; set; } = new HashSet<Module>();
+        public  void AddModule(Module module)
         {
-            if (module == null)
+            if (Modules.Any(x => x.Title == module.Title))
             {
-                throw new ArgumentException("Module cannot be null");
+                throw new ArgumentException("Module already exist with this Title");
             }
             
             Modules.Add(module);
         }
-        // public void UpdateModule(Module module)
-        // {
-        //     if (module == null) { throw new ArgumentNullException("An empty module cannot be updated"); }
-        //     var existingModule = Modules.FirstOrDefault(m => m.Id == module.Id);
-        //     if (existingModule == null)
-        //     {
-        //         throw new ArgumentException("This module does not exist");
-        //     }
-        //     existingModule = module;
-        // }
+        public void UpdateModule(Module module)
+        {
+            var existingModule = Modules.FirstOrDefault(m => m.Id == module.Id) ?? throw new ArgumentException("This module does not exist");
+            existingModule = module;
+        }
         public void RemoveModule(Module module)
         {
-            if (module == null)
-            {
-                throw new ArgumentException("Module cannot be null");
-            }
             Modules.Remove(module);
         }
         public void VerifyCourse()
@@ -103,14 +94,15 @@ namespace Domain.Entities
             return calculatedTime;
         }
         
-        public Course(string title, string courseCode,string displayPicture, string whatToLearn,Level level, CourseStatus courseStatus)
+        public Course(string title,Level level, Guid categoryId,string courseCode, CourseStatus courseStatus,string whatToLearn,string displayPicture)
         {
             Title = title;
-            CourseCode = courseCode;
-            DisplayPicture = displayPicture;
-            WhatToLearn = whatToLearn;
             Level = level;
+            CategoryId = categoryId;
+            CourseCode = courseCode;
             CourseStatus = courseStatus;
+            WhatToLearn = whatToLearn;
+            DisplayPicture = displayPicture;
         }
         private Course()
         {

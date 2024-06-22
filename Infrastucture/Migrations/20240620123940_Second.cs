@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastucture.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Second : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -366,8 +366,8 @@ namespace Infrastucture.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     QuizId = table.Column<Guid>(type: "char(36)", nullable: false),
-                    AskedQuestion = table.Column<string>(type: "longtext", nullable: false),
-                    CorrectAnswer = table.Column<string>(type: "longtext", nullable: false),
+                    QuestionType = table.Column<int>(type: "int", nullable: false),
+                    QuestionText = table.Column<string>(type: "longtext", nullable: false),
                     CreatedBy = table.Column<string>(type: "longtext", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
@@ -418,14 +418,49 @@ namespace Infrastucture.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "QuestionOption",
+                columns: table => new
+                {
+                    Text = table.Column<string>(type: "longtext", nullable: false),
+                    IsCorrect = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "char(36)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.ForeignKey(
+                        name: "FK_QuestionOption_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "QuizAnswer",
+                columns: table => new
+                {
+                    QuestionId = table.Column<Guid>(type: "char(36)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.ForeignKey(
+                        name: "FK_QuizAnswer_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "Description", "ModifiedBy", "ModifiedOn", "RoleName" },
                 values: new object[,]
                 {
-                    { new Guid("e716db23-770f-4cc5-a5e6-a0ed3a9df63a"), "Admin", new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4396), "Creates and owns a course ", null, null, "Instructor" },
-                    { new Guid("eb2a9156-40b6-4f47-9eb2-9f6cdde06e6f"), "Admin", new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4414), "Takes a course for better Understanding", null, null, "Admin" },
-                    { new Guid("ebfaf7a3-94a7-47df-a282-b832e3a800f4"), "Admin", new DateTime(2024, 6, 13, 11, 30, 57, 287, DateTimeKind.Local).AddTicks(4195), "Takes a course for better Understanding", null, null, "Student" }
+                    { new Guid("ccaca1d1-2d2f-47ba-8ec3-21afc8e6b87f"), "Admin", new DateTime(2024, 6, 20, 13, 39, 40, 654, DateTimeKind.Local).AddTicks(8509), "Creates and owns a course ", null, null, "Instructor" },
+                    { new Guid("d6ca1901-433e-4408-94e3-668a3c76c086"), "Admin", new DateTime(2024, 6, 20, 13, 39, 40, 654, DateTimeKind.Local).AddTicks(8523), "Takes a course for better Understanding", null, null, "Admin" },
+                    { new Guid("eebb32ff-cf5d-409d-99c8-411d9a7c0829"), "Admin", new DateTime(2024, 6, 20, 13, 39, 40, 654, DateTimeKind.Local).AddTicks(8447), "Takes a course for better Understanding", null, null, "Student" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -464,9 +499,19 @@ namespace Infrastucture.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuestionOption_QuestionId",
+                table: "QuestionOption",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuizId",
                 table: "Questions",
                 column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizAnswer_QuestionId",
+                table: "QuizAnswer",
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Quizzes_ModuleId",
@@ -508,7 +553,10 @@ namespace Infrastucture.Migrations
                 name: "Payments");
 
             migrationBuilder.DropTable(
-                name: "Questions");
+                name: "QuestionOption");
+
+            migrationBuilder.DropTable(
+                name: "QuizAnswer");
 
             migrationBuilder.DropTable(
                 name: "Results");
@@ -523,7 +571,7 @@ namespace Infrastucture.Migrations
                 name: "Enrollments");
 
             migrationBuilder.DropTable(
-                name: "Quizzes");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "Roles");
@@ -533,6 +581,9 @@ namespace Infrastucture.Migrations
 
             migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Quizzes");
 
             migrationBuilder.DropTable(
                 name: "Modules");
