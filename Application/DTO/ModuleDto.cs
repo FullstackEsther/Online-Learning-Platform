@@ -11,7 +11,7 @@ namespace Application.DTO
         public  string Title { get; set; }
         public double Totaltime{ get;  set; }
         public Guid CourseId { get;  set; }
-        public Quiz Quiz { get;  set; }
-        public ICollection<Lesson> Lessons { get; set; } 
+        public QuizDto Quiz { get;  set; }
+        public IReadOnlyList<LessonDto> Lessons { get; set; } 
     }
 }

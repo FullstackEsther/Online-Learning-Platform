@@ -47,6 +47,27 @@ namespace Domain.DomainServices.Implementation
 
         }
 
+        public async Task<Instructor> CreateProfile(string email, string biography, string firstName, string Lastname, string profilePicture)
+        {
+            var existing = _instructorRepository.GetInstructor(x => x.Email == email);
+            if (existing != null)  throw new ArgumentException("You already have a profile");
+            var instructor = new Instructor
+            {
+                Biography = biography,
+                Email = email,
+                FirstName = firstName,
+                LastName = Lastname,
+                ProfilePicture = profilePicture,
+            };
+            instructor.CreateDetails(email, DateTime.UtcNow);
+            var createProfile = _instructorRepository.Create(instructor);
+           if (await _instructorRepository.Save() > 0)
+           {
+                return instructor;
+           } 
+           return null;
+        }
+
         public async Task<Instructor> EditProfile(string email, string? biography, string? firstName, string? lastName, string? profilePicture)
         {
             var instructorProfile = await _instructorRepository.GetInstructor(x => x.Email == email);
@@ -77,7 +98,7 @@ namespace Domain.DomainServices.Implementation
 
         public async Task<Instructor> GetProfile(string email)
         {
-            var instructor= await _instructorRepository.GetInstructor(x => x.Email == email) ?? throw new ArgumentException("Instructor not found");
+            var instructor = await _instructorRepository.GetInstructor(x => x.Email == email) ?? throw new ArgumentException("Instructor not found");
             return instructor;
         }
     }

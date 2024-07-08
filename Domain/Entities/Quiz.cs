@@ -21,7 +21,8 @@ namespace Domain.Entities
              } } 
         public ICollection<Question> Questions { get; set; }
         public  ICollection<Result> Result { get; set; }= default!;
-        public Guid ModuleId { get; private set; }= default!;
+        public Guid ModuleId { get; private set; }
+        public Module Module { get; private set; }
         public Quiz(double duration, Guid moduleId)
         {
             Duration = duration;
@@ -44,9 +45,9 @@ namespace Domain.Entities
                 throw new ArgumentException("Duplicate Question");
             }   
         }
-        public void DeleteQuestion(Question question)
+        public void DeleteQuestion(Guid questionId)
         {
-            var obtainedQuestion = Questions.FirstOrDefault(x => x.QuestionText == question.QuestionText) ?? throw new ArgumentException("Question doesnot exist");
+            var obtainedQuestion = Questions.FirstOrDefault(x => x.Id == questionId) ?? throw new ArgumentException("Question doesnot exist");
             Questions.Remove(obtainedQuestion);
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Application.CQRS.Instructor.Command.EditProfile;
+using Application.CQRS.Instructor.Command.UpdateProfile;
 using Application.CQRS.Instructor.Query;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,13 @@ namespace FinalProjectApi.Controllers
         public async Task<IActionResult> EditProfile(EditProfileCommand command)
         {
             var response =await _mediator.Send(command);
+            if (response.Status) return Ok(response);
+            return BadRequest(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateProfile([FromForm]CreateProfileCommand command)
+        {
+            var response = await _mediator.Send(command);
             if (response.Status) return Ok(response);
             return BadRequest(response);
         }

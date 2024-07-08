@@ -13,6 +13,10 @@ namespace Infrastucture.Context.EntityConfiguration
         public void Configure(EntityTypeBuilder<ChatRoom> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
         }
     }
 }

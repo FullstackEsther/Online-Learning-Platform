@@ -56,7 +56,7 @@ namespace Domain.Entities
         public Guid CategoryId { get; set; } = default!;
         public Guid InstructorId { get; set; } = default!;
         public double TotalScore { get; set; } = default!;
-        public  virtual ICollection<Module> Modules { get; set; } = new HashSet<Module>();
+        public ICollection<Module> Modules { get; set; } = new HashSet<Module>();
         public  void AddModule(Module module)
         {
             if (Modules.Any(x => x.Title == module.Title))
@@ -108,9 +108,8 @@ namespace Domain.Entities
         {
 
         }
-
-        // public virtual Instructor Instructor { get; set; } = default!;
-        // public virtual Category Category { get; set; } = default!;
-        // public virtual IEnumerable<Enrollment> Enrollments { get; set; } = new HashSet<Enrollment>();
+        public Instructor Instructor { get; set; }
+        public  Category Category { get; set; }
+        public IEnumerable<Enrollment> Enrollments { get; set; } = new HashSet<Enrollment>();
     }
 }

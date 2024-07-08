@@ -21,7 +21,7 @@ namespace Domain.Entities
                 }
                 _description = value;
             } }
-        public ICollection<UserRole> UserRoles { get; set; } = default!;
+        public ICollection<UserRole> UserRoles { get; set; }
         public Role(string roleName)
         {
             RoleName = roleName;

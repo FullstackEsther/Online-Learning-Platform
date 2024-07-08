@@ -30,8 +30,9 @@ namespace Infrastucture.Repository.Implementation
         public async Task<IEnumerable<Course>> GetAllCourse()
         {
             var courses = await  _applicationContext.Courses
+            .Include(x => x.Modules).ThenInclude(x => x.Lessons)
             .Include(x => x.Modules)
-            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)
+            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions).ThenInclude(x => x .Options)
             .ToListAsync();
             return courses;
         }
@@ -39,17 +40,37 @@ namespace Infrastucture.Repository.Implementation
         public async Task<IEnumerable<Course>> GetAllCourses(Expression<Func<Course, bool>> predicate)
         {
             return await _applicationContext.Courses
+            .Include(x => x.Modules).ThenInclude(x => x.Lessons)
             .Include(x => x.Modules)
-            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)
+            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions).ThenInclude(x => x .Options)
             .Where(predicate).ToListAsync();    
         }
 
         public async Task<Course?> GetCourse(Expression<Func<Course, bool>> predicate)
         {
-           return await _applicationContext.Courses
+            try
+            {
+                 var course =  await _applicationContext.Courses
+           
+            // .Include(x => x.Modules) 
+            // .ThenInclude(x => x.Lessons)
            .Include(x => x.Modules)
-            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)
-            .FirstOrDefaultAsync(predicate);   
+            // .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)
+            // .ThenInclude(x => x .Options)
+            .FirstOrDefaultAsync(predicate);  
+            return course; 
+            }
+            catch (System.Exception ex)
+            {
+                
+                throw;
+            }
+          
+        }
+        public async Task<IReadOnlyList<Module>> AddModules(IReadOnlyList<Module> modules)
+        {
+            await _applicationContext.Modules.AddRangeAsync(modules);
+            return modules;
         }
     }
 }

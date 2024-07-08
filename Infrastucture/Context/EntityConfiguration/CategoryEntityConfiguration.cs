@@ -12,11 +12,15 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasMany<Course>()
-            .WithOne().HasForeignKey("CategoryId");
-            builder.Property(x => x.Name).IsRequired(true);
-            builder.Property(x => x.Description).IsRequired(true);
-            builder.Property(x => x.ParentCategory).IsRequired(false);
+            builder.HasMany(x => x.Courses)
+            .WithOne(x => x.Category).HasForeignKey(x => x.CategoryId);
+            builder.Property(x => x.Name).IsRequired(true).HasColumnType("varchar(30)");
+            builder.Property(x => x.Description).IsRequired(true).HasColumnType("varchar(50)");
+            builder.Property(x => x.ParentCategory).IsRequired(false).HasColumnType("varchar(30)");
+             builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
         }
     }
 }

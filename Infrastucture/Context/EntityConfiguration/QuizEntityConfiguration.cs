@@ -12,12 +12,14 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Quiz> builder)
         {
-            builder.HasOne<Module>()
-            .WithOne(x => x.Quiz).HasForeignKey<Quiz>(x => x.ModuleId);
             builder.HasMany(x => x.Questions)
-            .WithOne();
+            .WithOne(x => x.Quiz).HasForeignKey(x => x.QuizId);
+            builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
             builder.Property(x => x.Duration).IsRequired(true);
-            builder.HasMany(x => x.Result).WithOne().HasForeignKey(x => x.QuizId);
+            builder.HasMany(x => x.Result).WithOne(x => x.Quiz).HasForeignKey(x => x.QuizId);
         }
     }
 }

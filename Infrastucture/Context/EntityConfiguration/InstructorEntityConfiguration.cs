@@ -10,17 +10,21 @@ namespace Infrastucture.Context.EntityConfiguration
 {
     public class InstructorEntityConfiguration : IEntityTypeConfiguration<Instructor>
     {
-       public void Configure(EntityTypeBuilder<Instructor> builder)
+        public void Configure(EntityTypeBuilder<Instructor> builder)
         {
             builder.HasMany(x => x.Courses)
-            .WithOne();
-            builder.Property(x => x.Biography).IsRequired(false);
-            builder.Property(x => x.ProfilePicture).IsRequired(false); 
+            .WithOne(x => x.Instructor).HasForeignKey(x => x.InstructorId);
+            builder.Property(x => x.Biography).IsRequired(false).HasColumnType("varchar(250)");
+            builder.Property(x => x.ProfilePicture).IsRequired(false).HasColumnType("varchar(255)");
             builder.Property(x => x.FirstName)
             .HasMaxLength(30)
-            .IsRequired(true);
+            .IsRequired(true).HasColumnType("varchar(30)");
             builder.Property(x => x.LastName)
-            .HasMaxLength(30);
-        } 
+            .HasMaxLength(30).HasColumnType("varchar(30)");
+            builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
+        }
     }
 }
