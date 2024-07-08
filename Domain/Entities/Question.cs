@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Domain.Shared.Enum;
+using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
@@ -11,10 +12,12 @@ namespace Domain.Entities
         public Guid QuizId { get; set; }= default!;
         public QuestionType QuestionType {get;set;}
         public  string QuestionText { get; set; }
+        public  Quiz Quiz { get; set; }
         public ICollection<QuestionOption> Options = new HashSet<QuestionOption>();
-        public ICollection<QuizAnswer> Answers = new HashSet<QuizAnswer>();
-        internal Question(string questionText)
+        internal Question(string questionText, Guid quizId,QuestionType questionType)
         {
+            QuestionType = questionType;
+            QuizId = quizId;
             QuestionText = questionText;
         }
         private Question()
@@ -33,16 +36,16 @@ namespace Domain.Entities
             Options.Remove(option);
         }
 
-        public void AddAnswer(string optionText)
-        {
-           var option = Options.SingleOrDefault(x => x.Text == optionText) ?? throw new ArgumentException("Invalid Option");
-           var answer = new QuizAnswer(optionText,Id);
-           Answers.Add(answer);
-        }
-        public void RemoveAnswer(string optionText)
-        {
-            var answer = Answers.SingleOrDefault(x => x.OptionText == optionText) ?? throw new ArgumentException("Invalid Option");
-            Answers.Remove(answer);
-        }
+        // public void AddAnswer(string optionText)
+        // {
+        //    var option = Options.SingleOrDefault(x => x.Text == optionText) ?? throw new ArgumentException("Invalid Option");
+        //    var answer = new QuizAnswer(optionText,Id);
+        //    Answers.Add(answer);
+        // }
+        // public void RemoveAnswer(string selectedOption)
+        // {
+        //     var answer = Answers.SingleOrDefault(x => x.SelectedOption == selectedOption) ?? throw new ArgumentException("Invalid Option");
+        //     Answers.Remove(answer);
+        // }
     }
 }

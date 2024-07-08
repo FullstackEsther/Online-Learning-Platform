@@ -13,8 +13,12 @@ namespace Infrastucture.Context.EntityConfiguration
         public void Configure(EntityTypeBuilder<Enrollment> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasOne<Student>().WithMany(x => x.Enrollments).HasForeignKey(x => x.StudentId);
-            builder.HasOne<Course>().WithMany().HasForeignKey(x => x.CourseId);
+            builder.HasOne(x => x.Student).WithMany(x => x.Enrollments).HasForeignKey(x => x.StudentId);
+            builder.HasOne(x => x.Course).WithMany(x => x.Enrollments).HasForeignKey(x => x.CourseId);
+            builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
         }
     }
 }

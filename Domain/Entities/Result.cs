@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.DomainServices;
+using Domain.ValueObjects;
 using Newtonsoft.Json;
 
 namespace Domain.Entities
@@ -10,23 +11,23 @@ namespace Domain.Entities
     public class Result : BaseClass
     {
         // public string SerializedResponse ;
-        public string SerializedResponse { get; private set; }
+        // public string SerializedResponse { get; private set; }
         public double Score { get; private set; }
         public Guid StudentId { get; set; } = default!;
         public Guid QuizId { get; private set; }= default!;
         public bool IsPassedTest{get; private set;} 
-        internal Dictionary<Question, string> Responses;
-        // public Student Student { get; set; } = default!;
+        public ICollection<QuestionAnswer> QuestionAnswers{get; set;} = new HashSet<QuestionAnswer>();
+        public Student Student { get; set; }
+        public Quiz Quiz { get; set; }
         private Result()
         {
             
         }
-        internal Result(Guid quizId, Guid studentId, Dictionary<Question, string> responses)
+        internal Result(Guid quizId, Guid studentId, ICollection<QuestionAnswer> questionAnswers)
         {
             StudentId = studentId;
             QuizId = quizId;
-            Responses = responses;
-            // SerializeResponse();
+            QuestionAnswers = questionAnswers;
         }
         // public void CheckScore()
         // {

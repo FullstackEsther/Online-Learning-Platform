@@ -16,6 +16,7 @@ using Domain.DomainServices.Interface;
 using System.Reflection;
 using Application.CQRS.User.Command;
 using Application.Exception;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IResultRepository, ResultRepository>();
+builder.Services.AddScoped<IFileRepository, FileRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
@@ -45,6 +47,11 @@ builder.Services.AddSingleton<IAuthService, AuthService>();
 builder.Services.AddScoped<ICourseManager, CourseManager>();
 builder.Services.AddScoped<IInstructorManager, InstructorManager>();
 builder.Services.AddTransient<ICurrentUser, CurrentUser>();
+builder.Services.AddSingleton(sp => new Cloudinary(new Account(
+   builder.Configuration["Cloudinary:CloudName"],
+    builder.Configuration["Cloudinary:ApiKey"],
+    builder.Configuration["Cloudinary:ApiSecret"]
+)));
 builder.Services.AddAuthentication(x =>
            {
                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

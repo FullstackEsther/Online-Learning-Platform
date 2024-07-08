@@ -16,17 +16,24 @@ namespace Application.CQRS.Instructor.Command.EditProfile
         private readonly IInstructorManager _instructorManager;
         private readonly ICurrentUser _currentUser;
         private readonly IInstructorRepository _instructorRepository;
+        private readonly IFileRepository _fileRepository;
 
-        public EditProfileCommandhandler(IInstructorManager instructorManager, ICurrentUser currentUser, IInstructorRepository instructorRepository)
+        public EditProfileCommandhandler(IInstructorManager instructorManager, ICurrentUser currentUser, IInstructorRepository instructorRepository, IFileRepository fileRepository)
         {
             _instructorManager = instructorManager;
             _currentUser = currentUser;
             _instructorRepository = instructorRepository;
+            _fileRepository = fileRepository;
         }
         public async Task<BaseResponse<InstructorDto>> Handle(EditProfileCommand request, CancellationToken cancellationToken)
         {
+            var img = string.Empty;
+            if (request.Model.ProfilePicture != null)
+            {
+                img = await _fileRepository.UploadFileAsync(request.Model.ProfilePicture);
+            }
             var email = "otufaleesther@gmail.com";   // _currentUser.GetLoggedInUserEmail();
-            var editedProfile = await _instructorManager.EditProfile(email, request.Model.Biography, request.Model.FirstName, request.Model.LastName, request.Model.ProfilePicture);
+            var editedProfile = await _instructorManager.EditProfile(email, request.Model.Biography, request.Model.FirstName, request.Model.LastName,img );
             await _instructorRepository.Save();
             if (editedProfile == null)
             {

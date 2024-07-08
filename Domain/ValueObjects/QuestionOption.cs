@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Domain.ValueObjects
 {
     public class QuestionOption
     {
-        // public Guid Id = Guid.NewGuid();
-        // public Guid QuestionId {get; set;}
+        public Guid QuestionId {get; set;}
         public string Text {get;set;}
         public bool IsCorrect {get;set;}= false;
-        public QuestionOption( string text, bool isCorrect)
+        internal QuestionOption( string text, bool isCorrect, Guid questionId)
         {
             Text = text ?? throw new ArgumentException("Option text cannot be null");
             IsCorrect = isCorrect;
+            QuestionId = questionId;
         }
         private QuestionOption()
         {

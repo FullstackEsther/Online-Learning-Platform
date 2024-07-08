@@ -15,17 +15,25 @@ namespace Application.CQRS.Instructor.Command.CreateCourse
         private readonly IInstructorManager _instructorManager;
         private readonly ICurrentUser _currentUser;
         private readonly IInstructorRepository _instructorRepository;
+        private readonly IFileRepository _fileRepository;
 
-        public CreateCourseCommandHandler(IInstructorManager instructorManager, ICurrentUser currentUser, IInstructorRepository instructorRepository)
+        public CreateCourseCommandHandler(IInstructorManager instructorManager, ICurrentUser currentUser, IInstructorRepository instructorRepository, IFileRepository fileRepository)
         {
             _instructorManager = instructorManager;
             _currentUser = currentUser;
             _instructorRepository = instructorRepository;
+            _fileRepository = fileRepository;
         }
         public async Task<BaseResponse<CourseDto>> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
-            var email = "otufalesther@gmail.com";// _currentUser.GetLoggedInUserEmail(); //
-            var course = await _instructorManager.CreateCourse(request.Model.Title, request.Model.Level, request.Model.CategoryId, request.Model.CourseCode, request.Model.CourseStatus, request.Model.WhatToLearn, request.Model.DisplayPicture, request.Model.ProfilePicture, request.Model.FirstName, request.Model.LastName, request.Model.Biography, email);
+            var displayPicture = await  _fileRepository.UploadFileAsync(request.Model.DisplayPicture);
+            var file = string.Empty;
+            if (request.Model.profilePicture != null)
+            {
+                  file = await _fileRepository.UploadFileAsync(request.Model.profilePicture);
+            }
+            var email = "otufaleesther@gmail.com";// _currentUser.GetLoggedInUserEmail(); //
+            var course = await _instructorManager.CreateCourse(request.Model.Title, request.Model.Level, request.Model.CategoryId, request.Model.CourseCode, request.Model.CourseStatus, request.Model.WhatToLearn, displayPicture, file, request.Model.FirstName, request.Model.LastName, request.Model.Biography, email);
             await _instructorRepository.Save();
             if (course == null)
             {

@@ -13,16 +13,20 @@ namespace Infrastucture.Context.EntityConfiguration
         public void Configure(EntityTypeBuilder<Student> builder)
         {
             builder.HasMany(x => x.Enrollments)
-            .WithOne();
+            .WithOne(x => x.Student).HasForeignKey(x => x.StudentId);
             builder.HasMany(x => x.Results)
-            .WithOne();
-            builder.Property(x => x.ProfilePicture).IsRequired(false);
-            builder.Property(x => x.Biography).IsRequired(false); 
+            .WithOne(x => x.Student).HasForeignKey(x => x.StudentId);
+            builder.Property(x => x.ProfilePicture).IsRequired(false).HasColumnType("varchar(255)");
+            builder.Property(x => x.Biography).IsRequired(false).HasColumnType("varchar(250)"); 
             builder.Property(x => x.FirstName)
-            .HasMaxLength(30)
+            .HasMaxLength(30).HasColumnType("varrchar(30)")
             .IsRequired(true);
-            builder.Property(x => x.LastName)
-            .HasMaxLength(30);
+            builder.Property(x => x.LastName).HasColumnType("varchar(30)")
+            .HasMaxLength(30).IsRequired();
+            builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
         }
 
     }

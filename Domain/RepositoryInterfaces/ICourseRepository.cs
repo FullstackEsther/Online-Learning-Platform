@@ -14,5 +14,6 @@ namespace Domain.RepositoryInterfaces
         Task<IEnumerable<Course>> GetAllCourse();
         Task<IEnumerable<Course>> GetAllCourses(Expression<Func<Course, bool>> predicate);
         void Delete(Course course);
+        Task<IReadOnlyList<Module>> AddModules(IReadOnlyList<Module> modules);
     }
 }

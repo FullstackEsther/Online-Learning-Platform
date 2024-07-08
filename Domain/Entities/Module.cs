@@ -9,7 +9,7 @@ namespace Domain.Entities
     {
         public  string Title { get; set; }
         private double _totaltime;
-        public Guid CourseId { get;  private set; }= default!;
+        public Guid CourseId { get;  private set; }
         public ICollection<Lesson> Lessons { get; set; } 
         public double TotalTime { get
         {
@@ -72,7 +72,7 @@ namespace Domain.Entities
         }
         public void RemoveLesson(Guid lessonId)
         {
-           var lesson = Lessons.FirstOrDefault(x => x.Id == lessonId);
+           var lesson = Lessons.FirstOrDefault(x => x.Id == lessonId)?? throw new ArgumentException("Lesson  not Found");
            Lessons.Remove(lesson!);
         }
     

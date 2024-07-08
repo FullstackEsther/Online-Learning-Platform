@@ -13,7 +13,13 @@ namespace Infrastucture.Context.EntityConfiguration
         public void Configure(EntityTypeBuilder<Payment> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasOne(x => x.Enrollment).WithOne(x => x.Payment).HasForeignKey<Payment>();
+            builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
+            builder.HasOne(x => x.Enrollment).WithOne(x => x.Payment);
+            builder.Property(x => x.Email).IsRequired().HasColumnType("varchar(30)");
+            builder.Property(x => x.TrxRef).IsRequired().HasColumnType("varchar(255)");
         }
     }
 }

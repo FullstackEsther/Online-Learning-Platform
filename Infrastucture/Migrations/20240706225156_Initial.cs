@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastucture.Migrations
 {
     /// <inheritdoc />
-    public partial class Second : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -317,6 +317,7 @@ namespace Infrastucture.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Topic = table.Column<string>(type: "longtext", nullable: false),
                     File = table.Column<string>(type: "longtext", nullable: false),
+                    Article = table.Column<string>(type: "longtext", nullable: true),
                     ModuleId = table.Column<Guid>(type: "char(36)", nullable: false),
                     TotalMinutes = table.Column<double>(type: "double", nullable: false),
                     CreatedBy = table.Column<string>(type: "longtext", nullable: true),
@@ -368,6 +369,7 @@ namespace Infrastucture.Migrations
                     QuizId = table.Column<Guid>(type: "char(36)", nullable: false),
                     QuestionType = table.Column<int>(type: "int", nullable: false),
                     QuestionText = table.Column<string>(type: "longtext", nullable: false),
+                    Options = table.Column<string>(type: "json", nullable: false),
                     CreatedBy = table.Column<string>(type: "longtext", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
@@ -390,11 +392,11 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    SerializedResponse = table.Column<string>(type: "longtext", nullable: false),
                     Score = table.Column<double>(type: "double", nullable: false),
                     StudentId = table.Column<Guid>(type: "char(36)", nullable: false),
                     QuizId = table.Column<Guid>(type: "char(36)", nullable: false),
                     IsPassedTest = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    QuestionAnswers = table.Column<string>(type: "json", nullable: false),
                     CreatedBy = table.Column<string>(type: "longtext", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
@@ -418,49 +420,14 @@ namespace Infrastucture.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "QuestionOption",
-                columns: table => new
-                {
-                    Text = table.Column<string>(type: "longtext", nullable: false),
-                    IsCorrect = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "char(36)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.ForeignKey(
-                        name: "FK_QuestionOption_Questions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Questions",
-                        principalColumn: "Id");
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "QuizAnswer",
-                columns: table => new
-                {
-                    QuestionId = table.Column<Guid>(type: "char(36)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.ForeignKey(
-                        name: "FK_QuizAnswer_Questions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Questions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "Description", "ModifiedBy", "ModifiedOn", "RoleName" },
                 values: new object[,]
                 {
-                    { new Guid("ccaca1d1-2d2f-47ba-8ec3-21afc8e6b87f"), "Admin", new DateTime(2024, 6, 20, 13, 39, 40, 654, DateTimeKind.Local).AddTicks(8509), "Creates and owns a course ", null, null, "Instructor" },
-                    { new Guid("d6ca1901-433e-4408-94e3-668a3c76c086"), "Admin", new DateTime(2024, 6, 20, 13, 39, 40, 654, DateTimeKind.Local).AddTicks(8523), "Takes a course for better Understanding", null, null, "Admin" },
-                    { new Guid("eebb32ff-cf5d-409d-99c8-411d9a7c0829"), "Admin", new DateTime(2024, 6, 20, 13, 39, 40, 654, DateTimeKind.Local).AddTicks(8447), "Takes a course for better Understanding", null, null, "Student" }
+                    { new Guid("176b7d8c-e6b3-4392-b7b4-f4eb6b89f00c"), "Admin", new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2297), "Takes a course for better Understanding", null, null, "Admin" },
+                    { new Guid("325c619b-0692-41cc-aa12-7113011f0668"), "Admin", new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2290), "Creates and owns a course ", null, null, "Instructor" },
+                    { new Guid("7f6030db-eafe-4cb9-bc65-4953f2895b9c"), "Admin", new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2218), "Takes a course for better Understanding", null, null, "Student" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -499,19 +466,9 @@ namespace Infrastucture.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionOption_QuestionId",
-                table: "QuestionOption",
-                column: "QuestionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuizId",
                 table: "Questions",
                 column: "QuizId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuizAnswer_QuestionId",
-                table: "QuizAnswer",
-                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Quizzes_ModuleId",
@@ -553,10 +510,7 @@ namespace Infrastucture.Migrations
                 name: "Payments");
 
             migrationBuilder.DropTable(
-                name: "QuestionOption");
-
-            migrationBuilder.DropTable(
-                name: "QuizAnswer");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "Results");
@@ -571,7 +525,7 @@ namespace Infrastucture.Migrations
                 name: "Enrollments");
 
             migrationBuilder.DropTable(
-                name: "Questions");
+                name: "Quizzes");
 
             migrationBuilder.DropTable(
                 name: "Roles");
@@ -581,9 +535,6 @@ namespace Infrastucture.Migrations
 
             migrationBuilder.DropTable(
                 name: "Students");
-
-            migrationBuilder.DropTable(
-                name: "Quizzes");
 
             migrationBuilder.DropTable(
                 name: "Modules");

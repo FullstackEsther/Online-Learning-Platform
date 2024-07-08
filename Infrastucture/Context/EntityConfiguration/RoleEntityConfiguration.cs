@@ -14,7 +14,11 @@ namespace Infrastucture.Context.EntityConfiguration
         {
             builder.HasMany(x => x.UserRoles)
             .WithOne(x => x.Role);
-            builder.Property(x => x.RoleName).IsRequired(true);
+            builder.Property(x => x.RoleName).IsRequired(true).HasColumnType("varchar(50)");
+            builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
             builder.HasData(new Role("Student")
             {
                 Description = "Takes a course for better Understanding",
