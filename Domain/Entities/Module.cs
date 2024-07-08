@@ -9,6 +9,7 @@ namespace Domain.Entities
     {
         public  string Title { get; set; }
         private double _totaltime;
+        public virtual Course Course {get; set;}
         public Guid CourseId { get;  private set; }
         public ICollection<Lesson> Lessons { get; set; } 
         public double TotalTime { get
@@ -20,8 +21,7 @@ namespace Domain.Entities
         {
             _totaltime = CalculateTotaltime();
         } }
-        public Quiz Quiz { get; set; }= default!; 
-        public Course Course{get;set;}
+        public Quiz Quiz { get; set; }= default!;
        internal Module(string title, Guid courseId)
        {
             Title = title;

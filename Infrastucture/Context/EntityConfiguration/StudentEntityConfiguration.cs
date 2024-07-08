@@ -19,7 +19,7 @@ namespace Infrastucture.Context.EntityConfiguration
             builder.Property(x => x.ProfilePicture).IsRequired(false).HasColumnType("varchar(255)");
             builder.Property(x => x.Biography).IsRequired(false).HasColumnType("varchar(250)"); 
             builder.Property(x => x.FirstName)
-            .HasMaxLength(30).HasColumnType("varrchar(30)")
+            .HasMaxLength(30).HasColumnType("varchar(30)")
             .IsRequired(true);
             builder.Property(x => x.LastName).HasColumnType("varchar(30)")
             .HasMaxLength(30).IsRequired();

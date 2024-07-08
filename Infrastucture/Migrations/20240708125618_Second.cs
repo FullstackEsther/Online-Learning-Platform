@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastucture.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Second : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,13 +21,13 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    Name = table.Column<string>(type: "longtext", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: false),
-                    ParentCategory = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    Name = table.Column<string>(type: "varchar(30)", nullable: false),
+                    Description = table.Column<string>(type: "varchar(50)", nullable: false),
+                    ParentCategory = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,10 +44,10 @@ namespace Infrastucture.Migrations
                     IsGroupChat = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     SenderUserName = table.Column<string>(type: "longtext", nullable: false),
                     ReceiverUserName = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,13 +60,13 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
                     Email = table.Column<string>(type: "longtext", nullable: false),
-                    Biography = table.Column<string>(type: "longtext", nullable: true),
-                    ProfilePicture = table.Column<string>(type: "longtext", nullable: true),
+                    Biography = table.Column<string>(type: "varchar(250)", nullable: true),
+                    ProfilePicture = table.Column<string>(type: "varchar(255)", nullable: true),
                     FirstName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
                 },
@@ -77,16 +77,36 @@ namespace Infrastucture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Email = table.Column<string>(type: "varchar(30)", nullable: false),
+                    TrxRef = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    RoleName = table.Column<string>(type: "longtext", nullable: false),
+                    RoleName = table.Column<string>(type: "varchar(50)", nullable: false),
                     Description = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,13 +119,13 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
                     Email = table.Column<string>(type: "longtext", nullable: false),
-                    Biography = table.Column<string>(type: "longtext", nullable: true),
-                    ProfilePicture = table.Column<string>(type: "longtext", nullable: true),
+                    Biography = table.Column<string>(type: "varchar(250)", nullable: true),
+                    ProfilePicture = table.Column<string>(type: "varchar(255)", nullable: true),
                     FirstName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
                 },
@@ -120,13 +140,13 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    Username = table.Column<string>(type: "longtext", nullable: false),
+                    Username = table.Column<string>(type: "varchar(50)", nullable: false),
                     ResetPasswordCode = table.Column<int>(type: "int", nullable: false),
-                    Password = table.Column<string>(type: "longtext", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    Password = table.Column<string>(type: "varchar(50)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(50)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(50)", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,7 +162,7 @@ namespace Infrastucture.Migrations
                     ChatRoomId = table.Column<Guid>(type: "char(36)", nullable: false),
                     SenderUserName = table.Column<string>(type: "longtext", nullable: false),
                     Content = table.Column<string>(type: "longtext", nullable: false),
-                    Timestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    Timestamp = table.Column<string>(type: "varchar(30)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,12 +181,12 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    Title = table.Column<string>(type: "longtext", nullable: false),
-                    CourseCode = table.Column<string>(type: "longtext", nullable: false),
+                    Title = table.Column<string>(type: "varchar(30)", nullable: false),
+                    CourseCode = table.Column<string>(type: "varchar(15)", nullable: false),
                     Price = table.Column<double>(type: "double", nullable: true),
                     TotalTime = table.Column<double>(type: "double", nullable: false),
-                    InstructorName = table.Column<string>(type: "longtext", nullable: false),
-                    DisplayPicture = table.Column<string>(type: "longtext", nullable: false),
+                    InstructorName = table.Column<string>(type: "varchar(30)", nullable: false),
+                    DisplayPicture = table.Column<string>(type: "varchar(255)", nullable: false),
                     WhatToLearn = table.Column<string>(type: "longtext", nullable: false),
                     IsVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
@@ -174,10 +194,10 @@ namespace Infrastucture.Migrations
                     CategoryId = table.Column<Guid>(type: "char(36)", nullable: false),
                     InstructorId = table.Column<Guid>(type: "char(36)", nullable: false),
                     TotalScore = table.Column<double>(type: "double", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -235,11 +255,11 @@ namespace Infrastucture.Migrations
                     Feedback = table.Column<string>(type: "longtext", nullable: false),
                     StudentId = table.Column<Guid>(type: "char(36)", nullable: false),
                     CourseId = table.Column<Guid>(type: "char(36)", nullable: false),
-                    PaymentId = table.Column<Guid>(type: "char(36)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    PaymentId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -248,6 +268,12 @@ namespace Infrastucture.Migrations
                         name: "FK_Enrollments_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Enrollments_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -264,13 +290,13 @@ namespace Infrastucture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    Title = table.Column<string>(type: "longtext", nullable: false),
+                    Title = table.Column<string>(type: "varchar(30)", nullable: false),
                     CourseId = table.Column<Guid>(type: "char(36)", nullable: false),
                     TotalTime = table.Column<double>(type: "double", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -285,45 +311,19 @@ namespace Infrastucture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Email = table.Column<string>(type: "longtext", nullable: false),
-                    TrxRef = table.Column<string>(type: "longtext", nullable: false),
-                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Payments_Enrollments_Id",
-                        column: x => x.Id,
-                        principalTable: "Enrollments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Lessons",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    Topic = table.Column<string>(type: "longtext", nullable: false),
-                    File = table.Column<string>(type: "longtext", nullable: false),
+                    Topic = table.Column<string>(type: "varchar(50)", nullable: false),
+                    File = table.Column<string>(type: "varchar(255)", nullable: false),
                     Article = table.Column<string>(type: "longtext", nullable: true),
                     ModuleId = table.Column<Guid>(type: "char(36)", nullable: false),
                     TotalMinutes = table.Column<double>(type: "double", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -344,10 +344,10 @@ namespace Infrastucture.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Duration = table.Column<double>(type: "double", nullable: false),
                     ModuleId = table.Column<Guid>(type: "char(36)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -368,12 +368,12 @@ namespace Infrastucture.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     QuizId = table.Column<Guid>(type: "char(36)", nullable: false),
                     QuestionType = table.Column<int>(type: "int", nullable: false),
-                    QuestionText = table.Column<string>(type: "longtext", nullable: false),
+                    QuestionText = table.Column<string>(type: "varchar(255)", nullable: false),
                     Options = table.Column<string>(type: "json", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -397,10 +397,10 @@ namespace Infrastucture.Migrations
                     QuizId = table.Column<Guid>(type: "char(36)", nullable: false),
                     IsPassedTest = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     QuestionAnswers = table.Column<string>(type: "json", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "varchar(30)", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -425,9 +425,9 @@ namespace Infrastucture.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "Description", "ModifiedBy", "ModifiedOn", "RoleName" },
                 values: new object[,]
                 {
-                    { new Guid("176b7d8c-e6b3-4392-b7b4-f4eb6b89f00c"), "Admin", new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2297), "Takes a course for better Understanding", null, null, "Admin" },
-                    { new Guid("325c619b-0692-41cc-aa12-7113011f0668"), "Admin", new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2290), "Creates and owns a course ", null, null, "Instructor" },
-                    { new Guid("7f6030db-eafe-4cb9-bc65-4953f2895b9c"), "Admin", new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2218), "Takes a course for better Understanding", null, null, "Student" }
+                    { new Guid("5797602e-8734-40ae-b4f0-898af518b525"), "Admin", new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4396), "Takes a course for better Understanding", null, null, "Student" },
+                    { new Guid("58f3f8ca-7c62-4d77-9c32-b66ed31024eb"), "Admin", new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4499), "Takes a course for better Understanding", null, null, "Admin" },
+                    { new Guid("78cd7ea4-876a-43c1-a11b-f2c13ccb8783"), "Admin", new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4485), "Creates and owns a course ", null, null, "Instructor" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -444,6 +444,12 @@ namespace Infrastucture.Migrations
                 name: "IX_Enrollments_CourseId",
                 table: "Enrollments",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_PaymentId",
+                table: "Enrollments",
+                column: "PaymentId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_StudentId",
@@ -501,13 +507,13 @@ namespace Infrastucture.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Enrollments");
+
+            migrationBuilder.DropTable(
                 name: "Lessons");
 
             migrationBuilder.DropTable(
                 name: "Messages");
-
-            migrationBuilder.DropTable(
-                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Questions");
@@ -519,22 +525,22 @@ namespace Infrastucture.Migrations
                 name: "UserRole");
 
             migrationBuilder.DropTable(
+                name: "Payments");
+
+            migrationBuilder.DropTable(
                 name: "ChatRooms");
 
             migrationBuilder.DropTable(
-                name: "Enrollments");
+                name: "Quizzes");
 
             migrationBuilder.DropTable(
-                name: "Quizzes");
+                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Modules");

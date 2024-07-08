@@ -63,7 +63,7 @@ namespace Domain.Entities
             {
                 throw new ArgumentException("Module already exist with this Title");
             }
-            
+            module.Course = this;
             Modules.Add(module);
         }
         public void UpdateModule(Module module)
