@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240706225156_Initial")]
-    partial class Initial
+    [Migration("20240708125618_Second")]
+    partial class Second
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,27 +29,27 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("ParentCategory")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.HasKey("Id");
 
@@ -63,19 +63,19 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<bool>("IsGroupChat")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("ReceiverUserName")
                         .HasColumnType("longtext");
@@ -109,8 +109,9 @@ namespace Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Timestamp")
+                        .IsRequired()
+                        .HasColumnType("varchar(30)");
 
                     b.HasKey("Id");
 
@@ -130,27 +131,27 @@ namespace Infrastucture.Migrations
 
                     b.Property<string>("CourseCode")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(15)");
 
                     b.Property<int>("CourseStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("DisplayPicture")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("InstructorId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("InstructorName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<bool>("IsVerified")
                         .HasColumnType("tinyint(1)");
@@ -159,17 +160,17 @@ namespace Infrastucture.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<double?>("Price")
                         .HasColumnType("double");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<double>("TotalScore")
                         .HasColumnType("double");
@@ -200,22 +201,23 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Feedback")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<Guid?>("PaymentId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("StudentId")
@@ -224,6 +226,9 @@ namespace Infrastucture.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("PaymentId")
+                        .IsUnique();
 
                     b.HasIndex("StudentId");
 
@@ -237,13 +242,13 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Biography")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -260,13 +265,13 @@ namespace Infrastucture.Migrations
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("ProfilePicture")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -283,27 +288,27 @@ namespace Infrastucture.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("File")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<Guid>("ModuleId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Topic")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<double>("TotalMinutes")
                         .HasColumnType("double");
@@ -325,20 +330,20 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<double>("TotalTime")
                         .HasColumnType("double");
@@ -353,33 +358,34 @@ namespace Infrastucture.Migrations
             modelBuilder.Entity("Domain.Entities.Payment", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("TrxRef")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -393,16 +399,16 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Options")
                         .IsRequired()
@@ -410,7 +416,7 @@ namespace Infrastucture.Migrations
 
                     b.Property<string>("QuestionText")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("QuestionType")
                         .HasColumnType("int");
@@ -432,19 +438,19 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<double>("Duration")
                         .HasColumnType("double");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<Guid>("ModuleId")
                         .HasColumnType("char(36)");
@@ -464,19 +470,19 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<bool>("IsPassedTest")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("QuestionAnswers")
                         .IsRequired()
@@ -507,23 +513,23 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -532,25 +538,25 @@ namespace Infrastucture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7f6030db-eafe-4cb9-bc65-4953f2895b9c"),
+                            Id = new Guid("5797602e-8734-40ae-b4f0-898af518b525"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2218),
+                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4396),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Student"
                         },
                         new
                         {
-                            Id = new Guid("325c619b-0692-41cc-aa12-7113011f0668"),
+                            Id = new Guid("78cd7ea4-876a-43c1-a11b-f2c13ccb8783"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2290),
+                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4485),
                             Description = "Creates and owns a course ",
                             RoleName = "Instructor"
                         },
                         new
                         {
-                            Id = new Guid("176b7d8c-e6b3-4392-b7b4-f4eb6b89f00c"),
+                            Id = new Guid("58f3f8ca-7c62-4d77-9c32-b66ed31024eb"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 6, 23, 51, 56, 226, DateTimeKind.Local).AddTicks(2297),
+                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4499),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Admin"
                         });
@@ -563,13 +569,13 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Biography")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -586,13 +592,13 @@ namespace Infrastucture.Migrations
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("ProfilePicture")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -606,27 +612,29 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(0)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("ResetPasswordCode")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -702,6 +710,12 @@ namespace Infrastucture.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Payment", "Payment")
+                        .WithOne("Enrollment")
+                        .HasForeignKey("Domain.Entities.Enrollment", "PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Student", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
@@ -709,6 +723,8 @@ namespace Infrastucture.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
+
+                    b.Navigation("Payment");
 
                     b.Navigation("Student");
                 });
@@ -733,17 +749,6 @@ namespace Infrastucture.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Payment", b =>
-                {
-                    b.HasOne("Domain.Entities.Enrollment", "Enrollment")
-                        .WithOne("Payment")
-                        .HasForeignKey("Domain.Entities.Payment", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Enrollment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Question", b =>
@@ -823,12 +828,6 @@ namespace Infrastucture.Migrations
                     b.Navigation("Modules");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Enrollment", b =>
-                {
-                    b.Navigation("Payment")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.Instructor", b =>
                 {
                     b.Navigation("Courses");
@@ -839,6 +838,12 @@ namespace Infrastucture.Migrations
                     b.Navigation("Lessons");
 
                     b.Navigation("Quiz")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Payment", b =>
+                {
+                    b.Navigation("Enrollment")
                         .IsRequired();
                 });
 

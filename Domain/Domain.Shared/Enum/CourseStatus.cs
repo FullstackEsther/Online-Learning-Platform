@@ -2,7 +2,7 @@ namespace Domain.Enum
 {
     public enum CourseStatus
     {
-        Free = 0,
+        Free = 1,
         Paid
     }
 }
