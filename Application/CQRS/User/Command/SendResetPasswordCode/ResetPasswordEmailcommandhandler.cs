@@ -20,12 +20,12 @@ namespace Application.CQRS.User.Command.ResetPassword
         }
         public async Task<bool> Handle(ResetPasswordEmailCommand request, CancellationToken cancellationToken)
         {
-           var user = await  _userRepository.Get(x => x.Username == request.Username);
-           if (user == null) return false;
-           var code = user.GenerateCode();
-           await _userRepository.Save();
-          var sendEmail = _mailService.SendCodeToEmail(request.Username,code);
-            if(sendEmail)return true;
+            var user = await _userRepository.Get(x => x.Username == request.Username);
+            if (user == null) return false;
+            var code = user.GenerateCode();
+            await _userRepository.Save();
+            var sendEmail = _mailService.SendCodeToEmail(request.Username, code);
+            if (sendEmail) return true;
             return false;
         }
     }

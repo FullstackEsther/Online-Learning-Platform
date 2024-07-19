@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.DomainServices.Interface;
 using Domain.Entities;
 using Domain.RepositoryInterfaces;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,7 @@ using PayStack.Net;
 
 namespace Domain.DomainServices.Implementation
 {
-    public class PaymentManager
+    public class PaymentManager : IPaymentManager
     {
         private readonly IConfiguration _configuration;
         private readonly string token;
@@ -33,7 +34,7 @@ namespace Domain.DomainServices.Implementation
                     Email = userEmail,
                     Currency = "NGN",
                     Reference = GeneratetransactionReference(),
-                    CallbackUrl = ""
+                    CallbackUrl = "http://localhost:5283/VerifyPayment"
                 };
                 TransactionInitializeResponse response = PayStack.Transactions.Initialize(request);
                 if (response.Status)

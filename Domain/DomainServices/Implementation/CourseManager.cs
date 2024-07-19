@@ -16,10 +16,12 @@ namespace Domain.DomainServices.Implementation
     public class CourseManager : ICourseManager
     {
         private readonly ICourseRepository _courseRepository;
+        private readonly IStudentRepository _studentRepository;
 
-        public CourseManager(ICourseRepository courseRepository)
+        public CourseManager(ICourseRepository courseRepository, IStudentRepository studentRepository)
         {
             _courseRepository = courseRepository;
+            _studentRepository = studentRepository;
         }
 
         public async Task<Lesson> AddLessonToModule(Guid moduleId, string topic, string file, double totalMinutes, string? article)
@@ -29,7 +31,7 @@ namespace Domain.DomainServices.Implementation
             var lesson = new Lesson(topic, file, module.Id, totalMinutes, article);
             lesson.CreateDetails(course.InstructorName, DateTime.UtcNow);
             module.AddLessons(lesson);
-            _courseRepository.Update(course);
+            await _courseRepository.AddLesson(lesson);
             var unitofWork = await _courseRepository.Save();
             if (unitofWork > 0)
             {
@@ -44,7 +46,7 @@ namespace Domain.DomainServices.Implementation
             var module = new Module(title, courseId);
             module.CreateDetails(getCourse.InstructorName, DateTime.UtcNow);
             getCourse.AddModule(module);
-            _courseRepository.Update(getCourse);
+            await _courseRepository.AddModule(module);
             var unitofWork = await _courseRepository.Save();
             if (unitofWork <= 0)
             {
@@ -60,8 +62,18 @@ namespace Domain.DomainServices.Implementation
             var question = module.Quiz.Questions.FirstOrDefault(x => x.Id == questionId) ?? throw new ArgumentException("Question doesn't exist");
             var option = new QuestionOption(optionText, isCorrectoption, questionId);
             question.AddOption(option);
-            _courseRepository.Update(course);
-            if (await _courseRepository.Save() > 0) return question;
+            _courseRepository.UpdateQuestion(question);
+            var unitofWork = await _courseRepository.Save();
+            if (unitofWork > 0) return question;
+            return null;
+        }
+
+        public async Task<ICollection<QuestionAnswer>> AddQuestionAnswerToQuiz(Guid quizId, List<string> selectedOptions, Guid questionId)
+        {
+            var course = await _courseRepository.GetCourse(course => course.Modules.Any(x => x.Quiz.Id == quizId)) ?? throw new ArgumentException("Course doesn't exist");
+            var module = course.Modules.FirstOrDefault(x => x.Quiz.Id == quizId) ?? throw new ArgumentException("module doesn't exist");
+            var answers = module.Quiz.GenerateAnswers(questionId, selectedOptions);
+            if (await _courseRepository.Save() > 0) return answers;
             return null;
         }
 
@@ -72,7 +84,7 @@ namespace Domain.DomainServices.Implementation
             var quiz = module.Quiz.Id == quizId ? module.Quiz : throw new ArgumentException("quiz doesn't exit");
             var question = new Question(questionText, quizId, questionType);
             quiz.AddQuestion(question);
-            _courseRepository.Update(course);
+            await _courseRepository.AddQuestion(question);
             if (await _courseRepository.Save() > 0) return question;
             return null;
         }
@@ -84,16 +96,32 @@ namespace Domain.DomainServices.Implementation
             var quiz = new Quiz(duration, moduleId);
             quiz.CreateDetails(course.InstructorName, DateTime.UtcNow);
             module.SetQuiz(quiz);
-            _courseRepository.Update(course);
+            await _courseRepository.AddQuiz(quiz);
             if (await _courseRepository.Save() > 0) return quiz;
             return null;
         }
 
-        public async Task<Course> CreateCourse(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture, string email)
+        public async Task<Result> AddResultToQuiz(Guid quizId, ICollection<QuestionAnswer> answers, string email)
+        {
+            var student = await _studentRepository.Get(x => x.Email == email);
+            var course = await _courseRepository.GetCourse(course => course.Modules.Any(x => x.Quiz.Id == quizId)) ?? throw new ArgumentException("Course doesn't exist");
+            var module = course.Modules.FirstOrDefault(x => x.Quiz.Id == quizId) ?? throw new ArgumentException("module doesn't exist");
+            var result = new Result(quizId,student.Id,answers);
+            result.CheckScore();
+            module.Quiz.AddResult(result);
+            await _courseRepository.AddResult(result);
+            if (await _courseRepository.Save() > 0) return result;
+            return null;
+        }
+
+        public async Task<Course> CreateCourse(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture, string email, double price)
         {
             var checkCourse = _courseRepository.Exist(x => x.CourseCode == courseCode);
             if (checkCourse) throw new ArgumentException("Course Code already exist");
-            var course = new Course(title, level, categoryId, courseCode, courseStatus, whatToLearn, displayPicture);
+            var course = new Course(title, level, categoryId, courseCode, courseStatus, whatToLearn, displayPicture)
+            {
+                Price = price
+            };
             course.CreateDetails(email, DateTime.UtcNow);
             return await _courseRepository.Create(course);
         }
@@ -144,7 +172,12 @@ namespace Domain.DomainServices.Implementation
 
         public async Task<IEnumerable<Course>> GetAllCoursesByInstructorAsync(Guid instructorId)
         {
-           return await _courseRepository.GetAllCourses(x => x.InstructorId == instructorId);
+            return await _courseRepository.GetAllCourses(x => x.InstructorId == instructorId);
+        }
+
+        public async Task<IEnumerable<Course>> GetAllUnVerifiedCoursesAsync()
+        {
+            return await _courseRepository.GetAllCourses(x => x.IsVerified == false);
         }
 
         public async Task<IEnumerable<Course>> GetAllVerifiedCoursesAsync()
@@ -159,7 +192,7 @@ namespace Domain.DomainServices.Implementation
 
         public async Task<IEnumerable<Course>> GetCoursesByCategoryAsync(Guid categoryId)
         {
-          return await _courseRepository.GetAllCourses(x => x.CategoryId == categoryId);
+            return await _courseRepository.GetAllCourses(x => x.CategoryId == categoryId);
         }
 
         public async Task RemoveQuestionOption(Guid moduleId, Guid questionId, string text)
@@ -167,17 +200,18 @@ namespace Domain.DomainServices.Implementation
             var course = await _courseRepository.GetCourse(course => course.Modules.Any(m => m.Id == moduleId)) ?? throw new ArgumentException("Course doesn't exist");
             var module = course.Modules.FirstOrDefault(x => x.Id == moduleId) ?? throw new ArgumentException("module doesn't exist");
             var question = module.Quiz.Questions.FirstOrDefault(x => x.Id == questionId) ?? throw new ArgumentException("question doesn't exist");
-            var option = question.Options.FirstOrDefault(x => x.Text == text);
+            var option = question.Options.FirstOrDefault(x => x.Text == text) ?? throw new ArgumentException("Option doesnot exist");
             question.RemoveOption(option);
+            _courseRepository.UpdateQuestion(question);
+            await _courseRepository.Save();
         }
 
-        public async Task<bool> UpdateCourse(string title, string courseCode, double? price, string displayPicture, string whatToLearn, CourseStatus courseStatus, Level level, Guid categoryId, Guid courseId)
+        public async Task<bool> UpdateCourse(string title, string courseCode, double? price, string whatToLearn, CourseStatus courseStatus, Level level, Guid categoryId, Guid courseId)
         {
             var existingCourse = await _courseRepository.GetCourse(x => x.Id == courseId) ?? throw new ArgumentException("Course does not exist");
             existingCourse.Title = title;
             existingCourse.CourseCode = courseCode;
             existingCourse.Price = price;
-            existingCourse.DisplayPicture = displayPicture;
             existingCourse.WhatToLearn = whatToLearn;
             existingCourse.Level = level;
             existingCourse.CourseStatus = courseStatus;
@@ -200,13 +234,34 @@ namespace Domain.DomainServices.Implementation
             return false;
         }
 
-        public async Task<bool> UpdateModuleLesson(string topic, Guid moduleId, string file, double totalMinutes, string? article, Guid lessonId)
+        public async Task<Course> UpdateDisplaypicture(Guid courseId, string displaypictureUrl)
+        {
+
+            var existingCourse = await _courseRepository.GetCourse(x => x.Id == courseId) ?? throw new ArgumentException("Course does not exist");
+            existingCourse.DisplayPicture = displaypictureUrl;
+            _courseRepository.Update(existingCourse);
+            if (await _courseRepository.Save() > 0) return existingCourse;
+            return null;
+        }
+
+        public async Task<bool> UpdateLessonFile(Guid moduleId, string fileUrl, Guid lessonId)
+        {
+            var course = await _courseRepository.GetCourse(course => course.Modules.Any(m => m.Id == moduleId)) ?? throw new ArgumentException("Course doesn't exist");
+            var module = course.Modules.FirstOrDefault(x => x.Id == moduleId) ?? throw new ArgumentException("module doesn't exist");
+            var existingLesson = module.Lessons.FirstOrDefault(x => x.Id == lessonId) ?? throw new ArgumentException("Lesson Not Found");
+            existingLesson.File = fileUrl;
+            existingLesson.ModifyDetails(course.InstructorName, DateTime.UtcNow);
+            _courseRepository.Update(course);
+            if (await _courseRepository.Save() > 0) return true;
+            return false;
+        }
+
+        public async Task<bool> UpdateModuleLesson(string topic, Guid moduleId, double totalMinutes, string? article, Guid lessonId)
         {
             var course = await _courseRepository.GetCourse(course => course.Modules.Any(m => m.Id == moduleId)) ?? throw new ArgumentException("Course doesn't exist");
             var module = course.Modules.FirstOrDefault(x => x.Id == moduleId) ?? throw new ArgumentException("module doesn't exist");
             var existingLesson = module.Lessons.FirstOrDefault(x => x.Id == lessonId) ?? throw new ArgumentException("Lesson Not Found");
             existingLesson.Article = article;
-            existingLesson.File = file;
             existingLesson.Topic = topic;
             existingLesson.TotalMinutes = totalMinutes;
             existingLesson.ModifyDetails(course.InstructorName, DateTime.UtcNow);
@@ -214,5 +269,19 @@ namespace Domain.DomainServices.Implementation
             if (await _courseRepository.Save() > 0) return true;
             return false;
         }
+
+        public async Task<bool> UpdateQuizQuestion(string questionText, Guid moduleId, QuestionType questionType, Guid questionId)
+        {
+            var course = await _courseRepository.GetCourse(course => course.Modules.Any(m => m.Id == moduleId)) ?? throw new ArgumentException("Course doesn't exist");
+            var module = course.Modules.FirstOrDefault(x => x.Id == moduleId) ?? throw new ArgumentException("module doesn't exist");
+            var question = module.Quiz.Questions.FirstOrDefault(x => x.Id == questionId) ?? throw new ArgumentException("question doesn't exist");
+            question.QuestionText = questionText;
+            question.QuestionType = questionType;
+            module.Quiz.UpdateQuestion(question);
+            _courseRepository.Update(course);
+            if (await _courseRepository.Save() > 0) return true;
+            return false;
+        }
+
     }
 }

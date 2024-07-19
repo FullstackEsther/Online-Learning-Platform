@@ -203,10 +203,6 @@ namespace Infrastucture.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
 
-                    b.Property<string>("Feedback")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("varchar(30)");
 
@@ -535,25 +531,25 @@ namespace Infrastucture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5797602e-8734-40ae-b4f0-898af518b525"),
+                            Id = new Guid("22e3a5ce-2636-40d4-be22-a6afab99a90b"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4396),
+                            CreatedOn = new DateTime(2024, 7, 19, 4, 12, 49, 380, DateTimeKind.Local).AddTicks(8743),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Student"
                         },
                         new
                         {
-                            Id = new Guid("78cd7ea4-876a-43c1-a11b-f2c13ccb8783"),
+                            Id = new Guid("36013548-5c81-4cf2-8f71-b493216d3411"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4485),
+                            CreatedOn = new DateTime(2024, 7, 19, 4, 12, 49, 380, DateTimeKind.Local).AddTicks(8783),
                             Description = "Creates and owns a course ",
                             RoleName = "Instructor"
                         },
                         new
                         {
-                            Id = new Guid("58f3f8ca-7c62-4d77-9c32-b66ed31024eb"),
+                            Id = new Guid("48a7e8bd-5059-40c5-8b64-ea6686978326"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4499),
+                            CreatedOn = new DateTime(2024, 7, 19, 4, 12, 49, 380, DateTimeKind.Local).AddTicks(8789),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Admin"
                         });
@@ -609,14 +605,12 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("ModifiedOn")
@@ -636,6 +630,54 @@ namespace Infrastucture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Domain.Entities.UserProgress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CompletionDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime(0)");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime(0)");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserProgresses");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
@@ -789,6 +831,25 @@ namespace Infrastucture.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("Domain.Entities.UserProgress", b =>
+                {
+                    b.HasOne("Domain.Entities.Course", null)
+                        .WithMany("UserProgresses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Lesson", null)
+                        .WithMany("UserProgresses")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany("UserProgresses")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("Domain.Entities.Role", "Role")
@@ -823,11 +884,18 @@ namespace Infrastucture.Migrations
                     b.Navigation("Enrollments");
 
                     b.Navigation("Modules");
+
+                    b.Navigation("UserProgresses");
                 });
 
             modelBuilder.Entity("Domain.Entities.Instructor", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Lesson", b =>
+                {
+                    b.Navigation("UserProgresses");
                 });
 
             modelBuilder.Entity("Domain.Entities.Module", b =>
@@ -865,6 +933,8 @@ namespace Infrastucture.Migrations
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
+                    b.Navigation("UserProgresses");
+
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

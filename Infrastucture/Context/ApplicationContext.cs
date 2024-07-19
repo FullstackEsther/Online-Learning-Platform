@@ -14,8 +14,6 @@ namespace Infrastucture.Context
 {
     public class ApplicationContext : DbContext
     {
-
-
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             
@@ -30,7 +28,11 @@ namespace Infrastucture.Context
         }
         // public  override Task<int> SaveChangesAsync(CancellationToken token = default)
         // {
-        //     EntityStateModification();
+        //     foreach (var entry in ChangeTracker.Entries<Question>())
+        //     {
+        //         System.Console.WriteLine($"{entry.State}");
+        //     }
+        //     // EntityStateModification();
         //     return  base.SaveChangesAsync();
         // }
         // public void EntityStateModification()
@@ -58,6 +60,7 @@ namespace Infrastucture.Context
           modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ChatRoom> ChatRooms { get; set; }
@@ -67,7 +70,7 @@ namespace Infrastucture.Context
         public DbSet<Quiz> Quizzes { get; set; }
         // public DbSet<QuizAnswer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
-        // public DbSet<QuestionOption> Options { get; set; }
+        public DbSet<UserProgress> UserProgresses { get; set; }
         public DbSet<Domain.Entities.Module> Modules { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Lesson> Lessons { get; set; }

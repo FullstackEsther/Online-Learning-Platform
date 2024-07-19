@@ -40,5 +40,10 @@ namespace Infrastucture.Repository.Implementation
             .Include(x => x.UserRoles).ThenInclude(x => x.Role)
             .ToListAsync();
         }
+        public async Task<UserRole> AddUserRole(UserRole userRole)
+        {
+            await _applicationContext.UserRole.AddAsync(userRole);
+            return userRole;
+        }
     }
 }

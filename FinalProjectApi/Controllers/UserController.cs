@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.CQRS.User.Command;
+using Application.CQRS.User.Command.AssignRole;
 using Application.CQRS.User.Query;
 using Application.CQRS.User.Query.Get;
 using Application.DTO;
@@ -22,21 +23,19 @@ namespace FinalProjectApi.Controllers
         private readonly ICurrentUser _currentUser;
         private readonly ISender _mediator;
 
-        public UserController(IAuthService authService,  ICurrentUser currentUser, ISender mediator)
+        public UserController(IAuthService authService, ISender mediator)
         {
             _authService = authService;
-            _currentUser = currentUser;
             _mediator = mediator;
         }
-        
-        // [HttpPost]
-        // public async Task<IActionResult> AssignRoleToUser([FromRoute] string roleName)
-        // {
-        //     var user = _currentUser.GetLoggedInUserEmail;
-        //     var assigned = await _userService.AssignRoleToUser(user.ToString(), roleName);
-        //     if (assigned) return Ok();
-        //     return BadRequest();
-        // }
+
+        [HttpPost("assignrole")]
+        public async Task<IActionResult> AssignRoleToUser([FromQuery] string roleName)
+        {
+            var command = new AssignRoleCommand(roleName);
+            await _mediator.Send(command);
+            return Ok();
+        }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterUserCommand command)

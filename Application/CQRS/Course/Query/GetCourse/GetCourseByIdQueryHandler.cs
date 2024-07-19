@@ -37,12 +37,12 @@ namespace Application.CQRS.Course.Query.GetCourse
                     Title = course.Title,
                     TotalTime = course.TotalTime,
                     WhatToLearn = course.WhatToLearn,
-                    Modules = course.Modules.Select(x => new ModuleDto
+                    Modules = course?.Modules?.Select(x => new ModuleDto
                     {
                         CourseId = course.Id,
                         Title = x.Title,
                         Totaltime = x.TotalTime,
-                        Lessons = x.Lessons.Select(x => new LessonDto
+                        Lessons = x.Lessons?.Select(x => new LessonDto
                         {
                             Article = x.Article,
                             File = x.File,
@@ -54,12 +54,12 @@ namespace Application.CQRS.Course.Query.GetCourse
                         {
                             Duration = x.Quiz.Duration,
                             ModuleId = x.Quiz.ModuleId,
-                            Questions = x.Quiz.Questions.Select(x => new QuestionDto
+                            Questions = x.Quiz?.Questions.Select(x => new QuestionDto
                             {
                                 QuestionText = x.QuestionText,
                                 QuizId = x.QuizId,
                                 QuestionType = x.QuestionType,
-                                questionOptions = x.Options.Select(x => new QuestionOptionDto
+                                questionOptions = x.Options?.Select(x => new QuestionOptionDto
                                 {
                                     option = x.Text
                                 }).ToList()

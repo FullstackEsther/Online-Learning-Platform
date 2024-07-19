@@ -17,7 +17,7 @@ namespace Application.CQRS.Course.Command.DeleteOption
         }
         public async Task Handle(DeleteQuestionOptionCommand request, CancellationToken cancellationToken)
         {
-           await  _courseManager.RemoveQuestionOption(request.ModuleId,request.QuestionId,request.Text);
+            await _courseManager.RemoveQuestionOption(request.ModuleId, request.QuestionId, request.Text);
         }
     }
 }

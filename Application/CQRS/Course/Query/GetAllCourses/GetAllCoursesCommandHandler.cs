@@ -18,7 +18,8 @@ namespace Application.CQRS.Course.Query.GetAllCourses
         }
         public async Task<BaseResponse<IReadOnlyList<CourseDto>>> Handle(GetAllCoursesQuery request, CancellationToken cancellationToken)
         {
-            var courses = await _courseManager.GetAllCoursesAsync() ?? throw new ArgumentException("No Courses Found");
+            var check = await _courseManager.GetAllCoursesAsync();
+            var courses = check.Any() ? check : throw new ArgumentException("No Courses Found");
             var courseDtos = courses.Select(course => new CourseDto
             {
                 CategoryId = course.CategoryId,
@@ -31,37 +32,8 @@ namespace Application.CQRS.Course.Query.GetAllCourses
                 Level = course.Level,
                 Title = course.Title,
                 TotalTime = course.TotalTime,
-                WhatToLearn = course.WhatToLearn,
-                Modules = course.Modules.Select(module => new ModuleDto
-                {
-                    CourseId = course.Id,
-                    Title = module.Title,
-                    Totaltime = module.TotalTime,
-                    Lessons = module.Lessons.Select(lesson => new LessonDto
-                    {
-                        Article = lesson.Article,
-                        File = lesson.File,
-                        ModuleId = lesson.ModuleId,
-                        Topic = lesson.Topic,
-                        TotalMinutes = lesson.TotalMinutes
-                    }).ToList(),
-                    Quiz = new QuizDto
-                    {
-                        Duration = module.Quiz.Duration,
-                        ModuleId = module.Quiz.ModuleId,
-                        Questions = module.Quiz.Questions.Select(question => new QuestionDto
-                        {
-                            QuestionText = question.QuestionText,
-                            QuizId = question.QuizId,
-                            QuestionType = question.QuestionType,
-                            questionOptions = question.Options.Select(option => new QuestionOptionDto
-                            {
-                                option = option.Text
-                            }).ToList()
-                        }).ToList()
-                    }
-                }).ToList()
-            }).ToList();
+                WhatToLearn = course.WhatToLearn
+            }).ToList();   
 
             return new BaseResponse<IReadOnlyList<CourseDto>>
             {

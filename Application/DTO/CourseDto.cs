@@ -33,22 +33,18 @@ namespace Application.DTO
         public IFormFile DisplayPicture { get; set; }
         public string WhatToLearn { get; set; }
         public CourseStatus CourseStatus { get; set; }
-        public IFormFile? profilePicture {get;set;}
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Biography{ get; set; }
+        public double Price { get; set; }
     }
-  
+
 
     public record UpdateCourseRequestModel
     {
-    public string Title { get; set; }
-    public string CourseCode { get; set; }
-    public double? Price { get; set; }
-    public string DisplayPicture { get; set; }
-    public string WhatToLearn { get; set; }
-    public Level Level { get; set; }
-    public CourseStatus CourseStatus { get; set; }
-    public Guid CategoryId { get; set; }
-}
+        public string Title { get; set; }
+        public string CourseCode { get; set; }
+        public double? Price { get; set; }
+        public string WhatToLearn { get; set; }
+        public Level Level { get; set; }
+        public CourseStatus CourseStatus { get; set; }
+        public Guid CategoryId { get; set; }
+    }
 }

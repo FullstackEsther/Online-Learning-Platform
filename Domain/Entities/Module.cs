@@ -7,33 +7,36 @@ namespace Domain.Entities
 {
     public class Module : BaseClass
     {
-        public  string Title { get; set; }
+        public string Title { get; set; }
         private double _totaltime;
-        public virtual Course Course {get; set;}
-        public Guid CourseId { get;  private set; }
-        public ICollection<Lesson> Lessons { get; set; } 
-        public double TotalTime { get
+        public virtual Course Course { get; set; }
+        public Guid CourseId { get; private set; }
+        public ICollection<Lesson> Lessons { get; set; }
+        public double TotalTime
         {
-            return _totaltime;
-        }
+            get
+            {
+                return _totaltime;
+            }
 
-        set
+            set
+            {
+                _totaltime = CalculateTotaltime();
+            }
+        }
+        public Quiz Quiz { get; set; } = default!;
+        internal Module(string title, Guid courseId)
         {
-            _totaltime = CalculateTotaltime();
-        } }
-        public Quiz Quiz { get; set; }= default!;
-       internal Module(string title, Guid courseId)
-       {
             Title = title;
             CourseId = courseId;
             Lessons = new HashSet<Lesson>();
-       }
-       private Module()
-       {
+        }
+        private Module()
+        {
 
-       }
-       public void SetQuiz(Quiz quiz)
-       {
+        }
+        public void SetQuiz(Quiz quiz)
+        {
             if (quiz == null)
             {
                 throw new ArgumentException("Quiz cannot be null");
@@ -43,22 +46,25 @@ namespace Domain.Entities
                 throw new ArgumentException("Wrong ModuleId passed");
             }
             Quiz = quiz;
-       }
-       public void RemoveQuiz()
-       {
-           Quiz = null; 
-       }
+        }
+        public void RemoveQuiz()
+        {
+            Quiz = null;
+        }
 
         private double CalculateTotaltime()
         {
             double totaltime = 0;
-            foreach (var time in Lessons)
+            if (Lessons != null && Lessons.Count != 0)
             {
-                totaltime += time.TotalMinutes;
+                foreach (var lesson in Lessons)
+                {
+                    totaltime += lesson.TotalMinutes;
+                }
             }
             return totaltime;
         }
-         
+
         public void AddLessons(Lesson lesson)
         {
             if (lesson != null)
@@ -72,10 +78,10 @@ namespace Domain.Entities
         }
         public void RemoveLesson(Guid lessonId)
         {
-           var lesson = Lessons.FirstOrDefault(x => x.Id == lessonId)?? throw new ArgumentException("Lesson  not Found");
-           Lessons.Remove(lesson!);
+            var lesson = Lessons.FirstOrDefault(x => x.Id == lessonId) ?? throw new ArgumentException("Lesson  not Found");
+            Lessons.Remove(lesson!);
         }
-    
+
         // public void UpdateLesson(Lesson updatedLesson)
         // {
         //     var existingLessons = Lessons.FirstOrDefault(x => x.Id == updatedLesson.Id);
@@ -86,6 +92,6 @@ namespace Domain.Entities
         //         existingLessons.TotalMinutes = updatedLesson.TotalMinutes;
         //     }
         // }
-        
+
     }
 }

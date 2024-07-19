@@ -12,6 +12,7 @@ namespace Infrastucture.Context.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
+            builder.HasMany(x => x.UserProgresses).WithOne().HasForeignKey(x => x.CourseId);
             builder.HasMany(x => x.Modules)
             .WithOne(x => x.Course).HasForeignKey(x => x.CourseId);
             builder.HasMany(x => x.Enrollments)

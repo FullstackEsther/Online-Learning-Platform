@@ -30,11 +30,11 @@ namespace Application.Exception
                 _logger.LogError($"Argument error: {ex.Message}");
                 await HandleArgumentExceptionAsync(httpContext, ex);
             }
-            // catch (Exception ex)
-            // {
-            //     _logger.LogError($"Something went wrong: {ex}");
-            //     await HandleExceptionAsync(httpContext, ex);
-            // }
+            catch (System.Exception ex)
+            {
+                _logger.LogError($"Something went wrong: {ex}");
+                await HandleExceptionAsync(httpContext, ex);
+            }
         }
 
         private static Task HandleArgumentExceptionAsync(HttpContext context, ArgumentException exception)
@@ -49,16 +49,17 @@ namespace Application.Exception
             }.ToString());
         }
 
-        // private Task HandleExceptionAsync(HttpContext context, Exception exception)
-        // {
-        //     context.Response.ContentType = "application/json";
-        //     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        private Task HandleExceptionAsync(HttpContext context, System.Exception exception)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-        //     return context.Response.WriteAsync(new ErrorDetails()
-        //     {
-        //         StatusCode = context.Response.StatusCode,
-        //         Message = "Internal Server Error from the custom middleware."
-        //     }.ToString());
-        // }
+            return context.Response.WriteAsync(new ErrorDetails()
+            {
+                StatusCode = context.Response.StatusCode,
+                // Message = "Internal Server Error from the custom middleware."
+                Message = exception.Message
+            }.ToString());
+        }
     }
 }

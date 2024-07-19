@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastucture.Migrations
 {
     /// <inheritdoc />
-    public partial class Second : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -143,9 +143,9 @@ namespace Infrastucture.Migrations
                     Username = table.Column<string>(type: "varchar(50)", nullable: false),
                     ResetPasswordCode = table.Column<int>(type: "int", nullable: false),
                     Password = table.Column<string>(type: "varchar(50)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "varchar(50)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(50)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "varchar(50)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "varchar(50)", nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime(0)", nullable: true)
                 },
                 constraints: table =>
@@ -425,9 +425,9 @@ namespace Infrastucture.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "Description", "ModifiedBy", "ModifiedOn", "RoleName" },
                 values: new object[,]
                 {
-                    { new Guid("5797602e-8734-40ae-b4f0-898af518b525"), "Admin", new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4396), "Takes a course for better Understanding", null, null, "Student" },
-                    { new Guid("58f3f8ca-7c62-4d77-9c32-b66ed31024eb"), "Admin", new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4499), "Takes a course for better Understanding", null, null, "Admin" },
-                    { new Guid("78cd7ea4-876a-43c1-a11b-f2c13ccb8783"), "Admin", new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4485), "Creates and owns a course ", null, null, "Instructor" }
+                    { new Guid("23ca48a4-4ba0-4fad-a7f8-6468c62e17c1"), "Admin", new DateTime(2024, 7, 10, 13, 32, 8, 534, DateTimeKind.Local).AddTicks(219), "Takes a course for better Understanding", null, null, "Student" },
+                    { new Guid("93370f1c-c237-4295-b548-94570b3b2e0b"), "Admin", new DateTime(2024, 7, 10, 13, 32, 8, 534, DateTimeKind.Local).AddTicks(266), "Creates and owns a course ", null, null, "Instructor" },
+                    { new Guid("d9c47bfd-13a9-4d15-b907-9667a365ec1e"), "Admin", new DateTime(2024, 7, 10, 13, 32, 8, 534, DateTimeKind.Local).AddTicks(272), "Takes a course for better Understanding", null, null, "Admin" }
                 });
 
             migrationBuilder.CreateIndex(

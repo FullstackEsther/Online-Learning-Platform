@@ -10,7 +10,8 @@ namespace Domain.Entities
     {
         private static readonly Random rand = new Random();
         private string _username;
-        public string Username { 
+        public string Username
+        {
             get => _username;
             set
             {
@@ -22,7 +23,8 @@ namespace Domain.Entities
                 {
                     throw new ArgumentException("Email format is incorrect");
                 }
-            } }
+            }
+        }
         private string _password;
         private int _resetPasswordCode;
         public int ResetPasswordCode
@@ -34,6 +36,7 @@ namespace Domain.Entities
             }
         }
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserProgress> UserProgresses {get;set;} = new HashSet<UserProgress>();
         public string Password
         {
             get
@@ -102,11 +105,19 @@ namespace Domain.Entities
                 throw new ArgumentException("Password too weak");
             }
         }
-        public void AddRole(Role role)
+        public UserRole AddRole(User user, Role role)
         {
             if (!UserRoles.Any(x => x.Role.RoleName == role.RoleName))
             {
-                UserRoles.Add(new UserRole { Role = role });
+                var userRole = new UserRole
+                {
+                    Role = role,
+                    RoleId = role.Id,
+                    User = user,
+                    UserId = user.Id
+                };
+                UserRoles.Add(userRole);
+                return userRole;
             }
             else
             {

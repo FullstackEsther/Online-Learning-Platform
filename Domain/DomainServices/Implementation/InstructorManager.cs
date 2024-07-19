@@ -20,36 +20,19 @@ namespace Domain.DomainServices.Implementation
             _instructorRepository = instructorRepository;
             _courseManager = courseManager;
         }
-        public async Task<Course> CreateCourse(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture, string? profilePicture, string? firstName, string? lastName, string? biography, string? email)
+        public async Task<Course> CreateCourse(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture, string email,double price)
         {
             var existingInstructor = await _instructorRepository.GetInstructor(x => x.Email == email);
-            if (existingInstructor == null)
-            {
-                var instructor = new Instructor()
-                {
-                    Biography = biography,
-                    Email = email,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    ProfilePicture = profilePicture
-                };
-                instructor.CreateDetails(email, DateTime.UtcNow);
-                await _instructorRepository.Create(instructor);
-                var course = await _courseManager.CreateCourse(title, level, categoryId, courseCode, courseStatus, whatToLearn, displayPicture, email);
-                course.InstructorName = $"{firstName} {lastName}";
-                course.InstructorId = instructor.Id;
-                return course;
-            }
-            var subsequentCourse = await _courseManager.CreateCourse(title, level, categoryId, courseCode, courseStatus, whatToLearn, displayPicture, email);
-            subsequentCourse.InstructorId = existingInstructor.Id;
-            subsequentCourse.InstructorName = $"{existingInstructor.FirstName} {existingInstructor.LastName}";
-            return subsequentCourse;
+            var course = await _courseManager.CreateCourse(title, level, categoryId, courseCode, courseStatus, whatToLearn, displayPicture, email,price);
+            course.InstructorId = existingInstructor.Id;
+            course.InstructorName = $"{existingInstructor.FirstName} {existingInstructor.LastName}";
+            return course;
 
         }
 
         public async Task<Instructor> CreateProfile(string email, string biography, string firstName, string Lastname, string profilePicture)
         {
-            var existing = _instructorRepository.GetInstructor(x => x.Email == email);
+            var existing = await _instructorRepository.GetInstructor(x => x.Email == email);
             if (existing != null)  throw new ArgumentException("You already have a profile");
             var instructor = new Instructor
             {

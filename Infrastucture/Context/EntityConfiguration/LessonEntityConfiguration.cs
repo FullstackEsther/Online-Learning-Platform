@@ -14,6 +14,7 @@ namespace Infrastucture.Context.EntityConfiguration
         {
             builder.HasOne(x => x.Module)
             .WithMany(x => x.Lessons).HasForeignKey(x => x.ModuleId);
+            builder.HasMany(x => x.UserProgresses).WithOne().HasForeignKey(x => x.LessonId);
             builder.Property(x => x.Topic).IsRequired(true).HasColumnType("varchar(50)");
             builder.Property(x => x.TotalMinutes).IsRequired(true);
             builder.Property(x => x.File).IsRequired(true).HasColumnType("varchar(255)");

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240708125618_Second")]
-    partial class Second
+    [Migration("20240710123208_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -538,25 +538,25 @@ namespace Infrastucture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5797602e-8734-40ae-b4f0-898af518b525"),
+                            Id = new Guid("23ca48a4-4ba0-4fad-a7f8-6468c62e17c1"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4396),
+                            CreatedOn = new DateTime(2024, 7, 10, 13, 32, 8, 534, DateTimeKind.Local).AddTicks(219),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Student"
                         },
                         new
                         {
-                            Id = new Guid("78cd7ea4-876a-43c1-a11b-f2c13ccb8783"),
+                            Id = new Guid("93370f1c-c237-4295-b548-94570b3b2e0b"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4485),
+                            CreatedOn = new DateTime(2024, 7, 10, 13, 32, 8, 534, DateTimeKind.Local).AddTicks(266),
                             Description = "Creates and owns a course ",
                             RoleName = "Instructor"
                         },
                         new
                         {
-                            Id = new Guid("58f3f8ca-7c62-4d77-9c32-b66ed31024eb"),
+                            Id = new Guid("d9c47bfd-13a9-4d15-b907-9667a365ec1e"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 8, 13, 56, 17, 755, DateTimeKind.Local).AddTicks(4499),
+                            CreatedOn = new DateTime(2024, 7, 10, 13, 32, 8, 534, DateTimeKind.Local).AddTicks(272),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Admin"
                         });
@@ -612,14 +612,12 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("ModifiedOn")

@@ -27,13 +27,8 @@ namespace Application.CQRS.Instructor.Command.CreateCourse
         public async Task<BaseResponse<CourseDto>> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
             var displayPicture = await  _fileRepository.UploadFileAsync(request.Model.DisplayPicture);
-            var file = string.Empty;
-            if (request.Model.profilePicture != null)
-            {
-                  file = await _fileRepository.UploadFileAsync(request.Model.profilePicture);
-            }
-            var email = "otufaleesther@gmail.com";// _currentUser.GetLoggedInUserEmail(); //
-            var course = await _instructorManager.CreateCourse(request.Model.Title, request.Model.Level, request.Model.CategoryId, request.Model.CourseCode, request.Model.CourseStatus, request.Model.WhatToLearn, displayPicture, file, request.Model.FirstName, request.Model.LastName, request.Model.Biography, email);
+            var email = "otufeesther@gmail.com";// _currentUser.GetLoggedInUserEmail(); //
+            var course = await _instructorManager.CreateCourse(request.Model.Title, request.Model.Level, request.Model.CategoryId, request.Model.CourseCode, request.Model.CourseStatus, request.Model.WhatToLearn, displayPicture,email,request.Model.Price);
             await _instructorRepository.Save();
             if (course == null)
             {

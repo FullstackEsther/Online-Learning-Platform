@@ -25,7 +25,6 @@ namespace Application.DTO
     public record UpdateLessonRequestModel
     {
         public  string Topic { get; set; }
-        public IFormFile File { get; set; }
         public string? Article { get; set; }
         public Guid ModuleId { get; set; }
         public Guid LessonId { get; set; }

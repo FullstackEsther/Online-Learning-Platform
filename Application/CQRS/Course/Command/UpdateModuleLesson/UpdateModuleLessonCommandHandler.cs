@@ -21,8 +21,7 @@ namespace Application.CQRS.Course.Command.UpdateModuleLesson
         }
         public async Task<bool> Handle(UpdateModuleLessonCommand request, CancellationToken cancellationToken)
         {
-           var file = await _fileRepository.UploadFileAsync(request.Model.File);
-          return await _courseManager.UpdateModuleLesson(request.Model.Topic,request.Model.ModuleId,file,request.Model.TotalMinutes,request.Model.Article,request.Model.LessonId);
+          return await _courseManager.UpdateModuleLesson(request.Topic,request.ModuleId,request.TotalMinutes,request.Article,request.LessonId);
         }
     }
 }

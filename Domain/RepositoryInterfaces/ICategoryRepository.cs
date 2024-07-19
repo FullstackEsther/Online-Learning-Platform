@@ -11,5 +11,8 @@ namespace Domain.RepositoryInterfaces
     {
         Task<Category> Get(Expression<Func<Category, bool>> predicate); 
         Task<IEnumerable<Category>>  GetAllCategories();
+        bool Exist(Expression<Func<Category, bool>> predicate);
+        void Delete(Category category);
+        Task<IEnumerable<Category>> GetAllCategories(Expression<Func<Category, bool>> predicate);
     }
 }

@@ -16,7 +16,7 @@ namespace Domain.ValueObjects
             IsCorrect = isCorrect;
             QuestionId = questionId;
         }
-        private QuestionOption()
+        public QuestionOption()
         {
             
         }

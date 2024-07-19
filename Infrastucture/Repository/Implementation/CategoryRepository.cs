@@ -17,7 +17,7 @@ namespace Infrastucture.Repository.Implementation
         {
             _applicationContext = applicationContext;
         }
-        public  Task<Category> Get(Expression<Func<Category, bool>> predicate)
+        public Task<Category> Get(Expression<Func<Category, bool>> predicate)
         {
             var category = _applicationContext.Categories
             .SingleOrDefaultAsync(predicate);
@@ -29,5 +29,20 @@ namespace Infrastucture.Repository.Implementation
             var categories = await _applicationContext.Categories.ToListAsync();
             return categories;
         }
+        public async Task<IEnumerable<Category>> GetAllCategories(Expression<Func<Category, bool>> predicate)
+        {
+            var categories = await _applicationContext.Categories
+            .Where(predicate).ToListAsync();
+            return categories;
+        }
+        public bool Exist(Expression<Func<Category, bool>> predicate)
+        {
+            return _applicationContext.Categories.Any(predicate);
+        }
+        public void Delete(Category category)
+        {
+            _applicationContext.Categories.Remove(category);
+        }
+
     }
 }

@@ -8,18 +8,17 @@ namespace Domain.ValueObjects
 {
     public class QuestionAnswer
     {
-        public string SelectedOption;
+        public ICollection<string> SelectedOptions;
         public Guid QuestionId;
+        public Guid QuizId { get; set; }
         public Question Question { get; set; }
-        public Guid ResultId { get; set; }
-        public Result Result { get; set; }
-        public QuestionAnswer(string selectedOption, Guid questionId, Guid resultId)
+        public QuestionAnswer(ICollection<string> selectedOptions, Guid questionId, Guid quizId)
         {
-            SelectedOption = selectedOption;
+            SelectedOptions = selectedOptions;
             QuestionId = questionId;
-            ResultId = resultId;
+            QuizId = quizId;
         }
-        private QuestionAnswer()
+        public QuestionAnswer()
         {
 
         }
