@@ -27,13 +27,8 @@ namespace Application.CQRS.Instructor.Command.EditProfile
         }
         public async Task<BaseResponse<InstructorDto>> Handle(EditProfileCommand request, CancellationToken cancellationToken)
         {
-            var img = string.Empty;
-            if (request.Model.ProfilePicture != null)
-            {
-                img = await _fileRepository.UploadFileAsync(request.Model.ProfilePicture);
-            }
-            var email = "otufaleesther@gmail.com";   // _currentUser.GetLoggedInUserEmail();
-            var editedProfile = await _instructorManager.EditProfile(email, request.Model.Biography, request.Model.FirstName, request.Model.LastName,img );
+            var email =  _currentUser.GetLoggedInUserEmail();
+            var editedProfile = await _instructorManager.EditProfile(email, request.Model.Biography, request.Model.FirstName, request.Model.LastName);
             await _instructorRepository.Save();
             if (editedProfile == null)
             {

@@ -21,7 +21,7 @@ namespace Application.CQRS.Student.Query.ViewProfile
         }
         public async Task<BaseResponse<StudentDto>> Handle(GetStudentProfileQuery request, CancellationToken cancellationToken)
         {
-            var email = "otufeesther@gmail.com"; //_currentUser.GetLoggedInUserEmail();
+            var email =_currentUser.GetLoggedInUserEmail();
             var student = await _studentRepository.Get(x => x.Email == email) ?? throw new ArgumentException("Student Not Found");
             return new BaseResponse<StudentDto>
             {
@@ -29,10 +29,11 @@ namespace Application.CQRS.Student.Query.ViewProfile
                 Message = "Successful",
                 Data = new StudentDto
                 {
+                     Id = student.Id,
                     Biography = student.Biography,
                     Email = student.Email,
                     FirstName = student.FirstName,
-                    LastName = student.FirstName,
+                    LastName = student.LastName,
                     ProfilePicture = student.ProfilePicture
                 }
             };

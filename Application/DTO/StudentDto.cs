@@ -8,18 +8,20 @@ namespace Application.DTO
 {
     public record StudentDto
     {
+        public Guid Id { get; set; }
         public string ProfilePicture { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Biography { get; set; }
         public string Email { get; set; }
+        public ResultDto? ResultDto { get; set; }
     }
     public record CreateStudentProfileRequestModel
     {
         public IFormFile? ProfilePicture { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Biography { get; set; }
+        public string? Biography { get; set; }
     }
     public record UpdateStudentProfileRequestModel
     {

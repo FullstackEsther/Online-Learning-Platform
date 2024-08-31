@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 
 namespace Domain.Entities
 {
@@ -39,11 +40,11 @@ namespace Domain.Entities
         {
             if (quiz == null)
             {
-                throw new ArgumentException("Quiz cannot be null");
+                throw new DomainException("Quiz cannot be null");
             }
             if (quiz.ModuleId != this.Id)
             {
-                throw new ArgumentException("Wrong ModuleId passed");
+                throw new DomainException("Wrong ModuleId passed");
             }
             Quiz = quiz;
         }
@@ -73,12 +74,12 @@ namespace Domain.Entities
             }
             else
             {
-                throw new ArgumentException("Cannot Add an empty Lesson Object");
+                throw new DomainException("Cannot Add an empty Lesson Object");
             }
         }
         public void RemoveLesson(Guid lessonId)
         {
-            var lesson = Lessons.FirstOrDefault(x => x.Id == lessonId) ?? throw new ArgumentException("Lesson  not Found");
+            var lesson = Lessons.FirstOrDefault(x => x.Id == lessonId) ?? throw new DomainException("Lesson  not Found");
             Lessons.Remove(lesson!);
         }
 

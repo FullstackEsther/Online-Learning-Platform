@@ -21,12 +21,12 @@ namespace Application.CQRS.Student.Command.EditProfile
         }
         public async Task<BaseResponse<StudentDto>> Handle(EditStudentProfileCommand request, CancellationToken cancellationToken)
         {
-            var email = "otufeesther@gmail.com"; //_currentUser.GetLoggedInUserEmail();
+            var email = _currentUser.GetLoggedInUserEmail();
             var student = await _studentRepository.Get(x => x.Email == email) ?? throw new ArgumentException("Student doesn't exist");
             student.Biography = request.Model.Biography;
             student.FirstName = request.Model.FirstName;
             student.LastName = request.Model.LastName;
-            student.ModifyDetails(email, DateTime.UtcNow);
+            // student.ModifyDetails(email, DateTime.UtcNow);
             _studentRepository.Update(student);
             if (await _studentRepository.Save() > 0)
             {

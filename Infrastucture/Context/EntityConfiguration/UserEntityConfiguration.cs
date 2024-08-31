@@ -17,10 +17,16 @@ namespace Infrastucture.Context.EntityConfiguration
             builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
             builder.Property(x => x.Password).HasColumnType("varchar(50)");
             builder.Property(x => x.Username).HasColumnType("varchar(50)");
-            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(50)");
-            builder.Property(x => x.CreatedBy).HasColumnType("varchar(50)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(60)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(60)");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Username).IsRequired(true);
+            builder.HasData(new User("otufaleesther@gmail.com", "Tolulope*1")
+            {
+                Id = Guid.Parse("e8374987-be9c-4099-91a6-a024754b7703"),
+                CreatedBy = "Admin",
+                CreatedOn = DateTime.Now,
+            });
         }
 
     }

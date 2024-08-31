@@ -21,8 +21,8 @@ namespace Application.CQRS.Payment.Command
         }
         public async Task<BaseResponse<PaymentDto>> Handle(InitializePaymentCommand request, CancellationToken cancellationToken)
         {
-            var email = "otufeesther@gmail.com";  // _currentUser.GetLoggedInUserEmail();
-            var response = await _paymentManager.InitializePayment(request.Amount, email);
+            var email =    _currentUser.GetLoggedInUserEmail();
+            var response = await _paymentManager.InitializePayment(email, request.CourseId);
             if (response == null)
             {
                 return new BaseResponse<PaymentDto>
@@ -38,10 +38,7 @@ namespace Application.CQRS.Payment.Command
                 Message = "Initialized",
                 Data = new PaymentDto
                 {
-                    Amount = response.Amount,
-                    Email = response.Email,
-                    Status = response.Status,
-                    TrxRef = response.TrxRef
+                     AuthorizationUrl = response
                 }
             };
         }

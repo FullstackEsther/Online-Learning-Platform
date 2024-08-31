@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Domain.DomainServices.Interface;
 using Domain.Entities;
@@ -21,7 +22,7 @@ namespace Domain.DomainServices.Implementation
         public string GetLoggedInUserEmail()
         {
             var user = _httpContextAccessor.HttpContext.User;
-            var loggedInUserEmail = user?.Claims?.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Email)?.Value;
+            var loggedInUserEmail =  user?.FindFirst(ClaimTypes.Email)?.Value;
             return loggedInUserEmail;
         }
 

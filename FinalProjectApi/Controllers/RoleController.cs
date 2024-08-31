@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.DTO;
 using Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProjectApi.Controllers
@@ -18,20 +19,7 @@ namespace FinalProjectApi.Controllers
         {
             _roleService = roleService;
         }
-        // [HttpPost]
-        // public async Task<IActionResult> AddRole([FromBody]RoleRequestModel model)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-        //     var response = await _roleService.AddRole(model);
-        //     if (response.Status)
-        //     {
-        //         return CreatedAtAction(nameof(AddRole), new{name = response.Data.RoleName});
-        //     }
-        //     return BadRequest(response.Message);
-        // }
+        [Authorize(Roles = "Instructor,Admin,Student")]
         [HttpGet("{roleName}")]
         public async Task<IActionResult> GetRole([FromRoute]string roleName)
         {

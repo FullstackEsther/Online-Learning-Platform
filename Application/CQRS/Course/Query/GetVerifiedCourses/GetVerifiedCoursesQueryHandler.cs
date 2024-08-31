@@ -22,6 +22,7 @@ namespace Application.CQRS.Course.Query.GetVerifiedCourses
             var courses = check.Any() ? check : throw new ArgumentException("There are no verified courses");
              var courseDtos = courses.Select(course => new CourseDto
             {
+                 Id = course.Id,
                 CategoryId = course.CategoryId,
                 CourseCode = course.CourseCode,
                 CourseStatus = course.CourseStatus,
@@ -33,6 +34,8 @@ namespace Application.CQRS.Course.Query.GetVerifiedCourses
                 Title = course.Title,
                 TotalTime = course.TotalTime,
                 WhatToLearn = course.WhatToLearn,
+                NumberOfLessons= course.CalculateNumberOfLessons(),
+                 Price = course.Price
             }).ToList();
             return new BaseResponse<IEnumerable<CourseDto>>
             {

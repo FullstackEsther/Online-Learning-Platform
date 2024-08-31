@@ -7,5 +7,5 @@ using MediatR;
 
 namespace Application.CQRS.Payment.Command
 {
-    public record InitializePaymentCommand(decimal Amount) : IRequest<BaseResponse<PaymentDto>>;
+    public record InitializePaymentCommand(Guid CourseId) : IRequest<BaseResponse<PaymentDto>>;
 }

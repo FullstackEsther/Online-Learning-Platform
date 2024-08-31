@@ -10,9 +10,10 @@ namespace Domain.DomainServices.Interface
 {
     public interface IInstructorManager
     {
-          Task<Course> CreateCourse(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture, string email,double price);
+          Task<Course> CreateCourse(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture, string email,double? price);
           public Task<Instructor> GetProfile(string email);
-          public  Task<Instructor> EditProfile(string email, string biography, string firstName, string Lastname, string profilePicture);
+          public  Task<Instructor> EditProfile(string email, string biography, string firstName, string Lastname);
+          public  Task<Instructor> EditProfilePicture(string email, string profilePicture);
           public  Task<Instructor> CreateProfile(string email, string biography, string firstName, string Lastname, string profilePicture);
     }
 }

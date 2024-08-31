@@ -21,9 +21,10 @@ namespace Application.CQRS.UserProgress.UpdateProgress
 
         public async Task<bool> Handle(UpdateProgressCommand request, CancellationToken cancellationToken)
         { 
-            var email = "otufeesther@gmail.com"; //_currentUser.GetLoggedInUserEmail();
+            var email =  _currentUser.GetLoggedInUserEmail();
             var progress = await _userProgressManager.UpdateUserProgress(email, request.LeessonId, request.CourseId) ?? throw new ArgumentException("Progress not Updated");
-            return true;
+           if (progress!= null) return true;
+           return false;
         }
     }
 }

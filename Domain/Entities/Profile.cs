@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 
 namespace Domain.Entities
 {
@@ -23,11 +24,11 @@ namespace Domain.Entities
             }
             else if (value == null)
             {
-                throw new ArgumentException("Email field is required");
+                throw new DomainException("Email field is required");
             }
             else
             {
-                throw new ArgumentException("Invalid EmailFormat");
+                throw new DomainException("Invalid EmailFormat");
             }
         } }  
         private string? _biography; 
@@ -39,7 +40,7 @@ namespace Domain.Entities
             {
                 if (value != null && value.Length > 250)
                 {
-                    throw new ArgumentException("Biography must be 250 words or fewer");
+                    throw new DomainException("Biography must be 250 words or fewer");
                 }
                 _biography = value; 
             } }

@@ -11,6 +11,6 @@ namespace Domain.RepositoryInterfaces
     {
         bool Exist(Expression<Func<UserProgress, bool>> predicate);
         Task<UserProgress> Get(Expression<Func<UserProgress, bool>> predicate); 
-        Task<IEnumerable<UserProgress>> GetAll();
+        Task<IEnumerable<UserProgress>> GetAll(Expression<Func<UserProgress, bool>> predicate);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 using Domain.ValueObjects;
 
 namespace Domain.Entities
@@ -19,7 +20,7 @@ namespace Domain.Entities
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException("Duration cannot be zero or lower than zero");
+                    throw new DomainException("Duration cannot be zero or lower than zero");
                 }
                 _duration = value;
             }
@@ -27,8 +28,8 @@ namespace Domain.Entities
         public ICollection<Question> Questions { get; set; }
         public ICollection<Result> Result { get; set; } = new HashSet<Result>();
         public Guid ModuleId { get; private set; }
-        public Module Module { get; private set; }
-        ICollection<QuestionAnswer> answers = new HashSet<QuestionAnswer>();
+        public Module Module { get;  set; }
+        // ICollection<QuestionAnswer> answers = new HashSet<QuestionAnswer>();
         public Quiz(double duration, Guid moduleId)
         {
             Duration = duration;
@@ -42,17 +43,17 @@ namespace Domain.Entities
         public void AddQuestion(Question question)
         {
             var check = Questions.SingleOrDefault(x => x.QuestionText == question.QuestionText);
-            if (check != null) throw new ArgumentException("Duplicate Question");
+            if (check != null) throw new DomainException("Duplicate Question");
             Questions.Add(question);
         }
         public void DeleteQuestion(Guid questionId)
         {
-            var obtainedQuestion = Questions.FirstOrDefault(x => x.Id == questionId) ?? throw new ArgumentException("Question doesnot exist");
+            var obtainedQuestion = Questions.FirstOrDefault(x => x.Id == questionId) ?? throw new DomainException("Question doesnot exist");
             Questions.Remove(obtainedQuestion);
         }
         public void UpdateQuestion(Question question)
         {
-            var existingQuestion = Questions.SingleOrDefault(x => x.QuestionText == question.QuestionText) ?? throw new ArgumentException("Question does not exist");
+            var existingQuestion = Questions.SingleOrDefault(x => x.QuestionText == question.QuestionText) ?? throw new DomainException("Question does not exist");
             existingQuestion.QuestionText = question.QuestionText;
             existingQuestion.QuestionType = question.QuestionType;
         }
@@ -60,19 +61,19 @@ namespace Domain.Entities
         public void AddResult(Result result)
         {
             var check = Result.SingleOrDefault(x => x.Id == result.Id);
-            if (check != null) throw new ArgumentException("Result already exist");
+            if (check != null) throw new DomainException("Result already exist");
             Result.Add(result);
         }
         public void DeleteResult(Guid resultId)
         {
-            var obtainedResult = Result.FirstOrDefault(x => x.Id == resultId) ?? throw new ArgumentException("Result not Found");
+            var obtainedResult = Result.FirstOrDefault(x => x.Id == resultId) ?? throw new DomainException("Result not Found");
             Result.Remove(obtainedResult);
         }
-        public ICollection<QuestionAnswer>  GenerateAnswers(Guid questionId, List<string> selectedOptions)
-        {
-            var questionAnswer = new QuestionAnswer(selectedOptions,questionId, this.Id);
-            answers.Add(questionAnswer);
-            return answers;
-        }
+        // public ICollection<QuestionAnswer>  GenerateAnswers(Guid questionId, List<string> selectedOptions)
+        // {
+        //     var questionAnswer = new QuestionAnswer(selectedOptions,questionId, this.Id);
+        //     answers.Add(questionAnswer);
+        //     return answers;
+        // }
     }
 }

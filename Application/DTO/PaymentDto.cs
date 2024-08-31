@@ -10,6 +10,6 @@ namespace Application.DTO
         public decimal Amount { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string TrxRef { get; set; }
-        public bool Status { get; set; }
+        public string AuthorizationUrl { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.DTO;
 using Domain.DomainServices.Interface;
+using Domain.ValueObjects;
 using MediatR;
 
 namespace Application.CQRS.Course.Command.AddResult
@@ -20,16 +21,21 @@ namespace Application.CQRS.Course.Command.AddResult
         }
         public async Task<BaseResponse<ResultDto>> Handle(AddResultCommand request, CancellationToken cancellationToken)
         {
-            var email = _currentUser.GetLoggedInUserEmail();
-            var questionAnswers = await _courseManager.AddQuestionAnswerToQuiz(request.QuizId, request.SelectedOption, request.QuestionId);
-            var result = await _courseManager.AddResultToQuiz(request.QuizId, questionAnswers, email) ?? throw new ArgumentException("Result not Created");
+            var email =_currentUser.GetLoggedInUserEmail();
+            var questionAnswer = request.QuestionAnswers.Answers.Select(x => new QuestionAnswer
+            {
+                 QuestionId = x.QuestionId,
+                  QuizId = request.QuestionAnswers.QuizId,
+                   SelectedOptions = x.SelectedOptions
+            }).ToList();
+            var result = await _courseManager.AddResultToQuiz(request.QuestionAnswers.QuizId, questionAnswer, email) ?? throw new ArgumentException("Result not Created");
             return new BaseResponse<ResultDto>
             {
                 Status = true,
                 Message = "Successful",
                 Data = new ResultDto
                 {
-                    Score = result.Score
+                    Score = result.Score,
                 }
             };
 

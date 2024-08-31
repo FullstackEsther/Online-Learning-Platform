@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Domain.Shared.Enum;
+using Domain.Domain.Shared.Exception;
 using Domain.DomainServices.Interface;
 using Domain.Entities;
 using Domain.Enum;
@@ -20,7 +21,7 @@ namespace Domain.DomainServices.Implementation
             _instructorRepository = instructorRepository;
             _courseManager = courseManager;
         }
-        public async Task<Course> CreateCourse(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture, string email,double price)
+        public async Task<Course> CreateCourse(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture, string email,double? price)
         {
             var existingInstructor = await _instructorRepository.GetInstructor(x => x.Email == email);
             var course = await _courseManager.CreateCourse(title, level, categoryId, courseCode, courseStatus, whatToLearn, displayPicture, email,price);
@@ -33,7 +34,7 @@ namespace Domain.DomainServices.Implementation
         public async Task<Instructor> CreateProfile(string email, string biography, string firstName, string Lastname, string profilePicture)
         {
             var existing = await _instructorRepository.GetInstructor(x => x.Email == email);
-            if (existing != null)  throw new ArgumentException("You already have a profile");
+            if (existing != null)  throw new DomainException("You already have a profile" , 409);
             var instructor = new Instructor
             {
                 Biography = biography,
@@ -51,7 +52,7 @@ namespace Domain.DomainServices.Implementation
            return null;
         }
 
-        public async Task<Instructor> EditProfile(string email, string? biography, string? firstName, string? lastName, string? profilePicture)
+        public async Task<Instructor> EditProfile(string email, string? biography, string? firstName, string? lastName)
         {
             var instructorProfile = await _instructorRepository.GetInstructor(x => x.Email == email);
             if (!string.IsNullOrEmpty(biography))
@@ -69,19 +70,23 @@ namespace Domain.DomainServices.Implementation
                 instructorProfile.LastName = lastName;
             }
 
-            if (!string.IsNullOrEmpty(profilePicture))
-            {
-                instructorProfile.ProfilePicture = profilePicture;
-            }
+            // instructorProfile.ModifyDetails(email, DateTime.UtcNow);
+            _instructorRepository.Update(instructorProfile);
+            return instructorProfile;
+        }
 
-            instructorProfile.ModifyDetails(email, DateTime.UtcNow);
+        public async Task<Instructor> EditProfilePicture(string email, string profilePicture)
+        {
+            var instructorProfile = await _instructorRepository.GetInstructor(x => x.Email == email);
+            instructorProfile.ProfilePicture = profilePicture;
+            // instructorProfile.ModifyDetails(email, DateTime.UtcNow);
             _instructorRepository.Update(instructorProfile);
             return instructorProfile;
         }
 
         public async Task<Instructor> GetProfile(string email)
         {
-            var instructor = await _instructorRepository.GetInstructor(x => x.Email == email) ?? throw new ArgumentException("Instructor not found");
+            var instructor = await _instructorRepository.GetInstructor(x => x.Email == email) ?? throw new DomainException("Instructor not found",404);
             return instructor;
         }
     }

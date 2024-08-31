@@ -27,9 +27,10 @@ namespace Infrastucture.Repository.Implementation
             .FirstOrDefaultAsync(predicate);
         }
 
-        public async  Task<IEnumerable<UserProgress>> GetAll()
+        public async  Task<IEnumerable<UserProgress>> GetAll(Expression<Func<UserProgress, bool>> predicate)
         {
             return await _applicationContext.UserProgresses
+            .Where(predicate)
             .ToListAsync();
         }
     }

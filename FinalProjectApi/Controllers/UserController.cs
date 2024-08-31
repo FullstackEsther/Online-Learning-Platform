@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.CQRS.User.Command;
 using Application.CQRS.User.Command.AssignRole;
@@ -11,6 +12,7 @@ using Application.DTO;
 using Application.Services.Interfaces;
 using Domain.DomainServices.Interface;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProjectApi.Controllers
@@ -28,13 +30,19 @@ namespace FinalProjectApi.Controllers
             _authService = authService;
             _mediator = mediator;
         }
-
+        // [Authorize(Roles = "Instructor,Admin,Student")]
         [HttpPost("assignrole")]
         public async Task<IActionResult> AssignRoleToUser([FromQuery] string roleName)
         {
             var command = new AssignRoleCommand(roleName);
-            await _mediator.Send(command);
-            return Ok();
+            var response = await _mediator.Send(command);
+            if (response.Status)
+            {
+              var token = _authService.GenerateToken(response.Data);
+               var reply = new {Token = token};
+                return Ok(reply);
+            }
+            return BadRequest();
         }
 
         [HttpPost("register")]

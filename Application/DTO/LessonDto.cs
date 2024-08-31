@@ -8,7 +8,8 @@ namespace Application.DTO
 {
     public record LessonDto
     {
-        public  string Topic { get; set; }
+        public Guid Id { get; set; }
+        public string Topic { get; set; }
         public string File { get; set; }
         public string Article { get; set; }
         public Guid ModuleId { get; set; }
@@ -16,7 +17,7 @@ namespace Application.DTO
     }
     public record LessonRequestModel
     {
-         public  string Topic { get; set; }
+        public string Topic { get; set; }
         public IFormFile File { get; set; }
         public string? Article { get; set; }
         public Guid ModuleId { get; set; }
@@ -24,10 +25,15 @@ namespace Application.DTO
     }
     public record UpdateLessonRequestModel
     {
-        public  string Topic { get; set; }
+        public string Topic { get; set; }
         public string? Article { get; set; }
-        public Guid ModuleId { get; set; }
-        public Guid LessonId { get; set; }
         public double TotalMinutes { get; set; }
     }
+    public record UpdateLessonVideoRequest
+    {
+        public IFormFile File { get; set; }
+        public Guid ModuleId { get; set; }
+        public Guid LessonId { get; set; }
+    }
+
 }

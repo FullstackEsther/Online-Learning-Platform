@@ -15,10 +15,10 @@ namespace Infrastucture.Context.EntityConfiguration
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.Student).WithMany(x => x.Enrollments).HasForeignKey(x => x.StudentId);
             builder.HasOne(x => x.Course).WithMany(x => x.Enrollments).HasForeignKey(x => x.CourseId);
-            builder.HasOne(x => x.Payment).WithOne(x => x.Enrollment).HasForeignKey<Enrollment>(x => x.PaymentId);
+            builder.HasOne(x => x.Payment).WithOne(x => x.Enrollment).HasForeignKey<Enrollment>(x => x.PaymentId).IsRequired(false);
             builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
-            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
-            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(60)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(60)");
             builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
         }
     }

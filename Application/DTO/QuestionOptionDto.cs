@@ -7,6 +7,12 @@ namespace Application.DTO
 {
     public class QuestionOptionDto
     {
-        public string option {get;set;}
+        public string? Option {get;set;}
+        public bool? IsCorrect {get;set;}
+    }
+     public record OptionRequest
+    {
+        public string OptionText {get;set;}
+        public bool IsCorrect {get;set;}
     }
 }

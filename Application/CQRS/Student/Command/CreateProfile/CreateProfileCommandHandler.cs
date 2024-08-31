@@ -24,7 +24,7 @@ namespace Application.CQRS.Student.Command.CreateProfile
         }
         public async Task<BaseResponse<StudentDto>> Handle(CreateProfileCommand request, CancellationToken cancellationToken)
         {
-            var email =  "otufeesther@gmail.com"; //_currentUser.GetLoggedInUserEmail();
+            var email =  _currentUser.GetLoggedInUserEmail();
             var profilePictureUrl = string.Empty;
             if (request.Model.ProfilePicture != null)
             {

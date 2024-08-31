@@ -11,18 +11,21 @@ namespace Application.DTO
 {
     public record CourseDto
     {
+        public Guid Id { get; set; }
         public string Title { get; set; }
-        public double TotalTime { get; set; }
+        public double TotalTime { get; set; }= default;
+        public double? Price { get; set; }
         public string WhatToLearn { get; set; }
         public string InstructorName { get; set; }
         public string DisplayPicture { get; set; }
         public string CourseCode { get; set; }
+        public int NumberOfLessons { get; set; }
         public bool IsVerified { get; set; }
         public Level Level { get; set; }
         public CourseStatus CourseStatus { get; set; }
         public Guid CategoryId { get; set; } = default!;
         public Guid InstructorId { get; set; } = default!;
-        public IReadOnlyList<ModuleDto> Modules { get; set; }
+        public IReadOnlyList<ModuleDto?> Modules { get; set; }
     }
     public record CourseRequestModel
     {
@@ -33,7 +36,7 @@ namespace Application.DTO
         public IFormFile DisplayPicture { get; set; }
         public string WhatToLearn { get; set; }
         public CourseStatus CourseStatus { get; set; }
-        public double Price { get; set; }
+        public double? Price { get; set; }
     }
 
 

@@ -8,7 +8,7 @@ namespace Domain.DomainServices.Interface
 {
     public interface IPaymentManager
     {
-        Task<Payment> InitializePayment(decimal amount, string userEmail);
+        Task<string> InitializePayment( string userEmail, Guid courseId);
         Task<Payment> VerifyPayment(string reference);
     }
 }

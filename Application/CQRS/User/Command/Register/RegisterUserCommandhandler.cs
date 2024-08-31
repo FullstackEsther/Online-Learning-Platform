@@ -31,9 +31,7 @@ namespace Application.CQRS.User.Command.Register
                     Status = false
                 };
             }
-            // var defaultRole = await _roleRepository.Get(x => x.RoleName == "Student");
             var user = new Domain.Entities.User(request.UserName, request.Password);
-            // user.AddRole(defaultRole);
             var createdUser = await _userRepository.Create(user);
             var unitOfWork = await _userRepository.Save();
             if (unitOfWork > 0)

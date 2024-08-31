@@ -16,8 +16,8 @@ namespace Infrastucture.Context.EntityConfiguration
             .WithOne(x => x.Role);
             builder.Property(x => x.RoleName).IsRequired(true).HasColumnType("varchar(50)");
             builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
-            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
-            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(60)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(60)");
             builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
             builder.HasData(new Role("Student")
             {
@@ -33,6 +33,7 @@ namespace Infrastucture.Context.EntityConfiguration
             });
             builder.HasData(new Role("Admin")
             {
+                Id = Guid.Parse("95431a3c-63cf-480d-9350-7a8f92f15c4f"),
                 Description = "Takes a course for better Understanding",
                 CreatedBy = "Admin",
                 CreatedOn = DateTime.Now,

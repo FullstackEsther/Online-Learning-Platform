@@ -29,6 +29,7 @@ namespace Application.CQRS.Course.Command.AddModuleToCourse
                     Data = new ModuleDto
                     {
                         CourseId = module.CourseId,
+                        Id = module.Id,
                         Title = module.Title,
                     }
                 };

@@ -14,8 +14,8 @@ namespace Infrastucture.Context.EntityConfiguration
         {
              builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
             builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
-            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(50)");
-            builder.Property(x => x.CreatedBy).HasColumnType("varchar(50)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(60)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(60)");
             builder.HasKey(x => x.Id);
         }
     }

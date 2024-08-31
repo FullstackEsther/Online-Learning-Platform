@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -25,6 +26,11 @@ namespace Application.Exception
             {
                 await _next(httpContext);
             }
+            catch (DomainException dex)
+            {
+                _logger.LogError($"Domain error: {dex.Message}");
+                await HandleDomainExceptionAsync(httpContext, dex);
+            }
             catch (ArgumentException ex)
             {
                 _logger.LogError($"Argument error: {ex.Message}");
@@ -37,6 +43,17 @@ namespace Application.Exception
             }
         }
 
+        private static Task HandleDomainExceptionAsync(HttpContext context, DomainException exception)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = exception.StatusCode;
+
+            return context.Response.WriteAsync(new ErrorDetails()
+            {
+                StatusCode = context.Response.StatusCode,
+                Message = exception.Message
+            }.ToString());
+        }
         private static Task HandleArgumentExceptionAsync(HttpContext context, ArgumentException exception)
         {
             context.Response.ContentType = "application/json";
@@ -57,7 +74,6 @@ namespace Application.Exception
             return context.Response.WriteAsync(new ErrorDetails()
             {
                 StatusCode = context.Response.StatusCode,
-                // Message = "Internal Server Error from the custom middleware."
                 Message = exception.Message
             }.ToString());
         }

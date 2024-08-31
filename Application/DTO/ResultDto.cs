@@ -8,5 +8,8 @@ namespace Application.DTO
     public class ResultDto
     {
         public double Score { get; set; }
+        public bool IsPassedTest { get; set; }
+        public QuizDto QuizDto { get; set; }
+        
     }
 }

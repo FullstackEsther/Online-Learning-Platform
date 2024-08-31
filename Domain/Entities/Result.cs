@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 using Domain.DomainServices;
 using Domain.ValueObjects;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace Domain.Entities
              private set
              {
                 _score = value;
-                CalculateScore();
+                // CalculateScore();
              } }
         public Guid StudentId { get; set; } = default!;
         public Guid QuizId { get; private set; } = default!;
@@ -39,17 +40,18 @@ namespace Domain.Entities
             if (_score < 80)
             {
                 FailedTest();
-                throw new ArgumentException("Retake test, you can only score 80 and above");
-
+            }else
+            {
+                PassedTest();
             }
-            PassedTest();
+            
         }
         private double MarkQuiz()
         {
             double correctAnswer = 0;
             foreach (var answer in QuestionAnswers)
             {
-                var question = Quiz.Questions.FirstOrDefault(x => x.Id == answer.QuestionId) ?? throw new ArgumentException("Invalid Question");
+                var question = Quiz.Questions.FirstOrDefault(x => x.Id == answer.QuestionId) ?? throw new DomainException("Invalid Question");
                 var correctOptions = question.Options.Where(x => x.IsCorrect == true).Select(x => x.Text);
                 if (correctOptions.All(x => answer.SelectedOptions.Contains(x)) && correctOptions.Count() == answer.SelectedOptions.Count())
                 {
@@ -58,10 +60,10 @@ namespace Domain.Entities
             }
             return correctAnswer;
         }
-        private void CalculateScore()
+        public void CalculateScore()
         {
             var score = MarkQuiz();
-            Score = score / Quiz.Questions.Count * 100;
+            _score = score / Quiz.Questions.Count * 100;
         }
         private void PassedTest()
         {

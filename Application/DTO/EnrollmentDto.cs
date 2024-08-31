@@ -10,5 +10,6 @@ namespace Application.DTO
         public Guid StudentId { get; set; } = default!;
         public Guid CourseId { get; set; } = default!;
         public Guid? PaymentId { get; set; } = default!;
+        public CourseDto CourseDto { get; set; } = default!;
     }
 }

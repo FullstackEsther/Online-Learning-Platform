@@ -19,7 +19,7 @@ namespace Application.CQRS.UserProgress.AddProgress
         }
         public async Task<bool> Handle(AddProgressCommand request, CancellationToken cancellationToken)
         {
-            var email = "otufeesther@gmail.com"; //_currentUser.GetLoggedInUserEmail();
+            var email = _currentUser.GetLoggedInUserEmail();
            var user = await  _userProgressManager.CreateUserProgress(email, request.LessonId,request.CourseId) ?? throw new ArgumentException("Userprogress Not Created");
            return true;
         }

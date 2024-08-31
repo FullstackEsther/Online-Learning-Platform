@@ -17,8 +17,8 @@ namespace Infrastucture.Context.EntityConfiguration
             .WithMany(x => x.Questions).HasForeignKey(x => x.QuizId);
             builder.Property(x => x.QuestionText).IsRequired(true).HasColumnType("varchar(255)");
             builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
-            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
-            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(60)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(60)");
             builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
             builder.Property(u => u.Options)
             .HasConversion(new JsonValueConverter<QuestionOption>())

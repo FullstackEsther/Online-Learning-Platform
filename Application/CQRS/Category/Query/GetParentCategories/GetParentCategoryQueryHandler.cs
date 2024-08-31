@@ -25,8 +25,11 @@ namespace Application.CQRS.Category.Query.GetParentCategories
                 Message = "Successful",
                 Data = parentCategories.Select(x => new CategoryDto
                 {
+                     Id = x.Id,
                     Name = x.Name,
-                    ParentCategory = x.ParentCategory
+                     Description = x.Description,
+                    ParentCategory = x.ParentCategory,
+                     
                 }).ToList()
             };
         }

@@ -23,7 +23,7 @@ namespace Application.CQRS.Instructor.Command.UpdateProfile
         public async Task<BaseResponse<InstructorDto>> Handle(CreateProfileCommand request, CancellationToken cancellationToken)
         {
             var profilePictureUrl= string.Empty;
-            var email ="otufeesther@gmail.com";// _currentUser.GetLoggedInUserEmail();
+            var email =_currentUser.GetLoggedInUserEmail();
             if (request.Model.ProfilePicture != null)
             {
                 

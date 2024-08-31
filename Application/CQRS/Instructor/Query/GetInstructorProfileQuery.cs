@@ -7,5 +7,5 @@ using MediatR;
 
 namespace Application.CQRS.Instructor.Query
 {
-    public record GetInstructorProfileQuery() : IRequest<BaseResponse<ProfileDto>>;
+    public record GetInstructorProfileQuery() : IRequest<BaseResponse<InstructorDto>>;
 }

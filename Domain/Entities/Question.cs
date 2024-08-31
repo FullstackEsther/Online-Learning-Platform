@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Domain.Shared.Enum;
+using Domain.Domain.Shared.Exception;
 using Domain.ValueObjects;
 
 namespace Domain.Entities
@@ -27,12 +28,12 @@ namespace Domain.Entities
         public void AddOption(QuestionOption option)
         {
             var checkOption = Options.SingleOrDefault(x => x.Text == option.Text);
-            if (checkOption != null) throw new ArgumentException("Option alredy exist");
+            if (checkOption != null) throw new DomainException("Option alredy exist");
             Options.Add(option);
         }
         public void RemoveOption(QuestionOption option)
         {
-            if(option == null) throw new ArgumentException("option cannot be null");
+            if(option == null) throw new DomainException("option cannot be null");
             Options.Remove(option);
         }
 

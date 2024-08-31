@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 
 namespace Domain.Entities
 {
@@ -21,7 +22,7 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Email format is incorrect");
+                    throw new DomainException("Email format is incorrect");
                 }
             }
         }
@@ -51,7 +52,7 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Password too weak");
+                    throw new DomainException("Password too weak");
                 }
 
             }
@@ -78,13 +79,13 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Old Password doesn't match");
+                    throw new DomainException("Old Password doesn't match");
                 }
 
             }
             else
             {
-                throw new ArgumentException("Password too weak");
+                throw new DomainException("Password too weak");
             }
         }
         public void ForgotPassword(string password, string confirmPassword)
@@ -97,12 +98,12 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Password doesnot match");
+                    throw new DomainException("Password doesnot match");
                 }
             }
             else
             {
-                throw new ArgumentException("Password too weak");
+                throw new DomainException("Password too weak");
             }
         }
         public UserRole AddRole(User user, Role role)
@@ -121,12 +122,12 @@ namespace Domain.Entities
             }
             else
             {
-                throw new ArgumentException("User already has the role");
+                throw new DomainException("User already has the role",409);
             }
         }
         public int GenerateCode()
         {
-            _resetPasswordCode = rand.Next(23456, 3455667);
+            _resetPasswordCode =  rand.Next(100000, 1000000);
             return _resetPasswordCode;
         }
         public User(string userName, string password)

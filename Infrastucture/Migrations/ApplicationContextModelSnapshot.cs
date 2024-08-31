@@ -26,17 +26,17 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -51,6 +51,48 @@ namespace Infrastucture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c3b288e3-26c9-4f46-8fba-d52a2686ad0b"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 720, DateTimeKind.Local).AddTicks(5493),
+                            Description = "Encompasses activities aimed at improving one's skills, knowledge, and career prospects",
+                            Name = "Profesional Development"
+                        },
+                        new
+                        {
+                            Id = new Guid("04a2830d-9811-4984-9a2a-5a5904f5d957"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 720, DateTimeKind.Local).AddTicks(5549),
+                            Description = "Encompass the creative expression and application of visual and artistic skills",
+                            Name = "Art and Design"
+                        },
+                        new
+                        {
+                            Id = new Guid("53cd1fd7-8794-4190-8e23-c338b1e050e2"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 720, DateTimeKind.Local).AddTicks(5561),
+                            Description = "Stands for Science, Technology, Engineering, and Mathematics. It encompasses a wide range of fields related to scientific and technological advancements",
+                            Name = "STEM"
+                        },
+                        new
+                        {
+                            Id = new Guid("58a8cf1d-96f4-4d56-b8a2-6da394fba413"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 720, DateTimeKind.Local).AddTicks(5592),
+                            Description = "Encompasses the study of various aspects of running a business,Involves understanding how to plan, organize, lead, and control business operations",
+                            Name = "Business and Management"
+                        },
+                        new
+                        {
+                            Id = new Guid("4b1d8bdb-5974-4321-a620-4389a7f1f617"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 720, DateTimeKind.Local).AddTicks(5603),
+                            Description = "Encompasses the study of human culture, society, and the arts",
+                            Name = "Humanities"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Chat.ChatRoom", b =>
@@ -60,7 +102,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -69,7 +111,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -134,7 +176,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -157,7 +199,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -198,19 +240,18 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
 
                     b.Property<Guid?>("PaymentId")
-                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("StudentId")
@@ -238,7 +279,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("varchar(250)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -258,7 +299,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -281,7 +322,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -291,7 +332,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -323,13 +364,13 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -358,7 +399,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -368,7 +409,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -392,13 +433,13 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -431,7 +472,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -440,7 +481,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("double");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -463,7 +504,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -472,7 +513,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -506,7 +547,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -515,7 +556,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -531,25 +572,25 @@ namespace Infrastucture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("22e3a5ce-2636-40d4-be22-a6afab99a90b"),
+                            Id = new Guid("585b4c55-95f2-4a63-895a-bfa0b1731fc3"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 19, 4, 12, 49, 380, DateTimeKind.Local).AddTicks(8743),
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 734, DateTimeKind.Local).AddTicks(9473),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Student"
                         },
                         new
                         {
-                            Id = new Guid("36013548-5c81-4cf2-8f71-b493216d3411"),
+                            Id = new Guid("d11bfd10-d65f-45f6-8e68-d5157fb4e80c"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 19, 4, 12, 49, 380, DateTimeKind.Local).AddTicks(8783),
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 734, DateTimeKind.Local).AddTicks(9530),
                             Description = "Creates and owns a course ",
                             RoleName = "Instructor"
                         },
                         new
                         {
-                            Id = new Guid("48a7e8bd-5059-40c5-8b64-ea6686978326"),
+                            Id = new Guid("95431a3c-63cf-480d-9350-7a8f92f15c4f"),
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2024, 7, 19, 4, 12, 49, 380, DateTimeKind.Local).AddTicks(8789),
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 734, DateTimeKind.Local).AddTicks(9563),
                             Description = "Takes a course for better Understanding",
                             RoleName = "Admin"
                         });
@@ -565,7 +606,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("varchar(250)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -585,7 +626,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -605,13 +646,13 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -630,6 +671,17 @@ namespace Infrastucture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e8374987-be9c-4099-91a6-a024754b7703"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 736, DateTimeKind.Local).AddTicks(5558),
+                            Password = "Tolulope*1",
+                            ResetPasswordCode = 0,
+                            Username = "otufaleesther@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.UserProgress", b =>
@@ -645,7 +697,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(0)");
@@ -657,7 +709,7 @@ namespace Infrastucture.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(0)");
@@ -711,6 +763,16 @@ namespace Infrastucture.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRole");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b9a5b636-31f2-4b83-abe8-2bdcaabf2783"),
+                            CreatedBy = "Admin",
+                            CreatedOn = new DateTime(2024, 8, 27, 7, 23, 44, 737, DateTimeKind.Local).AddTicks(7057),
+                            RoleId = new Guid("95431a3c-63cf-480d-9350-7a8f92f15c4f"),
+                            UserId = new Guid("e8374987-be9c-4099-91a6-a024754b7703")
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Chat.Message", b =>
@@ -751,9 +813,7 @@ namespace Infrastucture.Migrations
 
                     b.HasOne("Domain.Entities.Payment", "Payment")
                         .WithOne("Enrollment")
-                        .HasForeignKey("Domain.Entities.Enrollment", "PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Domain.Entities.Enrollment", "PaymentId");
 
                     b.HasOne("Domain.Entities.Student", "Student")
                         .WithMany("Enrollments")

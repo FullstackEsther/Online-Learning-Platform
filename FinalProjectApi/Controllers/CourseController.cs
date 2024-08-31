@@ -20,6 +20,7 @@ using Application.CQRS.Course.Command.UpdateDisplayPicture;
 using Application.CQRS.Course.Command.UpdateLessonFile;
 using Application.CQRS.Course.Command.UpdateModuleLesson;
 using Application.CQRS.Course.Command.UpdateQuestion;
+using Application.CQRS.Course.Command.VerifyCourse;
 using Application.CQRS.Course.Query.GetAllCourses;
 using Application.CQRS.Course.Query.GetCourse;
 using Application.CQRS.Course.Query.GetCourseByCategory;
@@ -30,6 +31,7 @@ using Application.CQRS.Instructor.Command.CreateCourse;
 using Application.DTO;
 using Domain.Domain.Shared.Enum;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProjectApi.Controllers
@@ -43,7 +45,7 @@ namespace FinalProjectApi.Controllers
         {
             _mediator = mediator;
         }
-
+        [Authorize(Roles = "Instructor")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateCourse([FromForm] CourseRequestModel model)
         {
@@ -52,6 +54,7 @@ namespace FinalProjectApi.Controllers
             if (response.Status) return Ok(response);
             return BadRequest(model);
         }
+        [Authorize(Roles = "Instructor")]
         [HttpPut("course/{courseId:guid}")]
         public async Task<IActionResult> UpdateCourse([FromRoute] Guid courseId, UpdateCourseRequestModel model)
         {
@@ -60,6 +63,7 @@ namespace FinalProjectApi.Controllers
             if (response) return Ok();
             return BadRequest();
         }
+        [Authorize(Roles = "Instructor")]
         [HttpDelete("{courseId:guid}")]
         public async Task<IActionResult> DeleteCourse([FromRoute] Guid courseId)
         {
@@ -67,14 +71,16 @@ namespace FinalProjectApi.Controllers
             await _mediator.Send(command);
             return Ok();
         }
-        [HttpPost("module")]
-        public async Task<IActionResult> AddModule(AddModuleCommand command)
+        [Authorize(Roles = "Instructor")]
+        [HttpPost("module/{courseId:guid}")]
+        public async Task<IActionResult> AddModule([FromRoute] Guid courseId, [FromBody] string title)
         {
+            var command = new AddModuleCommand(courseId, title);
             var response = await _mediator.Send(command);
             if (response.Status) return Ok(response);
             return BadRequest(response.Message);
         }
-
+        [Authorize(Roles = "Instructor")]
         [HttpPut("module/{courseId:Guid}/{moduleId:Guid}")]
         public async Task<IActionResult> UpdateModule([FromRoute] Guid courseId, [FromRoute] Guid moduleId, [FromBody] string title)
         {
@@ -82,15 +88,16 @@ namespace FinalProjectApi.Controllers
             await _mediator.Send(command);
             return Ok();
         }
+        [Authorize(Roles = "Instructor")]
         [HttpPut("lesson/{moduleId:Guid}/{lessonId:Guid}")]
-        public async Task<IActionResult> UpdateLesson([FromRoute] Guid moduleId, [FromRoute] Guid lessonId, string? article, string topic, double totalminutes)
+        public async Task<IActionResult> UpdateLesson([FromRoute] Guid moduleId, [FromRoute] Guid lessonId, [FromBody] UpdateLessonRequestModel model)
         {
-            var command = new UpdateModuleLessonCommand(topic, article, moduleId, lessonId, totalminutes);
+            var command = new UpdateModuleLessonCommand(model.Topic, model.Article, moduleId, lessonId, model.TotalMinutes);
             var response = await _mediator.Send(command);
             if (response) return Ok();
             return BadRequest();
         }
-
+        [Authorize(Roles = "Instructor")]
         [HttpPost("lesson")]
         public async Task<IActionResult> AddLesson([FromForm] AddModuleLessonCommand command)
         {
@@ -98,6 +105,7 @@ namespace FinalProjectApi.Controllers
             if (response.Status) return Ok(response);
             return BadRequest(response.Message);
         }
+        [Authorize(Roles = "Instructor")]
         [HttpDelete("module/{courseId:guid}/{moduleId:guid}")]
         public async Task<IActionResult> DeleteModule([FromRoute] Guid courseId, [FromRoute] Guid moduleId)
         {
@@ -105,6 +113,7 @@ namespace FinalProjectApi.Controllers
             await _mediator.Send(command);
             return Ok();
         }
+        [Authorize(Roles = "Instructor")]
         [HttpDelete("lesson/{moduleId:guid}/{lessonId:guid}")]
         public async Task<IActionResult> DeleteLesson([FromRoute] Guid moduleId, [FromRoute] Guid lessonId)
         {
@@ -112,14 +121,16 @@ namespace FinalProjectApi.Controllers
             await _mediator.Send(command);
             return Ok();
         }
+        [Authorize(Roles = "Instructor")]
         [HttpPost("quiz/{moduleId:guid}")]
         public async Task<IActionResult> AddQuiz([FromRoute] Guid moduleId, [FromBody] double duration)
         {
             var command = new AddQuizToModuleCommand(moduleId, duration);
             var response = await _mediator.Send(command);
-            if (response.Status) return Ok();
+            if (response.Status) return Ok(response);
             return BadRequest(response);
         }
+        [Authorize(Roles = "Instructor")]
         [HttpDelete("quiz/{moduleId:guid}")]
         public async Task<IActionResult> DeleteQuiz([FromRoute] Guid moduleId)
         {
@@ -127,14 +138,16 @@ namespace FinalProjectApi.Controllers
             await _mediator.Send(command);
             return Ok();
         }
+        [Authorize(Roles = "Instructor")]
         [HttpPost("question/{moduleId:guid}/{quizId:guid}")]
-        public async Task<IActionResult> AddQuestionToQuiz([FromRoute] Guid moduleId, [FromRoute] Guid quizId, string questionText, QuestionType questionType)
+        public async Task<IActionResult> AddQuestionToQuiz([FromRoute] Guid moduleId, [FromRoute] Guid quizId, [FromBody] AddQuestionRequest request)
         {
-            var command = new AddQuizQuestionCommand(questionText, quizId, questionType, moduleId);
+            var command = new AddQuizQuestionCommand(request.QuestionText, quizId, request.QuestionType, moduleId);
             var response = await _mediator.Send(command);
-            if (response.Status) return Ok();
-            return BadRequest(response);
+            if (response.Status) return Ok(response);
+            return BadRequest(response.Message);
         }
+        [Authorize(Roles = "Instructor")]
         [HttpDelete("question/{moduleId:guid}/{questionId:guid}")]
         public async Task<IActionResult> DeleteQuestion([FromRoute] Guid moduleId, [FromRoute] Guid questionId)
         {
@@ -142,16 +155,18 @@ namespace FinalProjectApi.Controllers
             await _mediator.Send(command);
             return Ok();
         }
+        [Authorize(Roles = "Instructor")]
         [HttpPost("option{moduleId:guid}/{questionId:guid}")]
-        public async Task<IActionResult> AddOptionToQuestion([FromRoute] Guid moduleId, [FromRoute] Guid questionId, string optionText, bool isCorrect)
+        public async Task<IActionResult> AddOptionToQuestion([FromRoute] Guid moduleId, [FromRoute] Guid questionId, [FromBody] OptionRequest request)
         {
-            var command = new AddQuestionOptionCommand(questionId, isCorrect, optionText, moduleId);
+            var command = new AddQuestionOptionCommand(questionId, request.IsCorrect, request.OptionText, moduleId);
             var response = await _mediator.Send(command);
-            if (response.Status) return Ok();
+            if (response.Status) return Ok(response);
             return BadRequest(response);
         }
+        [Authorize(Roles = "Instructor")]
         [HttpDelete("option/{moduleId:guid}/{questionId:guid}/{text}")]
-        public async Task<IActionResult> RemoveOption([FromRoute] Guid moduleId, [FromRoute] Guid questionId, [FromRoute] string text)
+        public async Task<IActionResult> RemoveOption([FromRoute] Guid moduleId, [FromRoute] Guid questionId, string text)
         {
             var command = new DeleteQuestionOptionCommand(moduleId, questionId, text);
             await _mediator.Send(command);
@@ -174,14 +189,16 @@ namespace FinalProjectApi.Controllers
             if (response.Status) return Ok(response);
             return BadRequest(response.Message);
         }
+        [Authorize(Roles = "Instructor")]
         [HttpPut("question/{moduleId:Guid}/{questionId:Guid}")]
-        public async Task<IActionResult> UpdateQuestion([FromRoute] Guid moduleId, [FromRoute] Guid questionId, string questionText, QuestionType questionType)
+        public async Task<IActionResult> UpdateQuestion([FromRoute] Guid moduleId, [FromRoute] Guid questionId, [FromBody] UpdateQuestionRequest request)
         {
-            var command = new UpdateQuestionCommand(questionText, questionType, moduleId, questionId);
+            var command = new UpdateQuestionCommand(request.QuestionText, request.QuestionType, moduleId, questionId);
             var response = await _mediator.Send(command);
             if (response.Status) return Ok(response);
             return BadRequest();
         }
+        [Authorize(Roles = "Instructor")]
         [HttpPut("displaypicture")]
         public async Task<IActionResult> UpdateDisplayPicture([FromForm] Guid courseId, IFormFile displayPicture)
         {
@@ -190,10 +207,11 @@ namespace FinalProjectApi.Controllers
             if (response.Status) return Ok(response);
             return BadRequest();
         }
+        [Authorize(Roles = "Instructor")]
         [HttpPut("lessonfile")]
-        public async Task<IActionResult> UpdateLessonFile([FromForm] Guid moduleId, IFormFile lessonfile, Guid lessonId)
+        public async Task<IActionResult> UpdateLessonFile([FromForm] UpdateLessonVideoRequest request)
         {
-            var command = new UpdateLessonFileCommand(moduleId, lessonId, lessonfile);
+            var command = new UpdateLessonFileCommand(request.ModuleId, request.LessonId, request.File);
             var response = await _mediator.Send(command);
             if (response) return Ok();
             return BadRequest();
@@ -206,7 +224,8 @@ namespace FinalProjectApi.Controllers
             if (response.Status) return Ok(response);
             return BadRequest(response.Message);
         }
-        [HttpGet("getinstructorcourses/{instructorId}")]
+        [Authorize(Roles = "Instructor")]
+        [HttpGet("instructor/{instructorId}")]
         public async Task<IActionResult> GetCourseByInstructorId([FromRoute] Guid instructorId)
         {
             var query = new GetCoursesByInstructorQuery(instructorId);
@@ -214,7 +233,7 @@ namespace FinalProjectApi.Controllers
             if (response.Status) return Ok(response);
             return BadRequest(response.Message);
         }
-        [HttpGet("verifycourses")]
+        [HttpGet("verifiedcourses")]
         public async Task<IActionResult> GetVerifiedCourses()
         {
             var query = new GetVerifiedCoursesQuery();
@@ -222,6 +241,7 @@ namespace FinalProjectApi.Controllers
             if (response.Status) return Ok(response);
             return BadRequest(response.Message);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("unverifiedcourses")]
         public async Task<IActionResult> GetUnVerifiedCourses()
         {
@@ -230,13 +250,27 @@ namespace FinalProjectApi.Controllers
             if (response.Status) return Ok(response);
             return BadRequest(response.Message);
         }
-        [HttpPost("result/{quizId:guid}/{questionId:guid}")]
-        public async Task<IActionResult> AddResultToQuiz([FromRoute] Guid quizId, [FromRoute] Guid questionId, List<string> selectedOptions)
+        [HttpPost("result")]
+        public async Task<IActionResult> AddResultToQuiz([FromBody] QuestionAnswerRequestModel questionAnswers)
         {
-            var command = new AddResultCommand(quizId, questionId, selectedOptions);
+            if (questionAnswers == null)
+            {
+                return BadRequest("Invalid request payload.");
+            }
+            var command = new AddResultCommand(questionAnswers);
             var response = await _mediator.Send(command);
             if (response.Status) return Ok(response);
             return BadRequest(response);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("verifycourse/{courseId:guid}")]
+        public async Task<IActionResult> VerifiyCourse([FromRoute] Guid courseId)
+        {
+            var command = new VerifyCourseCommand(courseId);
+            var response = await _mediator.Send(command);
+            if (response) return Ok(response);
+            return BadRequest();
         }
     }
 }

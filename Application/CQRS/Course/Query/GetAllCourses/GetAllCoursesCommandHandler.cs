@@ -22,6 +22,7 @@ namespace Application.CQRS.Course.Query.GetAllCourses
             var courses = check.Any() ? check : throw new ArgumentException("No Courses Found");
             var courseDtos = courses.Select(course => new CourseDto
             {
+                 Id = course.Id,
                 CategoryId = course.CategoryId,
                 CourseCode = course.CourseCode,
                 CourseStatus = course.CourseStatus,

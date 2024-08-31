@@ -7,5 +7,5 @@ using MediatR;
 
 namespace Application.CQRS.Enrollment.Command.Enroll
 {
-    public record StudentEnrollmentCommand(Guid CourseId, string Reference): IRequest<BaseResponse<EnrollmentDto>>;
+    public record StudentEnrollmentCommand(Guid CourseId, string? Reference): IRequest<BaseResponse<EnrollmentDto>>;
 }

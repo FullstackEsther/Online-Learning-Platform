@@ -77,6 +77,14 @@ builder.Services.AddAuthentication(x =>
               });
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegisterUserCommand).Assembly));
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("ClientSide", policyBuilder => {
+         policyBuilder.WithOrigins("http://127.0.0.1:5501");
+         policyBuilder.AllowAnyHeader();
+         policyBuilder.AllowAnyMethod();
+         policyBuilder.AllowCredentials();
+    });
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -88,9 +96,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<ExceptionMiddleware>();
-
 app.UseHttpsRedirection();
+app.UseCors("ClientSide");
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

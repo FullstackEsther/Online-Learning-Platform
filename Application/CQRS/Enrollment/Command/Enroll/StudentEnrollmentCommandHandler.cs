@@ -20,7 +20,7 @@ namespace Application.CQRS.Enrollment.Command.Enroll
         }
         public async Task<BaseResponse<EnrollmentDto>> Handle(StudentEnrollmentCommand request, CancellationToken cancellationToken)
         {
-            var email ="otufeesther@gmail.com"; //_currentUser.GetLoggedInUserEmail();
+            var email = _currentUser.GetLoggedInUserEmail();
             var enroll = await _enrollmentManager.EnrollStudent(request.Reference, request.CourseId, email);
             if (enroll != null)
             {

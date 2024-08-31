@@ -20,8 +20,8 @@ namespace Infrastucture.Context.EntityConfiguration
             builder.HasOne(x => x.Instructor).WithMany(x => x.Courses).HasForeignKey(x => x.InstructorId);
             builder.HasOne(x => x.Category).WithMany(x => x.Courses).HasForeignKey(x => x.CategoryId);
             builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
-            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
-            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(60)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(60)");
             builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
             builder.Property(x => x.CourseCode).HasColumnType("varchar(15)");
             builder.Property(x => x.DisplayPicture).HasColumnType("varchar(255)");

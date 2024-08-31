@@ -25,6 +25,7 @@ namespace Application.CQRS.Category.Query.GetAllCategory
                   Message = "Sucessful",
                    Data = categories.Select(x => new CategoryDto
                    {
+                     Id = x.Id,
                      Name = x.Name,
                       ParentCategory = x.ParentCategory
                    }).ToList()

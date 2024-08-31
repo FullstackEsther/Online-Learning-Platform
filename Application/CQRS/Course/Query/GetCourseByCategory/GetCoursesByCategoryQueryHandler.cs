@@ -22,6 +22,7 @@ namespace Application.CQRS.Course.Query.GetCourseByCategory
             var courses = check.Any() ? check : throw new ArgumentException("There are no courses in this Category");
             var courseDtos = courses.Select(course => new CourseDto
             {
+                 Id = course.Id,
                 CategoryId = course.CategoryId,
                 CourseCode = course.CourseCode,
                 CourseStatus = course.CourseStatus,
@@ -33,6 +34,7 @@ namespace Application.CQRS.Course.Query.GetCourseByCategory
                 Title = course.Title,
                 TotalTime = course.TotalTime,
                 WhatToLearn = course.WhatToLearn,
+                 NumberOfLessons= course.CalculateNumberOfLessons()
             }).ToList();
             return new BaseResponse<IEnumerable<CourseDto>>
             {

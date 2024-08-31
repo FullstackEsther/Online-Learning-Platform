@@ -10,5 +10,6 @@ namespace Domain.DomainServices.Interface
     {
         Task<UserProgress> CreateUserProgress( string email, Guid lessonId, Guid courseId);
         Task<UserProgress> UpdateUserProgress(string email, Guid lessonId, Guid courseId);
+        public  Task<int> CalculateUserProgress(string email, Guid courseId);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 using Domain.DomainServices.Interface;
 using Domain.Entities;
 using Domain.RepositoryInterfaces;
@@ -21,10 +22,15 @@ namespace Domain.DomainServices.Implementation
         }
         public async Task<UserProgress> CreateUserProgress(string email, Guid lessonId, Guid courseId)
         {
-            var course = await _courseRepository.GetCourse(x => x.Id == courseId) ?? throw new ArgumentException("Course doesnot exist");
+            var existing = _userProgressRepository.Exist(x =>x.UserEmail == email && x.LessonId == lessonId);
+            if (existing)
+            {
+                return null;
+            }
+            var course = await _courseRepository.GetCourse(x => x.Id == courseId) ?? throw new DomainException("Course doesnot exist",404);
             var lesson = course.Modules
             .SelectMany(module => module.Lessons)
-            .FirstOrDefault(lesson => lesson.Id == lessonId) ?? throw new ArgumentException("Lesson doesn't exist");
+            .FirstOrDefault(lesson => lesson.Id == lessonId) ?? throw new DomainException("Lesson doesn't exist");
             var userProgress = new UserProgress(email, courseId, lessonId);
             await _userProgressRepository.Create(userProgress);
             if (await _courseRepository.Save() > 0) return userProgress;
@@ -33,11 +39,18 @@ namespace Domain.DomainServices.Implementation
 
         public async Task<UserProgress> UpdateUserProgress(string email, Guid lessonId, Guid courseId)
         {
-            var userProgress = await _userProgressRepository.Get(x => x.CourseId == courseId && x.LessonId == lessonId && x.UserEmail == email) ?? throw new ArgumentException("user progress doesnot esxist");
+            var userProgress = await _userProgressRepository.Get(x => x.CourseId == courseId && x.LessonId == lessonId && x.UserEmail == email) ?? throw new DomainException("user progress doesnot esxist");
             userProgress.MarkAsCompleted();
             _userProgressRepository.Update(userProgress);
             await _userProgressRepository.Save();
             return userProgress;
+        }
+        public async Task<int> CalculateUserProgress(string email, Guid courseId)
+        {
+            var course = await _courseRepository.GetCourse(x => x.Id == courseId);
+            var totalLessons = course.CalculateNumberOfLessons();
+            var userProgress = await _userProgressRepository.GetAll(x => x.CourseId == courseId && x.UserEmail == email && x.IsCompleted == true) ?? throw new DomainException("user progress doesnot esxist");
+            return (int)((double)userProgress.Count() / totalLessons * 100);
         }
     }
 }

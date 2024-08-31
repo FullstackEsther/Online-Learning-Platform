@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Domain.Shared.Enum;
+using Domain.Domain.Shared.Exception;
 using Domain.Enum;
 
 namespace Domain.Entities
@@ -22,7 +23,7 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Course Code must be less than 8 characters");
+                    throw new DomainException("Course Code must be less than 8 characters");
                 }
             }
         }
@@ -32,13 +33,17 @@ namespace Domain.Entities
             get => _price;
             set
             {
-                if (value.HasValue && value >= 0)
+                if (!value.HasValue) 
                 {
-                    _price = (double)value;
+                    _price = default; 
+                }
+                else if (value.Value > 0) 
+                {
+                    _price = value.Value;
                 }
                 else
                 {
-                    throw new ArgumentException("You cannot add a price of zero or lower than zero");
+                    throw new DomainException("You cannot add a price of zero or lower than zero");
                 }
             }
         }
@@ -61,19 +66,19 @@ namespace Domain.Entities
         public Guid InstructorId { get; set; } = default!;
         public double TotalScore { get; set; } = default!;
         public ICollection<Module> Modules { get; set; } = new HashSet<Module>();
-        public ICollection<UserProgress> UserProgresses {get;set;} = new HashSet<UserProgress>();
+        public ICollection<UserProgress> UserProgresses { get; set; } = new HashSet<UserProgress>();
         public void AddModule(Module module)
         {
             if (Modules.Any(x => x.Title == module.Title))
             {
-                throw new ArgumentException("Module already exist with this Title");
+                throw new DomainException("Module already exist with this Title");
             }
             module.Course = this;
             Modules.Add(module);
         }
         public void UpdateModule(Module module)
         {
-            var existingModule = Modules.FirstOrDefault(m => m.Id == module.Id) ?? throw new ArgumentException("This module does not exist");
+            var existingModule = Modules.FirstOrDefault(m => m.Id == module.Id) ?? throw new DomainException("This module does not exist");
             existingModule = module;
         }
         public void RemoveModule(Module module)
@@ -100,6 +105,22 @@ namespace Domain.Entities
                 }
             }
             return calculatedTime;
+        }
+        public int CalculateNumberOfLessons()
+        {
+            var totalLessons = 0;
+            if (Modules.Count != 0 && Modules != null)
+            {
+                foreach (var module in Modules)
+                {
+                    if (module.Lessons.Count != 0 && module.Lessons != null)
+                    {
+                        totalLessons += module.Lessons.Count;
+                    }
+                }
+                return totalLessons;
+            }
+            return totalLessons;
         }
 
         public Course(string title, Level level, Guid categoryId, string courseCode, CourseStatus courseStatus, string whatToLearn, string displayPicture)
