@@ -7,6 +7,6 @@ using MediatR;
 
 namespace Application.CQRS.Course.Command.UpdateModuleLesson
 {
-    public record UpdateModuleLessonCommand(UpdateLessonRequestModel Model) : IRequest<bool>;
+    public record UpdateModuleLessonCommand(string Topic, string? Article, Guid ModuleId, Guid LessonId, double TotalMinutes) : IRequest<bool>;
  
 }

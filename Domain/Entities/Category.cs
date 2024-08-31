@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 
 namespace Domain.Entities
 {
@@ -13,9 +14,9 @@ namespace Domain.Entities
              get => _description;
              set
              {
-                if (value.Length > 50)
+                if (value.Length > 200)
                 {
-                    throw new ArgumentException("Description must be 50 characters or fewer.");
+                    throw new DomainException("Description must be 200 characters or fewer.");
                 }
                 _description = value;
              } 

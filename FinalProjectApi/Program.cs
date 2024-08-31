@@ -34,18 +34,21 @@ builder.Services.AddScoped<IFileRepository, FileRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+builder.Services.AddScoped<IUserProgressRepository, UserProgressRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<ResultHelper>();
-builder.Services.AddScoped<PaymentManager>();
+builder.Services.AddScoped<IPaymentManager,PaymentManager>();
 builder.Services.AddScoped<ChatHub>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddSingleton<IAuthService, AuthService>();
 builder.Services.AddScoped<ICourseManager, CourseManager>();
 builder.Services.AddScoped<IInstructorManager, InstructorManager>();
+builder.Services.AddScoped<IEnrollmentManager, EnrollmentManager>();
+builder.Services.AddScoped<IUserProgressManager, UserProgressManager>();
 builder.Services.AddTransient<ICurrentUser, CurrentUser>();
 builder.Services.AddSingleton(sp => new Cloudinary(new Account(
    builder.Configuration["Cloudinary:CloudName"],
@@ -74,6 +77,14 @@ builder.Services.AddAuthentication(x =>
               });
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegisterUserCommand).Assembly));
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("ClientSide", policyBuilder => {
+         policyBuilder.WithOrigins("http://127.0.0.1:5501");
+         policyBuilder.AllowAnyHeader();
+         policyBuilder.AllowAnyMethod();
+         policyBuilder.AllowCredentials();
+    });
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -85,9 +96,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<ExceptionMiddleware>();
-
 app.UseHttpsRedirection();
+app.UseCors("ClientSide");
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

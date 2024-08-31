@@ -8,6 +8,7 @@ using Application.CQRS.User.Command.ResetPassword;
 using Application.CQRS.User.Command.UpdatePassword;
 using Application.Services.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProjectApi.Controllers
@@ -24,7 +25,7 @@ namespace FinalProjectApi.Controllers
             _mediator = mediator;
             _authService = authService;
         }
-        [HttpPost("token")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginUserCommand command)
         {
             var login = await _mediator.Send(command);
@@ -33,10 +34,12 @@ namespace FinalProjectApi.Controllers
                 return NotFound(login.Message);
             }
             var token = _authService.GenerateToken(login.Data);
-            return Ok(token);
-        }
 
-        [HttpPut]
+            var response = new { Token = token, Role = login.Data.roleNames };
+            return Ok(response);
+        }
+        [Authorize(Roles = "Instructor,Admin,Student")]
+        [HttpPut("password")]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordCommand command)
         {
             var update = await _mediator.Send(command);
@@ -46,7 +49,7 @@ namespace FinalProjectApi.Controllers
             }
             return BadRequest();
         }
-
+        
         [HttpPost("sendCode")]
         public async Task<IActionResult> SendChangePasswordCode(ResetPasswordEmailCommand command)
         {

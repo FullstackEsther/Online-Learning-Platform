@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.CQRS.User.Command;
+using Application.CQRS.User.Command.AssignRole;
 using Application.CQRS.User.Query;
 using Application.CQRS.User.Query.Get;
 using Application.DTO;
 using Application.Services.Interfaces;
 using Domain.DomainServices.Interface;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProjectApi.Controllers
@@ -22,21 +25,25 @@ namespace FinalProjectApi.Controllers
         private readonly ICurrentUser _currentUser;
         private readonly ISender _mediator;
 
-        public UserController(IAuthService authService,  ICurrentUser currentUser, ISender mediator)
+        public UserController(IAuthService authService, ISender mediator)
         {
             _authService = authService;
-            _currentUser = currentUser;
             _mediator = mediator;
         }
-        
-        // [HttpPost]
-        // public async Task<IActionResult> AssignRoleToUser([FromRoute] string roleName)
-        // {
-        //     var user = _currentUser.GetLoggedInUserEmail;
-        //     var assigned = await _userService.AssignRoleToUser(user.ToString(), roleName);
-        //     if (assigned) return Ok();
-        //     return BadRequest();
-        // }
+        // [Authorize(Roles = "Instructor,Admin,Student")]
+        [HttpPost("assignrole")]
+        public async Task<IActionResult> AssignRoleToUser([FromQuery] string roleName)
+        {
+            var command = new AssignRoleCommand(roleName);
+            var response = await _mediator.Send(command);
+            if (response.Status)
+            {
+              var token = _authService.GenerateToken(response.Data);
+               var reply = new {Token = token};
+                return Ok(reply);
+            }
+            return BadRequest();
+        }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterUserCommand command)

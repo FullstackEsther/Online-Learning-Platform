@@ -25,6 +25,7 @@ namespace Application.CQRS.Course.Command.AddQuestion
                 Message = "Successful",
                 Data = new QuestionDto
                 {
+                     Id = question.Id,
                     QuestionText = question.QuestionText,
                     QuizId = question.QuizId,
                     QuestionType = question.QuestionType

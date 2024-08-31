@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Domain.Shared.Enum;
+using Domain.Domain.Shared.Exception;
 
 namespace Domain.Entities
 {
@@ -12,6 +13,7 @@ namespace Domain.Entities
         public string File { get; set; }= default!;
         public string? Article { get; set; }= default!;
         public Guid ModuleId { get; private set; } = default!;
+        public ICollection<UserProgress> UserProgresses {get;set;} = new HashSet<UserProgress>();
         private double _totalMinutes;
         public double  TotalMinutes { 
             get
@@ -21,7 +23,7 @@ namespace Domain.Entities
             set
             {
                  if(value == 0){
-                    throw new ArgumentException("You can not set duration of zero");
+                    throw new DomainException("You can not set duration of zero");
                 }
                 _totalMinutes = value;
             } }

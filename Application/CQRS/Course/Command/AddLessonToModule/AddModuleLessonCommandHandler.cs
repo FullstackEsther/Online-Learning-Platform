@@ -35,6 +35,7 @@ namespace Application.CQRS.Course.Command.AddLessonToModule
                     Message = "Successful",
                     Data = new LessonDto
                     {
+                          Id = createLesson.Id,
                         Article = createLesson.Article,
                         File = createLesson.File,
                         ModuleId = createLesson.ModuleId,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 
 namespace Domain.Entities
 {
@@ -10,7 +11,8 @@ namespace Domain.Entities
     {
         private static readonly Random rand = new Random();
         private string _username;
-        public string Username { 
+        public string Username
+        {
             get => _username;
             set
             {
@@ -20,9 +22,10 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Email format is incorrect");
+                    throw new DomainException("Email format is incorrect");
                 }
-            } }
+            }
+        }
         private string _password;
         private int _resetPasswordCode;
         public int ResetPasswordCode
@@ -34,6 +37,7 @@ namespace Domain.Entities
             }
         }
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserProgress> UserProgresses {get;set;} = new HashSet<UserProgress>();
         public string Password
         {
             get
@@ -48,7 +52,7 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Password too weak");
+                    throw new DomainException("Password too weak");
                 }
 
             }
@@ -75,13 +79,13 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Old Password doesn't match");
+                    throw new DomainException("Old Password doesn't match");
                 }
 
             }
             else
             {
-                throw new ArgumentException("Password too weak");
+                throw new DomainException("Password too weak");
             }
         }
         public void ForgotPassword(string password, string confirmPassword)
@@ -94,28 +98,36 @@ namespace Domain.Entities
                 }
                 else
                 {
-                    throw new ArgumentException("Password doesnot match");
+                    throw new DomainException("Password doesnot match");
                 }
             }
             else
             {
-                throw new ArgumentException("Password too weak");
+                throw new DomainException("Password too weak");
             }
         }
-        public void AddRole(Role role)
+        public UserRole AddRole(User user, Role role)
         {
             if (!UserRoles.Any(x => x.Role.RoleName == role.RoleName))
             {
-                UserRoles.Add(new UserRole { Role = role });
+                var userRole = new UserRole
+                {
+                    Role = role,
+                    RoleId = role.Id,
+                    User = user,
+                    UserId = user.Id
+                };
+                UserRoles.Add(userRole);
+                return userRole;
             }
             else
             {
-                throw new ArgumentException("User already has the role");
+                throw new DomainException("User already has the role",409);
             }
         }
         public int GenerateCode()
         {
-            _resetPasswordCode = rand.Next(23456, 3455667);
+            _resetPasswordCode =  rand.Next(100000, 1000000);
             return _resetPasswordCode;
         }
         public User(string userName, string password)

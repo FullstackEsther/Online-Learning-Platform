@@ -10,7 +10,7 @@ using MediatR;
 
 namespace Application.CQRS.Instructor.Query
 {
-    public class GetInstructorProfileQueryHandler : IRequestHandler<GetInstructorProfileQuery, BaseResponse<ProfileDto>>
+    public class GetInstructorProfileQueryHandler : IRequestHandler<GetInstructorProfileQuery, BaseResponse<InstructorDto>>
     {
         private readonly IInstructorManager _instructoManager;
         private readonly ICurrentUser _currentUser;
@@ -21,27 +21,25 @@ namespace Application.CQRS.Instructor.Query
             _instructoManager = instructoManager;
             _cloudinary = cloudinary;
         }
-        public async Task<BaseResponse<ProfileDto>> Handle(GetInstructorProfileQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<InstructorDto>> Handle(GetInstructorProfileQuery request, CancellationToken cancellationToken)
         {
-            var profile = await _instructoManager.GetProfile("otufaleesther@gmail.com");
+            var profile = await _instructoManager.GetProfile(_currentUser.GetLoggedInUserEmail());
             if (profile == null)
             {
-                return new BaseResponse<ProfileDto>
+                return new BaseResponse<InstructorDto>
                 {
                     Status = false,
                     Message = "Not Updated",
                     Data = null
                 };
             }
-        //     var profilePics = profile.ProfilePicture?.Split('/');
-        //     var retrieve = profilePics?[^1];
-        //    var publicId = retrieve?[..retrieve.LastIndexOf('.')]; _cloudinary.Api.UrlImgUp.BuildUrl(publicId)
-            return new BaseResponse<ProfileDto>
+            return new BaseResponse<InstructorDto>
             {
                 Status = true,
                 Message = "Successful",
-                Data = new ProfileDto
+                Data = new InstructorDto
                 {
+                    Id = profile.Id,
                     FirstName = profile.FirstName,
                     LastName = profile.LastName,
                     Biography = profile.Biography,

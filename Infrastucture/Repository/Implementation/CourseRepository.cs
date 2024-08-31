@@ -32,7 +32,7 @@ namespace Infrastucture.Repository.Implementation
             var courses = await _applicationContext.Courses
             .Include(x => x.Modules).ThenInclude(x => x.Lessons)
             .Include(x => x.Modules)
-            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions).ThenInclude(x => x.Options)
+            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)//.ThenInclude(x => x.Options)
             .ToListAsync();
             return courses;
         }
@@ -42,7 +42,7 @@ namespace Infrastucture.Repository.Implementation
             return await _applicationContext.Courses
             .Include(x => x.Modules).ThenInclude(x => x.Lessons)
             .Include(x => x.Modules)
-            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions).ThenInclude(x => x.Options)
+            .ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)//.ThenInclude(x => x.Options)
             .Where(predicate).ToListAsync();
         }
 
@@ -64,12 +64,36 @@ namespace Infrastucture.Repository.Implementation
 
                 throw;
             }
-
         }
-        public async Task<IReadOnlyList<Module>> AddModules(IReadOnlyList<Module> modules)
+        public async Task<Module> AddModule(Module module)
         {
-            await _applicationContext.Modules.AddRangeAsync(modules);
-            return modules;
+            await _applicationContext.Modules.AddAsync(module);
+            return module;
+        }
+        public async Task<Lesson> AddLesson(Lesson lesson)
+        {
+            await _applicationContext.Lessons.AddAsync(lesson);
+            return lesson;
+        }
+        public async Task<Quiz> AddQuiz(Quiz quiz)
+        {
+            await _applicationContext.Quizzes.AddAsync(quiz);
+            return quiz;
+        }
+        public async Task<Question> AddQuestion(Question question)
+        {
+            await _applicationContext.Questions.AddAsync(question);
+            return question;
+        }
+        public async Task<Result> AddResult(Result result)
+        {
+            await _applicationContext.Results.AddAsync(result);
+            return result;
+        }
+        public Question UpdateQuestion(Question question)
+        {
+            _applicationContext.Questions.Update(question);
+            return question;
         }
     }
 }

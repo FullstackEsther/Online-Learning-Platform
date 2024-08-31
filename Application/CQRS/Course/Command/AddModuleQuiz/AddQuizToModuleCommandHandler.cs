@@ -25,6 +25,7 @@ namespace Application.CQRS.Course.Command.AddModuleQuiz
                 Message = "Successful",
                 Data = new QuizDto
                 {
+                     Id = quiz.Id,
                     Duration = quiz.Duration,
                     ModuleId = quiz.ModuleId,
                 }

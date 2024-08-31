@@ -18,8 +18,8 @@ namespace Infrastucture.Context.EntityConfiguration
             builder.HasOne(x => x.Student)
             .WithMany(x => x.Results).HasForeignKey(x => x.StudentId);
             builder.Property(x => x.CreatedOn).HasColumnType("datetime(0)");
-            builder.Property(x => x.CreatedBy).HasColumnType("varchar(30)");
-            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(30)");
+            builder.Property(x => x.CreatedBy).HasColumnType("varchar(60)");
+            builder.Property(x => x.ModifiedBy).HasColumnType("varchar(60)");
             builder.Property(x => x.ModifiedOn).HasColumnType("datetime(0)");
             builder.Property(u => u.QuestionAnswers)
             .HasConversion(new JsonValueConverter<QuestionAnswer>())

@@ -26,20 +26,25 @@ namespace Infrastucture.Repository.Implementation
         {
             return await _applicationContext.Students
              .Include(x => x.Enrollments)
-             .Include(x => x.Results)
+             .Include(x => x.Results).ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)
+             .Include(x => x.Results).ThenInclude(x => x.Quiz).ThenInclude(x => x.Module)
              .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Student> Get(Expression<Func<Student, bool>> predicate)
         {
             return await  _applicationContext.Students.Include(x => x.Enrollments)
-            .Include(x => x.Results).FirstOrDefaultAsync(predicate);
+            .Include(x => x.Results).ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)
+            .Include(x => x.Results).ThenInclude(x => x.Quiz).ThenInclude(x => x.Module)
+            .FirstOrDefaultAsync(predicate);
         }
 
         public async Task<IEnumerable<Student>> GetAll(Expression<Func<Student, bool>> predicate)
         {
             return await _applicationContext.Students.Include(x => x.Enrollments)
-            .Include(x => x.Results).Where(predicate).ToListAsync();
+            .Include(x => x.Results).ThenInclude(x => x.Quiz).ThenInclude(x => x.Questions)
+            .Include(x => x.Results).ThenInclude(x => x.Quiz).ThenInclude(x => x.Module)
+            .Where(predicate).ToListAsync();
         }
     }
 }

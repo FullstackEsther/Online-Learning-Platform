@@ -8,10 +8,11 @@ namespace Application.DTO
 {
     public class ModuleDto
     {
+        public  Guid Id { get; set; }
         public  string Title { get; set; }
         public double Totaltime{ get;  set; }
         public Guid CourseId { get;  set; }
-        public QuizDto Quiz { get;  set; }
-        public IReadOnlyList<LessonDto> Lessons { get; set; } 
+        public QuizDto? Quiz { get;  set; }
+        public IReadOnlyList<LessonDto?> Lessons { get; set; } 
     }
 }

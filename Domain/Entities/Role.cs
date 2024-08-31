@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Domain.Shared.Exception;
 
 namespace Domain.Entities
 {
@@ -17,7 +18,7 @@ namespace Domain.Entities
             {
                 if (value?.Length > 50)
                 {
-                    throw new ArgumentException("Description must be 50 characters or fewer.");
+                    throw new DomainException("Description must be 50 characters or fewer.");
                 }
                 _description = value;
             } }

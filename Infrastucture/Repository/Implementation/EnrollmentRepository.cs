@@ -19,13 +19,13 @@ namespace Infrastucture.Repository.Implementation
 
         public async Task<IEnumerable<Enrollment>> GetAllEnrollments(Expression<Func<Enrollment, bool>> predicate)
         {
-            var enrollments = await _applicationContext.Enrollments.Where(predicate).ToListAsync();
+            var enrollments = await _applicationContext.Enrollments.Include(x => x.Course).Where(predicate).ToListAsync();
             return enrollments;
         }
 
         public async Task<Enrollment> GetEnrollment(Expression<Func<Enrollment, bool>> predicate)
         {
-            return await _applicationContext.Enrollments.FirstOrDefaultAsync(predicate);
+            return await _applicationContext.Enrollments.Include(x => x.Course).FirstOrDefaultAsync(predicate);
         }
     }
 }

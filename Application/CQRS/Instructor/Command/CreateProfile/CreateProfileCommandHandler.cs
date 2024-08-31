@@ -22,13 +22,14 @@ namespace Application.CQRS.Instructor.Command.UpdateProfile
         }
         public async Task<BaseResponse<InstructorDto>> Handle(CreateProfileCommand request, CancellationToken cancellationToken)
         {
-            if (request == null)
+            var profilePictureUrl= string.Empty;
+            var email =_currentUser.GetLoggedInUserEmail();
+            if (request.Model.ProfilePicture != null)
             {
-                throw new ArgumentException("Fields cannot be null");
+                
+             profilePictureUrl = await _fileRespository.UploadFileAsync(request.Model.ProfilePicture);
             }
-            var email ="otufaleesther@gmail.com";// _currentUser.GetLoggedInUserEmail();
-            var uploadedPicture = await _fileRespository.UploadFileAsync(request.Model.ProfilePicture);
-            var createdProfile = await _instructorManager.CreateProfile(email, request.Model.Biography, request.Model.FirstName, request.Model.LastName, uploadedPicture);
+            var createdProfile = await _instructorManager.CreateProfile(email, request.Model.Biography, request.Model.FirstName, request.Model.LastName, profilePictureUrl);
             if (createdProfile == null)
             {
                 return new BaseResponse<InstructorDto>
