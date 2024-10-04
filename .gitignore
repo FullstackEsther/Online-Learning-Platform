@@ -1,0 +1,19 @@
+
+.vscode/
+.vs/
+*.suo
+*.user
+# *.userosscache
+# *.sln.docstates
+
+bin/
+obj/
+# [Bb]in/
+# [Oo]bj/
+
+.git/
+
+# *.nupkg
+# *.snupkg
+# *.Symbols.nupkg
+packages/
